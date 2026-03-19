@@ -5,13 +5,14 @@ import pydeck as pdk
 # 1. Page Config
 st.set_page_config(page_title="Global Crisis Monitor", layout="wide")
 
-# 2. THEME & BUTTON STYLING
+# 2. THEME & BUTTON STYLING (Clean & Minimalist)
 st.markdown("""
     <style>
     .stApp { background-color: #FFFFFF; }
     [data-testid="stSidebar"] {
         background-color: #F8F9FA;
         border-right: 1px solid #E0E0E0;
+        padding-top: 20px;
     }
     /* FIX FOR RESET BUTTON: Light background, Dark text */
     div.stButton > button {
@@ -20,6 +21,7 @@ st.markdown("""
         border: 1px solid #D0D0D0;
         border-radius: 8px;
         width: 100%;
+        margin-top: 10px;
     }
     div.stButton > button:hover {
         background-color: #E0E0E0;
@@ -40,13 +42,10 @@ df = load_data()
 # Initialize Session State
 if 'view' not in st.session_state: st.session_state.view = 'Global'
 
-# 4. SIDEBAR (Removed "Controls" text)
-st.sidebar.markdown("## 🗺️ Navigation")
-
-# Corrected Legend - Matching the Map Colors exactly
+# 4. SIDEBAR (First thing is Legend, then Button)
 st.sidebar.subheader("Disaster Legend")
 st.sidebar.markdown("""
-<div style="line-height: 2;">
+<div style="line-height: 2.2; margin-bottom: 20px;">
     <span style="color: rgb(100, 100, 255); font-size: 20px;">●</span> Arctic/Volcanic<br>
     <span style="color: rgb(255, 0, 0); font-size: 20px;">●</span> Japan Earthquake<br>
     <span style="color: rgb(255, 165, 0); font-size: 20px;">●</span> US South Storms<br>
@@ -55,14 +54,12 @@ st.sidebar.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-st.sidebar.write("---")
-
-if st.sidebar.button("🌍 Reset to Global View"):
+if st.sidebar.button("Reset to Global View"):
     st.session_state.view = 'Global'
     st.session_state.selected_country = None
     st.rerun()
 
-# 5. Color Mapping Logic (The Source of Truth)
+# 5. Color Mapping Logic
 color_lookup = {
     "Arctic Storms & Volcanic Activity": [100, 100, 255, 160],
     "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 160],
@@ -76,7 +73,7 @@ df['color'] = df['Disaster_Category'].map(color_lookup)
 if st.session_state.view == 'Global':
     st.title("Global Real-Time Disaster Map")
     
-    # Increased zoom to 2.0 to help map outlines appear
+    # Zoom set to 2.0 to ensure outlines are visible
     view_state = pdk.ViewState(latitude=20, longitude=0, zoom=2.0, pitch=0)
     
     layer = pdk.Layer(
