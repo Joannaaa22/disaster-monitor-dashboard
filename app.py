@@ -9,13 +9,8 @@ st.set_page_config(page_title="DisasterMonitor AI", layout="wide", initial_sideb
 # 2. THEME & STYLING
 st.markdown("""
     <style>
-    /* Hide Sidebar */
     [data-testid="stSidebar"] { display: none; }
-    
-    /* Main background */
     .stApp { background-color: #FFFFFF; }
-    
-    /* Custom Reset Button Styling */
     div.stButton > button {
         background-color: #FFFFFF;
         color: #1C1C1C;
@@ -24,15 +19,7 @@ st.markdown("""
         width: 100%;
         font-weight: 500;
     }
-    div.stButton > button:hover {
-        background-color: #F0F2F6;
-        border-color: #1C1C1C;
-    }
-    
-    /* Text Colors */
     h1, h2, h3, p, span { color: #1C1C1C !important; }
-    
-    /* Legend Box Styling */
     .legend-box {
         padding: 20px;
         border: 1px solid #E0E0E0;
@@ -42,16 +29,16 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# 3. Load Data with SIGNIFICANT Jittering
+# 3. Load Data with "Smart Jitter"
 @st.cache_data
 def load_data():
     df = pd.read_csv('final_dashboard_ready_data.csv')
     
-    # --- ADD "A LOT MORE" JITTERING ---
-    # Increased from 0.25 to 1.5 to ensure points are widely spread out
+    # We use a smaller jitter (1.0) but rely on TRANSPARENCY 
+    # so overlapping points create a darker 'glow'
     np.random.seed(42) 
-    df['lat'] = df['lat'] + np.random.uniform(-1.5, 1.5, len(df))
-    df['lon'] = df['lon'] + np.random.uniform(-1.5, 1.5, len(df))
+    df['lat'] = df['lat'] + np.random.uniform(-1.0, 1.0, len(df))
+    df['lon'] = df['lon'] + np.random.uniform(-1.0, 1.0, len(df))
     
     return df
 
@@ -63,13 +50,13 @@ if 'view' not in st.session_state:
 if 'selected_country' not in st.session_state: 
     st.session_state.selected_country = None
 
-# 4. COLOR MAPPING (Source of Truth for Map)
+# 4. COLOR MAPPING (Reduced Alpha to 140 for better overlapping visibility)
 color_lookup = {
-    "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 180],      # Purple
-    "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 180],       # Red
-    "Arctic Storms & Volcanic Activity": [100, 100, 255, 180],       # Blue
-    "Hydrological (Flash Floods) & Social Reports": [0, 255, 255, 180], # Cyan
-    "Regional Meteorological Alerts (US South)": [255, 165, 0, 180]   # Orange
+    "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 140],      
+    "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 140],       
+    "Arctic Storms & Volcanic Activity": [100, 100, 255, 140],       
+    "Hydrological (Flash Floods) & Social Reports": [0, 255, 255, 140], 
+    "Regional Meteorological Alerts (US South)": [255, 165, 0, 140]   
 }
 
 df['color'] = df['Disaster_Category'].map(color_lookup)
@@ -92,23 +79,30 @@ if st.session_state.view == 'Global':
     
     with col_map:
         view_state = pdk.ViewState(latitude=20, longitude=0, zoom=1.4, pitch=0)
+        
+        # PRO TIP: Adding 'stroked=True' makes dots easier to distinguish when they touch
         layer = pdk.Layer(
             "ScatterplotLayer",
             df,
             get_position=["lon", "lat"],
             get_color="color",
-            get_radius=220000,
+            get_radius=180000, # Slightly smaller radius so they don't bloat the map
             pickable=True,
+            stroked=True,
+            filled=True,
+            radius_min_pixels=5,
+            line_width_min_pixels=1,
+            get_line_color=[255, 255, 255] # White border around dots
         )
+        
         st.pydeck_chart(pdk.Deck(
-            map_style='light', 
+            map_style='mapbox://styles/mapbox/light-v10', 
             layers=[layer], 
             initial_view_state=view_state,
             tooltip={"text": "{location}\n{Disaster_Category}"}
         ))
 
     with col_ctrl:
-        # ✅ LEGEND (CSS CIRCLES + CLEAN NAMES)
         st.markdown('''
             <div class="legend-box">
                 <h3 style="margin-top:0; font-size: 1.2rem;">Incident Legend</h3>
@@ -152,27 +146,13 @@ elif st.session_state.view == 'Detail':
     st.subheader(f"Detailed Analysis: {country}")
     
     country_df = df[df['location'] == country]
-    
     d_map, d_list = st.columns([2, 1])
     
     with d_map:
-        detail_view = pdk.ViewState(
-            latitude=country_df['lat'].mean(), 
-            longitude=country_df['lon'].mean(), 
-            zoom=4, 
-            pitch=0
-        )
-        detail_layer = pdk.Layer(
-            "ScatterplotLayer",
-            country_df,
-            get_position=["lon", "lat"],
-            get_color="color", 
-            get_radius=50000,
-            pickable=True,
-        )
+        detail_view = pdk.ViewState(latitude=country_df['lat'].mean(), longitude=country_df['lon'].mean(), zoom=4)
         st.pydeck_chart(pdk.Deck(
-            map_style='light',
-            layers=[detail_layer],
+            map_style='mapbox://styles/mapbox/light-v10',
+            layers=[pdk.Layer("ScatterplotLayer", country_df, get_position=["lon", "lat"], get_color="color", get_radius=50000, pickable=True)],
             initial_view_state=detail_view,
             tooltip={"text": "{Disaster_Category}"}
         ))
