@@ -38,17 +38,31 @@ st.markdown("""
         border: 1px solid #E0E0E0;
         border-radius: 10px;
         background-color: #FDFDFD;
-        margin-top: 10px;
+        margin-top: 20px;
+    }
+    
+    /* Scrollable list for filtered locations */
+    .location-list {
+        max-height: 200px;
+        overflow-y: auto;
+        padding: 10px;
+        border: 1px solid #F0F2F6;
+        border-radius: 5px;
+        background-color: #FAFAFA;
+        font-size: 0.9rem;
     }
     </style>
     """, unsafe_allow_html=True)
 
-# Helper function to render the legend (Horizontal Layout for bottom placement)
-def render_legend():
-    st.markdown('''
+# Helper function to render the legend
+def render_legend(vertical=False):
+    # Adjust layout based on where it is placed
+    layout_style = "display: flex; flex-direction: column; gap: 10px;" if vertical else "display: flex; flex-wrap: wrap; gap: 20px;"
+    
+    st.markdown(f'''
         <div class="legend-box">
             <h3 style="margin-top:0; font-size: 1.1rem; color: #1C1C1C;">Incident Legend</h3>
-            <div style="display: flex; flex-wrap: wrap; gap: 20px; line-height: 1.5;">
+            <div style="{layout_style} line-height: 1.5;">
                 <div style="display: flex; align-items: center;">
                     <div style="width: 14px; height: 14px; background-color: rgb(128, 0, 128); border: 1.5px solid rgba(80, 80, 80, 0.5); border-radius: 50%; margin-right: 8px; flex-shrink: 0;"></div>
                     <span style="font-size: 13px;">Storms & Tornadoes</span>
@@ -77,7 +91,7 @@ def render_legend():
 @st.cache_data
 def load_data():
     df = pd.read_csv('final_dashboard_ready_data.csv')
-    df = df.dropna(subset=['lat', 'lon']) # Drop missing coordinates to prevent crashes
+    df = df.dropna(subset=['lat', 'lon'])
     np.random.seed(42) 
     df['lat'] = df['lat'] + np.random.uniform(-1.0, 1.0, len(df))
     df['lon'] = df['lon'] + np.random.uniform(-1.0, 1.0, len(df))
@@ -91,7 +105,7 @@ if 'view' not in st.session_state:
 if 'selected_country' not in st.session_state: 
     st.session_state.selected_country = None
 
-# 4. COLOR MAPPING
+# 4. COLOR MAPPING & DISASTER LABELS
 color_lookup = {
     "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 160],      
     "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 160],       
@@ -100,7 +114,17 @@ color_lookup = {
     "Regional Meteorological Alerts (US South)": [255, 165, 0, 160]   
 }
 
+# Mapping messy CSV names to the clean legend names
+clean_name_lookup = {
+    "Severe Meteorological (Tornado/Hail)": "Storms & Tornadoes",
+    "Geological (Japan Earthquake/Tsunami)": "Earthquakes & Tsunamis",
+    "Arctic Storms & Volcanic Activity": "Extreme Cold & Volcanic",
+    "Hydrological (Flash Floods) & Social Reports": "Floods & Local Alerts",
+    "Regional Meteorological Alerts (US South)": "Regional Weather Alerts"
+}
+
 df['color'] = df['Disaster_Category'].map(color_lookup)
+df['Clean_Category'] = df['Disaster_Category'].map(clean_name_lookup)
 
 # --- TOP NAVIGATION BAR ---
 t1, t2 = st.columns([7, 1])
@@ -118,11 +142,37 @@ st.divider()
 if st.session_state.view == 'Global':
     col_map, col_ctrl = st.columns([3, 1])
     
+    with col_ctrl:
+        st.subheader("1. Investigate Hotspot")
+        selected_loc = st.selectbox("Search by Location:", ["Select..."] + sorted(list(df['location'].unique())), key="loc_filter")
+        
+        if selected_loc != "Select...":
+            st.session_state.view = 'Detail'
+            st.session_state.selected_country = selected_loc
+            st.rerun()
+
+        st.write("---")
+        st.subheader("2. Filter by Disaster")
+        selected_cat = st.selectbox("Select Category:", ["All Incidents"] + list(clean_name_lookup.values()), key="cat_filter")
+        
+        # Filtering logic for the map
+        if selected_cat == "All Incidents":
+            filtered_df = df
+        else:
+            filtered_df = df[df['Clean_Category'] == selected_cat]
+            # List regions where this disaster exists
+            regions = sorted(filtered_df['location'].unique())
+            st.write(f"**Locations with {selected_cat}:**")
+            st.markdown(f'<div class="location-list">{" • ".join(regions)}</div>', unsafe_allow_html=True)
+
+        # Legend at the bottom of the right column
+        render_legend(vertical=True)
+
     with col_map:
         view_state = pdk.ViewState(latitude=20, longitude=0, zoom=1.4, pitch=0)
         layer = pdk.Layer(
             "ScatterplotLayer",
-            df,
+            filtered_df, # Use the filtered dataframe
             get_position=["lon", "lat"],
             get_color="color",
             get_radius=180000,
@@ -134,23 +184,11 @@ if st.session_state.view == 'Global':
             get_line_color=[80, 80, 80, 120] 
         )
         st.pydeck_chart(pdk.Deck(
-            map_style='light', # Changed for stability
+            map_style='light', 
             layers=[layer], 
             initial_view_state=view_state,
-            tooltip={"text": "{location}\n{Disaster_Category}"}
+            tooltip={"text": "{location}\nCategory: {Clean_Category}"}
         ))
-        
-        # Legend placed under the map
-        render_legend()
-
-    with col_ctrl:
-        st.subheader("Investigate Hotspot")
-        selected = st.selectbox("Search Locations:", ["Select..."] + sorted(list(df['location'].unique())))
-        
-        if selected != "Select...":
-            st.session_state.view = 'Detail'
-            st.session_state.selected_country = selected
-            st.rerun()
 
 # --- DETAIL VIEW ---
 elif st.session_state.view == 'Detail':
@@ -184,18 +222,18 @@ elif st.session_state.view == 'Detail':
             )
             
             st.pydeck_chart(pdk.Deck(
-                map_style='light', # Changed for stability
+                map_style='light',
                 layers=[detail_layer],
                 initial_view_state=detail_view,
-                tooltip={"text": "{Disaster_Category}"}
+                tooltip={"text": "{Clean_Category}"}
             ))
         else:
             st.warning("No data found for this location.")
             
-        # Legend placed directly under the map
-        render_legend()
+        # Legend under map in Detail View
+        render_legend(vertical=False)
     
     with d_list:
         st.write(f"Showing {len(country_df)} incidents")
         for _, row in country_df.iterrows():
-            st.info(f"**{row['Disaster_Category']}**\n\n{row['Tweet_Text']}")
+            st.info(f"**{row['Clean_Category']}**\n\n{row['Tweet_Text']}")
