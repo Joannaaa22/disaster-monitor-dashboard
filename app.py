@@ -38,12 +38,23 @@ st.markdown("""
         border-radius: 10px;
         background-color: #FDFDFD;
     }
+    
+    /* Custom Circle Swatch for Legend */
+    .legend-circle {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        margin-right: 12px;
+        display: inline-block;
+        border: 1px solid rgba(0,0,0,0.1);
+    }
     </style>
     """, unsafe_allow_html=True)
 
 # 3. Load Data
 @st.cache_data
 def load_data():
+    # Ensure the CSV is in the same directory
     return pd.read_csv('final_dashboard_ready_data.csv')
 
 df = load_data()
@@ -54,21 +65,39 @@ if 'view' not in st.session_state:
 if 'selected_country' not in st.session_state: 
     st.session_state.selected_country = None
 
-# 4. COLOR MAPPING (Source of Truth for Map)
-color_lookup = {
-    "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 180],      # Purple
-    "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 180],       # Red
-    "Arctic Storms & Volcanic Activity": [100, 100, 255, 180],       # Blue
-    "Hydrological (Flash Floods) & Social Reports": [0, 255, 255, 180], # Cyan
-    "Regional Meteorological Alerts (US South)": [255, 165, 0, 180]   # Orange
+# --- 4. CONFIGURATION (Source of Truth) ---
+# Maps the CSV category names to "Clean Labels" and "RGB Colors"
+DISASTER_CONFIG = {
+    "Severe Meteorological (Tornado/Hail)": {
+        "label": "Storms & Tornadoes",
+        "color": [128, 0, 128, 180]  # Purple
+    },
+    "Geological (Japan Earthquake/Tsunami)": {
+        "label": "Earthquakes & Tsunamis",
+        "color": [255, 0, 0, 180]    # Red
+    },
+    "Arctic Storms & Volcanic Activity": {
+        "label": "Arctic & Volcanic Activity",
+        "color": [100, 100, 255, 180] # Blue
+    },
+    "Hydrological (Flash Floods) & Social Reports": {
+        "label": "Floods & Social Alerts",
+        "color": [0, 255, 255, 180]  # Cyan
+    },
+    "Regional Meteorological Alerts (US South)": {
+        "label": "Regional Weather",
+        "color": [255, 165, 0, 180]  # Orange
+    }
 }
 
-df['color'] = df['Disaster_Category'].map(color_lookup)
+# Map the colors and friendly labels back to the dataframe
+df['color'] = df['Disaster_Category'].map(lambda x: DISASTER_CONFIG.get(x, {"color": [150, 150, 150, 180]})['color'])
+df['display_label'] = df['Disaster_Category'].map(lambda x: DISASTER_CONFIG.get(x, {"label": x})['label'])
 
 # --- TOP NAVIGATION BAR ---
 t1, t2 = st.columns([7, 1])
 with t1:
-    st.title("Global Real-Time Disaster Monitor") # EMOJI REMOVED
+    st.title("Global Real-Time Disaster Monitor")
 with t2:
     if st.button("Reset View"):
         st.session_state.view = 'Global'
@@ -95,42 +124,26 @@ if st.session_state.view == 'Global':
             map_style='light', 
             layers=[layer], 
             initial_view_state=view_state,
-            tooltip={"text": "{location}\n{Disaster_Category}"}
+            tooltip={"text": "{location}\nCategory: {display_label}"}
         ))
 
     with col_ctrl:
-        # ✅ HARD-CODED LEGEND (EXACT COLORS)
-        st.markdown('''
-            <div class="legend-box">
-                <h3 style="margin-top:0; font-size: 1.2rem;">Incident Legend</h3>
-                <div style="line-height: 2.2;">
-                    <div style="display: flex; align-items: center;">
-                        <span style="color: rgb(128, 0, 128); font-size: 24px; margin-right: 12px;">●</span>
-                        <span style="font-size: 14px;">Severe Meteorological (Tornado/Hail)</span>
-                    </div>
-                    <div style="display: flex; align-items: center;">
-                        <span style="color: rgb(255, 0, 0); font-size: 24px; margin-right: 12px;">●</span>
-                        <span style="font-size: 14px;">Geological (Japan Earthquake/Tsunami)</span>
-                    </div>
-                    <div style="display: flex; align-items: center;">
-                        <span style="color: rgb(100, 100, 255); font-size: 24px; margin-right: 12px;">●</span>
-                        <span style="font-size: 14px;">Arctic Storms & Volcanic Activity</span>
-                    </div>
-                    <div style="display: flex; align-items: center;">
-                        <span style="color: rgb(0, 255, 255); font-size: 24px; margin-right: 12px;">●</span>
-                        <span style="font-size: 14px;">Hydrological (Flash Floods) & Social Reports</span>
-                    </div>
-                    <div style="display: flex; align-items: center;">
-                        <span style="color: rgb(255, 165, 0); font-size: 24px; margin-right: 12px;">●</span>
-                        <span style="font-size: 14px;">Regional Meteorological Alerts (US South)</span>
-                    </div>
+        # --- DYNAMIC LEGEND ---
+        legend_html = '<div class="legend-box"><h3 style="margin-top:0; font-size: 1.1rem;">Incident Legend</h3>'
+        for cat, info in DISASTER_CONFIG.items():
+            rgb = f"rgb({info['color'][0]}, {info['color'][1]}, {info['color'][2]})"
+            legend_html += f'''
+                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                    <div class="legend-circle" style="background-color: {rgb};"></div>
+                    <span style="font-size: 13px; font-weight: 500;">{info['label']}</span>
                 </div>
-            </div>
-        ''', unsafe_allow_html=True)
+            '''
+        legend_html += '</div>'
+        st.markdown(legend_html, unsafe_allow_html=True)
         
         st.write("") 
         st.subheader("Investigate Hotspot")
-        selected = st.selectbox("Search Locations:", ["Select..."] + list(df['location'].unique()))
+        selected = st.selectbox("Search Locations:", ["Select..."] + sorted(list(df['location'].unique())))
         
         if selected != "Select...":
             st.session_state.view = 'Detail'
@@ -140,7 +153,7 @@ if st.session_state.view == 'Global':
 # --- DETAIL VIEW ---
 elif st.session_state.view == 'Detail':
     country = st.session_state.selected_country
-    st.subheader(f"Detailed Analysis: {country}") # PIN EMOJI REMOVED
+    st.subheader(f"Detailed Analysis: {country}")
     
     country_df = df[df['location'] == country]
     
@@ -165,10 +178,10 @@ elif st.session_state.view == 'Detail':
             map_style='light',
             layers=[detail_layer],
             initial_view_state=detail_view,
-            tooltip={"text": "{Disaster_Category}"}
+            tooltip={"text": "Category: {display_label}"}
         ))
     
     with d_list:
         st.write(f"Showing {len(country_df)} incidents")
         for _, row in country_df.iterrows():
-            st.info(f"**{row['Disaster_Category']}**\n\n{row['Tweet_Text']}")
+            st.info(f"**{row['display_label']}**\n\n{row['Tweet_Text']}")
