@@ -2,77 +2,95 @@ import streamlit as st
 import pandas as pd
 import pydeck as pdk
 
-# 1. Page Config - Using "light" as a preference
+# 1. Page Config
 st.set_page_config(page_title="Global Crisis Monitor", layout="wide")
 
-# CSS to ensure a clean white look
+# 2. FORCE TOTAL WHITE THEME (Main & Sidebar)
 st.markdown("""
     <style>
-    .main { background-color: #ffffff; }
-    .stSelectbox, .stButton { border-radius: 10px; }
+    /* Main background */
+    .stApp {
+        background-color: #FFFFFF;
+    }
+    /* Sidebar background */
+    [data-testid="stSidebar"] {
+        background-color: #F8F9FA;
+        border-right: 1px solid #E0E0E0;
+    }
+    /* Titles and Text */
+    h1, h2, h3, p {
+        color: #1C1C1C !important;
+    }
+    /* Info boxes - making them look cleaner */
+    .stAlert {
+        background-color: #FFFFFF;
+        border: 1px solid #E0E0E0;
+        border-radius: 8px;
+    }
     </style>
     """, unsafe_allow_html=True)
 
-# 2. Load Data
+# 3. Load Data
 @st.cache_data
 def load_data():
     return pd.read_csv('final_dashboard_ready_data.csv')
 
 df = load_data()
 
-# 3. Sidebar Legend & Navigation
-st.sidebar.title("🗺️ Dashboard Controls")
+# Initialize Session State
+if 'view' not in st.session_state: st.session_state.view = 'Global'
 
-# Legend (Helps explain the icons/colors)
+# 4. Sidebar Content
+st.sidebar.title("🗺️ Controls")
+
+# Legend with small colored circles
 st.sidebar.subheader("Disaster Legend")
-st.sidebar.markdown("""
-- 🔵 **Blue**: Arctic/Volcanic
-- 🔴 **Red**: Japan Earthquake
-- 🟠 **Orange**: US South Storms
-- 🟢 **Cyan**: Floods/Social
-- 🟣 **Purple**: Tornado/Hail
-""")
+st.sidebar.write("🔵 Arctic/Volcanic")
+st.sidebar.write("🔴 Japan Earthquake")
+st.sidebar.write("🟠 US South Storms")
+st.sidebar.write("🟢 Floods/Social")
+st.sidebar.write("🟣 Tornado/Hail")
 
 if st.sidebar.button("🌍 Reset to Global View"):
     st.session_state.view = 'Global'
     st.session_state.selected_country = None
+    st.rerun()
 
-# Initialize Session State
-if 'view' not in st.session_state: st.session_state.view = 'Global'
-
-# 4. Color Mapping Logic
+# 5. Color Mapping
 color_lookup = {
-    "Arctic Storms & Volcanic Activity": [100, 100, 255],
-    "Geological (Japan Earthquake/Tsunami)": [255, 0, 0],
-    "Regional Meteorological Alerts (US South)": [255, 165, 0],
-    "Hydrological (Flash Floods) & Social Reports": [0, 255, 255],
-    "Severe Meteorological (Tornado/Hail)": [128, 0, 128]
+    "Arctic Storms & Volcanic Activity": [100, 100, 255, 160],
+    "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 160],
+    "Regional Meteorological Alerts (US South)": [255, 165, 0, 160],
+    "Hydrological (Flash Floods) & Social Reports": [0, 255, 255, 160],
+    "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 160]
 }
 df['color'] = df['Disaster_Category'].map(color_lookup)
 
 # --- GLOBAL VIEW ---
 if st.session_state.view == 'Global':
-    st.title("🌍 Global Real-Time Disaster Map")
+    st.title("Global Real-Time Disaster Map")
     
-    # LIGHT THEMED MAP (mapbox://styles/mapbox/light-v9)
-    view_state = pdk.ViewState(latitude=20, longitude=0, zoom=1.5, pitch=0)
+    # This view state centers the map and sets zoom
+    view_state = pdk.ViewState(latitude=20, longitude=0, zoom=1.2, pitch=0)
     
     layer = pdk.Layer(
         "ScatterplotLayer",
         df,
         get_position=["lon", "lat"],
         get_color="color",
-        get_radius=200000, # Large radius so they look like big icons
+        get_radius=180000,
         pickable=True,
     )
 
     st.pydeck_chart(pdk.Deck(
-        map_style="mapbox://styles/mapbox/light-v9", # WHITE THEME
+        # Light-v10 provides the grey outlines on white land
+        map_style="mapbox://styles/mapbox/light-v10", 
         layers=[layer], 
         initial_view_state=view_state,
         tooltip={"text": "Location: {location}\nCategory: {Disaster_Category}"}
     ))
     
+    st.divider()
     st.subheader("Select a Hotspot to Investigate")
     selected = st.selectbox("Search Locations:", ["Select..."] + list(df['location'].unique()))
     
@@ -92,8 +110,8 @@ elif st.session_state.view == 'Detail':
     
     with col1:
         st.subheader("Regional Coverage")
-        # Standard Streamlit map is light-themed by default
-        st.map(country_df, color='#FF0000') 
+        # For the detail map, using a simple scatter to show exact points
+        st.map(country_df) 
     
     with col2:
         st.subheader("Incident Reports")
