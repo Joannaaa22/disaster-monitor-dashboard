@@ -5,22 +5,11 @@ import pydeck as pdk
 # 1. Page Config
 st.set_page_config(page_title="CrisisMonitor AI", layout="wide", initial_sidebar_state="collapsed")
 
-# 2. CUSTOM CSS: White Theme, No Sidebar, Clean Right Legend
+# 2. CUSTOM CSS: Pure White Theme, No Sidebar, Clean Right Legend
 st.markdown("""
     <style>
-    /* Hide Sidebar entirely */
     [data-testid="stSidebar"] { display: none; }
-    
-    /* Main background */
     .stApp { background-color: #FFFFFF; }
-    
-    /* Top Black Header (Optional - change to #1C1C1C if you want black) */
-    .header {
-        background-color: #FFFFFF;
-        padding: 10px;
-        border-bottom: 1px solid #E0E0E0;
-        margin-bottom: 20px;
-    }
     
     /* Custom Reset Button Styling */
     div.stButton > button {
@@ -36,10 +25,8 @@ st.markdown("""
         border-color: #1C1C1C;
     }
     
-    /* Text Colors */
     h1, h2, h3, p, span { color: #1C1C1C !important; }
     
-    /* Legend Box Styling */
     .legend-box {
         padding: 20px;
         border: 1px solid #E0E0E0;
@@ -60,13 +47,13 @@ df = load_data()
 if 'view' not in st.session_state: st.session_state.view = 'Global'
 if 'selected_country' not in st.session_state: st.session_state.selected_country = None
 
-# 4. Color Mapping Source
+# 4. Color Mapping Source (The "Source of Truth" for Map & Legend)
 color_lookup = {
-    "Arctic Storms & Volcanic Activity": [100, 100, 255, 180],
-    "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 180],
-    "Regional Meteorological Alerts (US South)": [255, 165, 0, 180],
-    "Hydrological (Flash Floods) & Social Reports": [0, 255, 255, 180],
-    "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 180]
+    "Arctic Storms & Volcanic Activity": [100, 100, 255, 180],      # Blue
+    "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 180],       # Red
+    "Regional Meteorological Alerts (US South)": [255, 165, 0, 180], # Orange
+    "Hydrological (Flash Floods) & Social Reports": [0, 255, 255, 180], # Cyan
+    "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 180]      # Purple
 }
 df['color'] = df['Disaster_Category'].map(color_lookup)
 
@@ -82,11 +69,10 @@ with t2:
 
 st.divider()
 
-# --- MAIN LAYOUT: MAP (Left) | LEGEND & CONTROLS (Right) ---
-col_map, col_ctrl = st.columns([3, 1])
-
 # --- GLOBAL VIEW ---
 if st.session_state.view == 'Global':
+    col_map, col_ctrl = st.columns([3, 1])
+    
     with col_map:
         view_state = pdk.ViewState(latitude=20, longitude=0, zoom=1.4, pitch=0)
         layer = pdk.Layer(
@@ -107,6 +93,7 @@ if st.session_state.view == 'Global':
     with col_ctrl:
         st.markdown('<div class="legend-box">', unsafe_allow_html=True)
         st.subheader("Disaster Legend")
+        # Fixed Legend to match map exactly
         st.markdown("""
         <div style="line-height: 2.2;">
             <span style="color: rgb(100, 100, 255); font-size: 20px;">●</span> Arctic/Volcanic<br>
@@ -118,7 +105,7 @@ if st.session_state.view == 'Global':
         """, unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
         
-        st.write("") # Spacing
+        st.write("") 
         st.subheader("Investigate Hotspot")
         selected = st.selectbox("Search Locations:", ["Select..."] + list(df['location'].unique()))
         
@@ -137,7 +124,28 @@ elif st.session_state.view == 'Detail':
     d_map, d_list = st.columns([2, 1])
     
     with d_map:
-        st.map(country_df)
+        # Custom Detail Map to match World Map style
+        # We use pdk.Deck here instead of st.map for the white/grey look
+        detail_view = pdk.ViewState(
+            latitude=country_df['lat'].mean(), 
+            longitude=country_df['lon'].mean(), 
+            zoom=4, 
+            pitch=0
+        )
+        detail_layer = pdk.Layer(
+            "ScatterplotLayer",
+            country_df,
+            get_position=["lon", "lat"],
+            get_color="color", # Uses the SAME color as Global View
+            get_radius=50000,
+            pickable=True,
+        )
+        st.pydeck_chart(pdk.Deck(
+            map_style='light', # This provides the white and grey look
+            layers=[detail_layer],
+            initial_view_state=detail_view,
+            tooltip={"text": "{location}: {Disaster_Category}"}
+        ))
     
     with d_list:
         st.write(f"Showing {len(country_df)} incidents")
