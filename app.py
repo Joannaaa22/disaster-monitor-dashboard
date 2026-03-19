@@ -11,13 +11,29 @@ if 'view' not in st.session_state:
 if 'selected_country' not in st.session_state: 
     st.session_state.selected_country = None
 
-# 3. THEME & STYLING
+# 3. THEME & STYLING (Light Map + Dark Text/UI elements)
 st.markdown("""
     <style>
     [data-testid="stSidebar"] { display: none; }
+    
+    /* Main background remains white/light for the map contrast */
     .stApp { background-color: #FFFFFF; }
     
-    /* Reset Button */
+    /* Target the Title specifically to be the dark color you wanted */
+    h1 { 
+        color: #1C1C1C !important; 
+        font-weight: 800 !important;
+    }
+    
+    /* Legend Box Styling */
+    .legend-box {
+        padding: 15px;
+        border: 1px solid #E0E0E0;
+        border-radius: 10px;
+        background-color: #F9F9F9;
+    }
+    
+    /* Custom Reset Button Styling */
     div.stButton > button {
         background-color: #FFFFFF;
         color: #1C1C1C;
@@ -25,26 +41,6 @@ st.markdown("""
         border-radius: 6px;
         width: 100%;
         font-weight: 500;
-    }
-    
-    /* Legend Styling */
-    .legend-box {
-        padding: 15px;
-        border: 1px solid #E0E0E0;
-        border-radius: 10px;
-        background-color: #FDFDFD;
-    }
-    .legend-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 8px;
-    }
-    .legend-circle {
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        margin-right: 12px;
-        border: 1px solid rgba(0,0,0,0.1);
     }
     </style>
     """, unsafe_allow_html=True)
@@ -57,7 +53,6 @@ def load_data():
 df = load_data()
 
 # --- 5. CENTRAL CONFIGURATION ---
-# This links the messy CSV names to your new Clean Labels and exact Colors
 DISASTER_CONFIG = {
     "Severe Meteorological (Tornado/Hail)": {
         "label": "Storms & Tornadoes",
@@ -88,7 +83,7 @@ df['display_label'] = df['Disaster_Category'].apply(lambda x: DISASTER_CONFIG.ge
 # --- TOP NAVIGATION BAR ---
 t1, t2 = st.columns([7, 1])
 with t1:
-    st.title("Global Real-Time Disaster Monitor")
+    st.title("Global Real-Time Disaster Monitor") # This is now the Dark Colour
 with t2:
     if st.button("Reset View"):
         st.session_state.view = 'Global'
@@ -113,30 +108,30 @@ if view_mode == 'Global':
             get_radius=220000,
             pickable=True,
         )
+        # BACK TO LIGHT MAP STYLE
         st.pydeck_chart(pdk.Deck(
-            map_style='light', 
+            map_style='mapbox://styles/mapbox/light-v10', 
             layers=[layer], 
             initial_view_state=view_state,
             tooltip={"text": "{location}\nCategory: {display_label}"}
         ))
 
     with col_ctrl:
-        # --- FIXED DYNAMIC LEGEND ---
         st.subheader("Incident Legend")
         
-        # Build HTML as a single string
-        legend_content = ""
+        # Build HTML content safely
+        legend_items_html = ""
         for key, info in DISASTER_CONFIG.items():
             rgb = f"rgb({info['color'][0]}, {info['color'][1]}, {info['color'][2]})"
-            legend_content += f"""
+            legend_items_html += f"""
                 <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                    <div style="width: 15px; height: 15px; background-color: {rgb}; border-radius: 50%; margin-right: 10px;"></div>
-                    <span style="font-size: 14px; color: #1C1C1C;">{info['label']}</span>
+                    <div style="width: 15px; height: 15px; background-color: {rgb}; border-radius: 50%; margin-right: 12px;"></div>
+                    <span style="font-size: 14px; color: #1C1C1C; font-weight: 500;">{info['label']}</span>
                 </div>
             """
         
-        # Wrap in a container and render ONCE
-        st.markdown(f'<div class="legend-box">{legend_content}</div>', unsafe_allow_html=True)
+        # Render the legend box ONCE to prevent HTML code leaking
+        st.markdown(f'<div class="legend-box">{legend_items_html}</div>', unsafe_allow_html=True)
         
         st.write("") 
         st.subheader("Investigate Hotspot")
@@ -161,7 +156,7 @@ elif view_mode == 'Detail':
             zoom=4, pitch=0
         )
         st.pydeck_chart(pdk.Deck(
-            map_style='light',
+            map_style='mapbox://styles/mapbox/light-v10',
             layers=[pdk.Layer("ScatterplotLayer", country_df, get_position=["lon", "lat"], 
                                get_color="color", get_radius=50000, pickable=True)],
             initial_view_state=detail_view,
