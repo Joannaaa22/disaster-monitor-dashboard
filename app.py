@@ -5,13 +5,12 @@ import pydeck as pdk
 # 1. Page Config
 st.set_page_config(page_title="CrisisMonitor AI", layout="wide", initial_sidebar_state="collapsed")
 
-# 2. CUSTOM CSS: Pure White Theme, No Sidebar, Clean Right Legend
+# 2. THEME & STYLING
 st.markdown("""
     <style>
     [data-testid="stSidebar"] { display: none; }
     .stApp { background-color: #FFFFFF; }
     
-    /* Custom Reset Button Styling */
     div.stButton > button {
         background-color: #FFFFFF;
         color: #1C1C1C;
@@ -43,11 +42,11 @@ def load_data():
 
 df = load_data()
 
-# Session State Initialization
+# Session State
 if 'view' not in st.session_state: st.session_state.view = 'Global'
 if 'selected_country' not in st.session_state: st.session_state.selected_country = None
 
-# 4. Color Mapping Source (The "Source of Truth" for Map & Legend)
+# 4. DEFINITIVE COLOR MAPPING (Used for Legend & Map)
 color_lookup = {
     "Arctic Storms & Volcanic Activity": [100, 100, 255, 180],      # Blue
     "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 180],       # Red
@@ -60,7 +59,7 @@ df['color'] = df['Disaster_Category'].map(color_lookup)
 # --- TOP NAVIGATION BAR ---
 t1, t2 = st.columns([7, 1])
 with t1:
-    st.title("🌍 Global Real-Time Crisis Monitor")
+    st.title("Global Real-Time Disaster Monitor")
 with t2:
     if st.button("Reset View"):
         st.session_state.view = 'Global'
@@ -91,19 +90,19 @@ if st.session_state.view == 'Global':
         ))
 
     with col_ctrl:
-        st.markdown('<div class="legend-box">', unsafe_allow_html=True)
-        st.subheader("Disaster Legend")
-        # Fixed Legend to match map exactly
-        st.markdown("""
-        <div style="line-height: 2.2;">
-            <span style="color: rgb(100, 100, 255); font-size: 20px;">●</span> Arctic/Volcanic<br>
-            <span style="color: rgb(255, 0, 0); font-size: 20px;">●</span> Japan Earthquake<br>
-            <span style="color: rgb(255, 165, 0); font-size: 20px;">●</span> US South Storms<br>
-            <span style="color: rgb(0, 255, 255); font-size: 20px;">●</span> Floods/Social<br>
-            <span style="color: rgb(128, 0, 128); font-size: 20px;">●</span> Tornado/Hail
+        # UPDATED LEGEND - Colors now match color_lookup exactly
+        st.markdown(f"""
+        <div class="legend-box">
+            <h3 style="margin-top:0;">Incident Legend</h3>
+            <div style="line-height: 2.2;">
+                <span style="color: rgb(100, 100, 255); font-size: 20px;">●</span> Arctic/Volcanic<br>
+                <span style="color: rgb(255, 0, 0); font-size: 20px;">●</span> Japan Earthquake<br>
+                <span style="color: rgb(255, 165, 0); font-size: 20px;">●</span> US South Storms<br>
+                <span style="color: rgb(0, 255, 255); font-size: 20px;">●</span> Floods/Social<br>
+                <span style="color: rgb(128, 0, 128); font-size: 20px;">●</span> Tornado/Hail
+            </div>
         </div>
         """, unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
         
         st.write("") 
         st.subheader("Investigate Hotspot")
@@ -117,15 +116,13 @@ if st.session_state.view == 'Global':
 # --- DETAIL VIEW ---
 elif st.session_state.view == 'Detail':
     country = st.session_state.selected_country
-    st.subheader(f"📍 Detailed Analysis: {country}")
+    st.subheader(f"Detailed Analysis: {country}")
     
     country_df = df[df['location'] == country]
     
     d_map, d_list = st.columns([2, 1])
     
     with d_map:
-        # Custom Detail Map to match World Map style
-        # We use pdk.Deck here instead of st.map for the white/grey look
         detail_view = pdk.ViewState(
             latitude=country_df['lat'].mean(), 
             longitude=country_df['lon'].mean(), 
@@ -136,15 +133,15 @@ elif st.session_state.view == 'Detail':
             "ScatterplotLayer",
             country_df,
             get_position=["lon", "lat"],
-            get_color="color", # Uses the SAME color as Global View
+            get_color="color", 
             get_radius=50000,
             pickable=True,
         )
         st.pydeck_chart(pdk.Deck(
-            map_style='light', # This provides the white and grey look
+            map_style='light',
             layers=[detail_layer],
             initial_view_state=detail_view,
-            tooltip={"text": "{location}: {Disaster_Category}"}
+            tooltip={"text": "{Disaster_Category}"}
         ))
     
     with d_list:
