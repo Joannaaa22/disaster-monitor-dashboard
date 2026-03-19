@@ -8,20 +8,12 @@ st.set_page_config(page_title="Global Crisis Monitor", layout="wide")
 # 2. FORCE TOTAL WHITE THEME (Main & Sidebar)
 st.markdown("""
     <style>
-    /* Main background */
-    .stApp {
-        background-color: #FFFFFF;
-    }
-    /* Sidebar background */
+    .stApp { background-color: #FFFFFF; }
     [data-testid="stSidebar"] {
         background-color: #F8F9FA;
         border-right: 1px solid #E0E0E0;
     }
-    /* Titles and Text */
-    h1, h2, h3, p {
-        color: #1C1C1C !important;
-    }
-    /* Info boxes - making them look cleaner */
+    h1, h2, h3, p { color: #1C1C1C !important; }
     .stAlert {
         background-color: #FFFFFF;
         border: 1px solid #E0E0E0;
@@ -38,12 +30,14 @@ def load_data():
 df = load_data()
 
 # Initialize Session State
-if 'view' not in st.session_state: st.session_state.view = 'Global'
+if 'view' not in st.session_state:
+    st.session_state.view = 'Global'
+if 'selected_country' not in st.session_state:
+    st.session_state.selected_country = None
 
 # 4. Sidebar Content
 st.sidebar.title("🗺️ Controls")
 
-# Legend with small colored circles
 st.sidebar.subheader("Disaster Legend")
 st.sidebar.write("🔵 Arctic/Volcanic")
 st.sidebar.write("🔴 Japan Earthquake")
@@ -70,7 +64,6 @@ df['color'] = df['Disaster_Category'].map(color_lookup)
 if st.session_state.view == 'Global':
     st.title("Global Real-Time Disaster Map")
     
-    # This view state centers the map and sets zoom
     view_state = pdk.ViewState(latitude=20, longitude=0, zoom=1.2, pitch=0)
     
     layer = pdk.Layer(
@@ -82,8 +75,8 @@ if st.session_state.view == 'Global':
         pickable=True,
     )
 
-     st.pydeck_chart(pdk.Deck(
-        # 'light' is a built-in deck.gl style that doesn't rely on Mapbox servers
+    # Use 'road' or 'light' for built-in map outlines without a token
+    st.pydeck_chart(pdk.Deck(
         map_style='light', 
         layers=[layer], 
         initial_view_state=view_state,
@@ -110,7 +103,6 @@ elif st.session_state.view == 'Detail':
     
     with col1:
         st.subheader("Regional Coverage")
-        # For the detail map, using a simple scatter to show exact points
         st.map(country_df) 
     
     with col2:
