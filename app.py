@@ -43,17 +43,20 @@ def load_data():
 df = load_data()
 
 # Session State
-if 'view' not in st.session_state: st.session_state.view = 'Global'
-if 'selected_country' not in st.session_state: st.session_state.selected_country = None
+if 'view' not in st.session_state: 
+    st.session_state.view = 'Global'
+if 'selected_country' not in st.session_state: 
+    st.session_state.selected_country = None
 
-# 4. DEFINITIVE COLOR MAPPING (Used for Legend & Map)
+# 4. COLOR MAPPING
 color_lookup = {
-    "Arctic Storms & Volcanic Activity": [100, 100, 255, 180],      # Blue
-    "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 180],       # Red
-    "Regional Meteorological Alerts (US South)": [255, 165, 0, 180], # Orange
-    "Hydrological (Flash Floods) & Social Reports": [0, 255, 255, 180], # Cyan
-    "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 180]      # Purple
+    "Arctic Storms & Volcanic Activity": [100, 100, 255, 180],
+    "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 180],
+    "Regional Meteorological Alerts (US South)": [255, 165, 0, 180],
+    "Hydrological (Flash Floods) & Social Reports": [0, 255, 255, 180],
+    "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 180]
 }
+
 df['color'] = df['Disaster_Category'].map(color_lookup)
 
 # --- TOP NAVIGATION BAR ---
@@ -90,19 +93,20 @@ if st.session_state.view == 'Global':
         ))
 
     with col_ctrl:
-        # UPDATED LEGEND - Colors now match color_lookup exactly
-        st.markdown(f"""
-        <div class="legend-box">
-            <h3 style="margin-top:0;">Incident Legend</h3>
-            <div style="line-height: 2.2;">
-                <span style="color: rgb(100, 100, 255); font-size: 20px;">●</span> Arctic/Volcanic<br>
-                <span style="color: rgb(255, 0, 0); font-size: 20px;">●</span> Japan Earthquake<br>
-                <span style="color: rgb(255, 165, 0); font-size: 20px;">●</span> US South Storms<br>
-                <span style="color: rgb(0, 255, 255); font-size: 20px;">●</span> Floods/Social<br>
-                <span style="color: rgb(128, 0, 128); font-size: 20px;">●</span> Tornado/Hail
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        # ✅ DYNAMIC LEGEND (AUTO-SYNC WITH MAP)
+        legend_html = '<div class="legend-box">'
+        legend_html += '<h3 style="margin-top:0;">Incident Legend</h3>'
+        legend_html += '<div style="line-height: 2.2;">'
+
+        for category, color in color_lookup.items():
+            rgb = f"rgb({color[0]}, {color[1]}, {color[2]})"
+            legend_html += f'''
+                <span style="color: {rgb}; font-size: 20px;">●</span> {category}<br>
+            '''
+
+        legend_html += '</div></div>'
+
+        st.markdown(legend_html, unsafe_allow_html=True)
         
         st.write("") 
         st.subheader("Investigate Hotspot")
