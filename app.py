@@ -99,29 +99,29 @@ if st.session_state.view == 'Global':
         ))
 
     with col_ctrl:
-        # ✅ UPDATED LEGEND (CLEAN NAMES & SYNCED COLORS)
+        # ✅ UPDATED LEGEND (CSS CIRCLES + CLEAN NAMES)
         st.markdown('''
             <div class="legend-box">
                 <h3 style="margin-top:0; font-size: 1.2rem;">Incident Legend</h3>
                 <div style="line-height: 2.2;">
-                    <div style="display: flex; align-items: center;">
-                        <span style="color: rgb(128, 0, 128); font-size: 24px; margin-right: 12px;">●</span>
+                    <div style="display: flex; align-items: center; margin-bottom: 4px;">
+                        <div style="width: 14px; height: 14px; background-color: rgb(128, 0, 128); border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Storms & Tornadoes</span>
                     </div>
-                    <div style="display: flex; align-items: center;">
-                        <span style="color: rgb(255, 0, 0); font-size: 24px; margin-right: 12px;">●</span>
+                    <div style="display: flex; align-items: center; margin-bottom: 4px;">
+                        <div style="width: 14px; height: 14px; background-color: rgb(255, 0, 0); border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Earthquakes & Tsunamis</span>
                     </div>
-                    <div style="display: flex; align-items: center;">
-                        <span style="color: rgb(100, 100, 255); font-size: 24px; margin-right: 12px;">●</span>
+                    <div style="display: flex; align-items: center; margin-bottom: 4px;">
+                        <div style="width: 14px; height: 14px; background-color: rgb(100, 100, 255); border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Extreme Cold & Volcanic</span>
                     </div>
-                    <div style="display: flex; align-items: center;">
-                        <span style="color: rgb(0, 255, 255); font-size: 24px; margin-right: 12px;">●</span>
+                    <div style="display: flex; align-items: center; margin-bottom: 4px;">
+                        <div style="width: 14px; height: 14px; background-color: rgb(0, 255, 255); border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Floods & Local Alerts</span>
                     </div>
-                    <div style="display: flex; align-items: center;">
-                        <span style="color: rgb(255, 165, 0); font-size: 24px; margin-right: 12px;">●</span>
+                    <div style="display: flex; align-items: center; margin-bottom: 4px;">
+                        <div style="width: 14px; height: 14px; background-color: rgb(255, 165, 0); border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Regional Weather Alerts</span>
                     </div>
                 </div>
