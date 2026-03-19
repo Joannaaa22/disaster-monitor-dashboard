@@ -99,30 +99,30 @@ if st.session_state.view == 'Global':
         ))
 
     with col_ctrl:
-        # ✅ HARD-CODED LEGEND (EXACT COLORS)
+        # ✅ UPDATED LEGEND (CLEAN NAMES & SYNCED COLORS)
         st.markdown('''
             <div class="legend-box">
                 <h3 style="margin-top:0; font-size: 1.2rem;">Incident Legend</h3>
                 <div style="line-height: 2.2;">
                     <div style="display: flex; align-items: center;">
                         <span style="color: rgb(128, 0, 128); font-size: 24px; margin-right: 12px;">●</span>
-                        <span style="font-size: 14px;">Severe Meteorological (Tornado/Hail)</span>
+                        <span style="font-size: 14px;">Storms & Tornadoes</span>
                     </div>
                     <div style="display: flex; align-items: center;">
                         <span style="color: rgb(255, 0, 0); font-size: 24px; margin-right: 12px;">●</span>
-                        <span style="font-size: 14px;">Geological (Japan Earthquake/Tsunami)</span>
+                        <span style="font-size: 14px;">Earthquakes & Tsunamis</span>
                     </div>
                     <div style="display: flex; align-items: center;">
                         <span style="color: rgb(100, 100, 255); font-size: 24px; margin-right: 12px;">●</span>
-                        <span style="font-size: 14px;">Arctic Storms & Volcanic Activity</span>
+                        <span style="font-size: 14px;">Extreme Cold & Volcanic</span>
                     </div>
                     <div style="display: flex; align-items: center;">
                         <span style="color: rgb(0, 255, 255); font-size: 24px; margin-right: 12px;">●</span>
-                        <span style="font-size: 14px;">Hydrological (Flash Floods) & Social Reports</span>
+                        <span style="font-size: 14px;">Floods & Local Alerts</span>
                     </div>
                     <div style="display: flex; align-items: center;">
                         <span style="color: rgb(255, 165, 0); font-size: 24px; margin-right: 12px;">●</span>
-                        <span style="font-size: 14px;">Regional Meteorological Alerts (US South)</span>
+                        <span style="font-size: 14px;">Regional Weather Alerts</span>
                     </div>
                 </div>
             </div>
