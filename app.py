@@ -9,8 +9,13 @@ st.set_page_config(page_title="DisasterMonitor AI", layout="wide", initial_sideb
 # 2. THEME & STYLING
 st.markdown("""
     <style>
+    /* Hide Sidebar */
     [data-testid="stSidebar"] { display: none; }
+    
+    /* Main background */
     .stApp { background-color: #FFFFFF; }
+    
+    /* Custom Reset Button Styling */
     div.stButton > button {
         background-color: #FFFFFF;
         color: #1C1C1C;
@@ -19,7 +24,15 @@ st.markdown("""
         width: 100%;
         font-weight: 500;
     }
+    div.stButton > button:hover {
+        background-color: #F0F2F6;
+        border-color: #1C1C1C;
+    }
+    
+    /* Text Colors */
     h1, h2, h3, p, span { color: #1C1C1C !important; }
+    
+    /* Legend Box Styling */
     .legend-box {
         padding: 20px;
         border: 1px solid #E0E0E0;
@@ -29,17 +42,13 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# 3. Load Data with "Smart Jitter"
+# 3. Load Data with Jittering
 @st.cache_data
 def load_data():
     df = pd.read_csv('final_dashboard_ready_data.csv')
-    
-    # We use a smaller jitter (1.0) but rely on TRANSPARENCY 
-    # so overlapping points create a darker 'glow'
     np.random.seed(42) 
     df['lat'] = df['lat'] + np.random.uniform(-1.0, 1.0, len(df))
     df['lon'] = df['lon'] + np.random.uniform(-1.0, 1.0, len(df))
-    
     return df
 
 df = load_data()
@@ -50,13 +59,13 @@ if 'view' not in st.session_state:
 if 'selected_country' not in st.session_state: 
     st.session_state.selected_country = None
 
-# 4. COLOR MAPPING (Reduced Alpha to 140 for better overlapping visibility)
+# 4. COLOR MAPPING
 color_lookup = {
-    "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 140],      
-    "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 140],       
-    "Arctic Storms & Volcanic Activity": [100, 100, 255, 140],       
-    "Hydrological (Flash Floods) & Social Reports": [0, 255, 255, 140], 
-    "Regional Meteorological Alerts (US South)": [255, 165, 0, 140]   
+    "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 160],      
+    "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 160],       
+    "Arctic Storms & Volcanic Activity": [100, 100, 255, 160],       
+    "Hydrological (Flash Floods) & Social Reports": [0, 255, 255, 160], 
+    "Regional Meteorological Alerts (US South)": [255, 165, 0, 160]   
 }
 
 df['color'] = df['Disaster_Category'].map(color_lookup)
@@ -80,19 +89,18 @@ if st.session_state.view == 'Global':
     with col_map:
         view_state = pdk.ViewState(latitude=20, longitude=0, zoom=1.4, pitch=0)
         
-        # PRO TIP: Adding 'stroked=True' makes dots easier to distinguish when they touch
         layer = pdk.Layer(
             "ScatterplotLayer",
             df,
             get_position=["lon", "lat"],
             get_color="color",
-            get_radius=180000, # Slightly smaller radius so they don't bloat the map
+            get_radius=180000,
             pickable=True,
-            stroked=True,
+            stroked=True,       # Enable outlines
             filled=True,
             radius_min_pixels=5,
-            line_width_min_pixels=1,
-            get_line_color=[255, 255, 255] # White border around dots
+            line_width_min_pixels=2, # Thickness of the outline
+            get_line_color=[0, 0, 0]  # SET TO BLACK [R, G, B]
         )
         
         st.pydeck_chart(pdk.Deck(
@@ -108,23 +116,23 @@ if st.session_state.view == 'Global':
                 <h3 style="margin-top:0; font-size: 1.2rem;">Incident Legend</h3>
                 <div style="line-height: 2.2;">
                     <div style="display: flex; align-items: center; margin-bottom: 4px;">
-                        <div style="width: 14px; height: 14px; background-color: rgb(128, 0, 128); border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
+                        <div style="width: 14px; height: 14px; background-color: rgb(128, 0, 128); border: 1.5px solid #000; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Storms & Tornadoes</span>
                     </div>
                     <div style="display: flex; align-items: center; margin-bottom: 4px;">
-                        <div style="width: 14px; height: 14px; background-color: rgb(255, 0, 0); border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
+                        <div style="width: 14px; height: 14px; background-color: rgb(255, 0, 0); border: 1.5px solid #000; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Earthquakes & Tsunamis</span>
                     </div>
                     <div style="display: flex; align-items: center; margin-bottom: 4px;">
-                        <div style="width: 14px; height: 14px; background-color: rgb(100, 100, 255); border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
+                        <div style="width: 14px; height: 14px; background-color: rgb(100, 100, 255); border: 1.5px solid #000; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Extreme Cold & Volcanic</span>
                     </div>
                     <div style="display: flex; align-items: center; margin-bottom: 4px;">
-                        <div style="width: 14px; height: 14px; background-color: rgb(0, 255, 255); border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
+                        <div style="width: 14px; height: 14px; background-color: rgb(0, 255, 255); border: 1.5px solid #000; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Floods & Local Alerts</span>
                     </div>
                     <div style="display: flex; align-items: center; margin-bottom: 4px;">
-                        <div style="width: 14px; height: 14px; background-color: rgb(255, 165, 0); border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
+                        <div style="width: 14px; height: 14px; background-color: rgb(255, 165, 0); border: 1.5px solid #000; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Regional Weather Alerts</span>
                     </div>
                 </div>
@@ -152,7 +160,7 @@ elif st.session_state.view == 'Detail':
         detail_view = pdk.ViewState(latitude=country_df['lat'].mean(), longitude=country_df['lon'].mean(), zoom=4)
         st.pydeck_chart(pdk.Deck(
             map_style='mapbox://styles/mapbox/light-v10',
-            layers=[pdk.Layer("ScatterplotLayer", country_df, get_position=["lon", "lat"], get_color="color", get_radius=50000, pickable=True)],
+            layers=[pdk.Layer("ScatterplotLayer", country_df, get_position=["lon", "lat"], get_color="color", stroked=True, get_line_color=[0,0,0], line_width_min_pixels=2, get_radius=50000, pickable=True)],
             initial_view_state=detail_view,
             tooltip={"text": "{Disaster_Category}"}
         ))
