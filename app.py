@@ -24,10 +24,6 @@ st.markdown("""
         width: 100%;
         font-weight: 500;
     }
-    div.stButton > button:hover {
-        background-color: #F0F2F6;
-        border-color: #1C1C1C;
-    }
     
     /* Text Colors */
     h1, h2, h3, p, span { color: #1C1C1C !important; }
@@ -99,8 +95,9 @@ if st.session_state.view == 'Global':
             stroked=True,
             filled=True,
             radius_min_pixels=5,
-            line_width_min_pixels=2,
-            get_line_color=[200, 200, 200]  # VERY LIGHT GREY OUTLINE
+            line_width_min_pixels=1,
+            # DARKER GREY WITH 50% TRANSPARENCY [R, G, B, A]
+            get_line_color=[80, 80, 80, 120] 
         )
         
         st.pydeck_chart(pdk.Deck(
@@ -111,29 +108,29 @@ if st.session_state.view == 'Global':
         ))
 
     with col_ctrl:
-        # ✅ UPDATED LEGEND (MATCHING LIGHT GREY BORDERS)
+        # ✅ UPDATED LEGEND (MATCHING SEMI-TRANSPARENT BORDERS)
         st.markdown('''
             <div class="legend-box">
                 <h3 style="margin-top:0; font-size: 1.2rem;">Incident Legend</h3>
                 <div style="line-height: 2.2;">
                     <div style="display: flex; align-items: center; margin-bottom: 4px;">
-                        <div style="width: 14px; height: 14px; background-color: rgb(128, 0, 128); border: 1.5px solid #C8C8C8; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
+                        <div style="width: 14px; height: 14px; background-color: rgb(128, 0, 128); border: 1.5px solid rgba(80, 80, 80, 0.5); border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Storms & Tornadoes</span>
                     </div>
                     <div style="display: flex; align-items: center; margin-bottom: 4px;">
-                        <div style="width: 14px; height: 14px; background-color: rgb(255, 0, 0); border: 1.5px solid #C8C8C8; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
+                        <div style="width: 14px; height: 14px; background-color: rgb(255, 0, 0); border: 1.5px solid rgba(80, 80, 80, 0.5); border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Earthquakes & Tsunamis</span>
                     </div>
                     <div style="display: flex; align-items: center; margin-bottom: 4px;">
-                        <div style="width: 14px; height: 14px; background-color: rgb(100, 100, 255); border: 1.5px solid #C8C8C8; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
+                        <div style="width: 14px; height: 14px; background-color: rgb(100, 100, 255); border: 1.5px solid rgba(80, 80, 80, 0.5); border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Extreme Cold & Volcanic</span>
                     </div>
                     <div style="display: flex; align-items: center; margin-bottom: 4px;">
-                        <div style="width: 14px; height: 14px; background-color: rgb(0, 255, 255); border: 1.5px solid #C8C8C8; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
+                        <div style="width: 14px; height: 14px; background-color: rgb(0, 255, 255); border: 1.5px solid rgba(80, 80, 80, 0.5); border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Floods & Local Alerts</span>
                     </div>
                     <div style="display: flex; align-items: center; margin-bottom: 4px;">
-                        <div style="width: 14px; height: 14px; background-color: rgb(255, 165, 0); border: 1.5px solid #C8C8C8; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
+                        <div style="width: 14px; height: 14px; background-color: rgb(255, 165, 0); border: 1.5px solid rgba(80, 80, 80, 0.5); border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Regional Weather Alerts</span>
                     </div>
                 </div>
@@ -167,8 +164,8 @@ elif st.session_state.view == 'Detail':
                 get_position=["lon", "lat"], 
                 get_color="color", 
                 stroked=True, 
-                get_line_color=[200, 200, 200], 
-                line_width_min_pixels=2, 
+                get_line_color=[80, 80, 80, 120], 
+                line_width_min_pixels=1, 
                 get_radius=50000, 
                 pickable=True
             )],
