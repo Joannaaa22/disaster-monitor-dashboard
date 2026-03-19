@@ -1,0 +1,337 @@
+Tweet_Text,Actual_Label,Predicted_Label,location,lat,lon,cluster,LDA_Topic,Disaster_Category
+"MAF continues Flash Flood Warning [flash flood: observed] for Andrews, Ector, Martin, Midland [TX] till Feb 14, 1:30 AM CST HTTPURL HTTPURL",1,1,Martin,32.2675039,-101.9190317,0,4,Severe Meteorological (Tornado/Hail)
+"A 2.00 magnitude earthquake has occurred near Keeseville, NY at 2/15/26, 7:50 PM! HTTPURL",1,1,Keeseville,44.505098,-73.4828735,-1,3,Hydrological (Flash Floods) & Social Reports
+"⚠️⛈️Severe Thunderstorm Warning for HEAVY RAINFALL
+parts of North Interior and South Interior districts.
+
+Heavy rainfall with slow moving thunderstorms over the eastern interior.
+Locations which may be affected include Kiwirrkurra.
+
+HTTPURL HTTPURL",1,1,North Interior,50.7516282,7.0922547,-1,4,Severe Meteorological (Tornado/Hail)
+"LIX updates Tornado Warning [tornado: RADAR INDICATED, hail: &lt;.75 IN] (cancels Assumption [LA], continues Ascension, St. James [LA]) till 1:00 AM CST HTTPURL HTTPURL",1,1,St. James,51.5069112,-0.1331561,1,4,Severe Meteorological (Tornado/Hail)
+"A Severe Thunderstorm Warning has been issued for the following parishes/counties until 2/14 11:45PM: Iberia, St. Martin, Vermilion, Lafayette, St. Mary. #lawx #mswx HTTPURL",1,1,Iberia,39.8963997,-4.4974366,2,4,Severe Meteorological (Tornado/Hail)
+🚨An #earthquakr of 6.7 has struck near #Japan. There is no #Tsunami warning issued🚨 HTTPURL,0,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"Japan Quake Triggers Tsunami Alert
+
+JP-01, Japan Agent: ""For now, probability of an “M 8+ megaquake” within a week remains low (≈ 1%), but because stakes are high — human lives, infrastructure, economic stability — prudent preparation and vigilance are warranted. ...."" HTTPURL",0,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"1.5 magnitude #earthquake. 44 km N of Chase, Alaska HTTPURL",1,1,Alaska,64.4459613,-149.680909,4,1,Geological (Japan Earthquake/Tsunami)
+"Severe Thunderstorm Warning for Caldwell, Grant, La Salle and Winn Parish in LA until 9:45pm. HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"@USER @USER The 2004 Pakistan earthquake struck on February 14, with a magnitude of 5.7 (followed by a 5.5 aftershock). Centered in the North West Frontier Province near Batgram, it killed at least 22 people, injured dozens, and caused landslides and building collapses. Tremors were felt in nearby regions. If you meant the 2005 quake, let me know!",0,1,Pakistan,30.3308401,71.247499,-1,3,Hydrological (Flash Floods) & Social Reports
+"BREAKING 🚨🚨
+
+#SantaBarbara / #California 
+
+A **TORNADO WARNING** has been issued for portions of Santa Barbara County 
+
+ At 1241 AM PST, a severe thunderstorm capable of producing a
+tornado was located near Los Alamos, or 9 miles east of Lompoc,
+moving east at 30 mph.
+HAZARD...Tornado.
+SOURCE...Radar indicated rotation.
+IMPACT...Flying debris will be dangerous to those caught without shelter
+
+Los Alamos around 1245 AM PST.
+Santa Ynez and Solvang around 1255 AM PST.
+Other locations impacted by this tornadic thunderstorm include
+Figueroa Mountain, Buellton, and Lake Cachuma. 
+
+@USER @USER",1,1,Santa Barbara County,34.7136533,-119.985823,6,1,Geological (Japan Earthquake/Tsunami)
+"⚠️ A 5.5-magnitude earthquake struck southeastern Cuba
+
+No immediate tsunami alert was issued following the earthquake, and there were no immediate reports of damage or casualties HTTPURL HTTPURL",1,1,Cuba,23.0131338,-80.8328748,-1,1,Geological (Japan Earthquake/Tsunami)
+"Further north, due to a bending of the QLCS into a NW to SE segment, a very potent zone for rapid tornadogenesis is occurring as flow curves around the bowed section of the outflow. Already a tornado is in progress in that tornado warning near Taylorsville, MS! #mswx HTTPURL",1,1,Taylorsville,40.6676347,-111.9388027,-1,2,Regional Meteorological Alerts (US South)
+"Daily News Digest:
+
+- Japan has lifted the tsunami alert following an earthquake in the northeastern region, ensuring safety for residents.
+- Finland reports a current account deficit of 0.2 billion euros for October, indicating economic challenges.
+- UK economic indicators show troubling trends: GDP fell by 0.1%, construction output dropped by 0.6%, and the services sector shrank by 0.3%, all worse than forecasts.
+- Hungary's PM Orban criticized the EU's indefinite freeze on Russian assets as unlawful, reflecting ongoing tensions within Europe regarding sanctions.
+- China is set to regulate unfair competition among online platforms and will require export licenses for certain steel products starting January 1st.
+- The Federal Reserve's Goolsbee expressed concerns over inflation and labor market stability, emphasizing the need for cautious monetary policy adjustments.
+- In international relations, Ukraine's President Zelenskiy plans to visit Berlin amid discussions on potential EU accession by 2027 and security guarantees involving NATO.
+- A series of maritime incidents occurred, including the US seizing a supertanker near Venezuela and Iran capturing a foreign tanker in the Gulf of Oman.
+- The Dutch trade balance exceeded forecasts at €12.471 billion, while Germany's CPI remained stable year-over-year at 2.3%.
+- Oracle announced delays in its data centers for OpenAI due to labor and material shortages, pushing timelines back to 2028.
+
+#Fibacus #DailyDigest",0,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+BREAKING: Japan issued a tsunami warning after a 6.7 magnitude quake,1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+Watauga County road repaired after two sections crumble from Hurricane Helene HTTPURL HTTPURL,0,1,Watauga County,36.2228105,-81.6863808,7,2,Regional Meteorological Alerts (US South)
+"DLH continues Blizzard Warning valid at Feb 17, 9:00 PM CST for Southern Cook/North Shore, Southern Lake/North Shore [MN] till Feb 19, 12:00 PM CST HTTPURL HTTPURL",1,1,Southern Lake/North,35.6485022,-80.9445473,7,4,Severe Meteorological (Tornado/Hail)
+"🚨BREAKING 
+
+A strong 6.7-magnitude earthquake struck northeastern Japan, and authorities have issued a tsunami alert as a precaution.
+
+#LaCasaDeAlofoke2 HTTPURL",1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"@USER @USER @USER Yes, similar events have occurred nearby. The 2013 Gayo earthquake triggered multiple landslides in Central Aceh and adjacent Bener Meriah Regency. More recently, a road collapsed into a sinkhole in Bener Meriah in December 2025 due to flooding. The Pondok Balik site itself has a history of progressive collapse since the early 2000s. Sources: USGS, local reports.",0,1,Central Aceh,-6.8769742,109.0883535,-1,0,Arctic Storms & Volcanic Activity
+"(Hollywood Hills, Los Angeles) Severe Thunderstorm Warning Until 12:15 P.M. - reported on @USER HTTPURL",1,1,Hollywood Hills,34.1216903,-118.3465777,8,4,Severe Meteorological (Tornado/Hail)
+"Flash Flood Warning for Willowbrook: FFWLOX The National Weather Service in Los Angeles/Oxnard has issued a * Flash Flood Warning for, Eastern Los Angeles County in southwestern California, * Until 200 PM PST. * At 1201 PM PST, Doppler radar and automated rain gauges indicated...",1,1,Los Angeles/Oxnard,34.179088,-118.600493,8,1,Geological (Japan Earthquake/Tsunami)
+"Japan lifts tsunami warning after back-to-back quakes 
+#JapanEarthquake #JapanTsunami #alert
+HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"LOX issues Tornado Warning [tornado: RADAR INDICATED, hail: &lt;.75 IN] for Santa Barbara [CA] till 1:15 AM PST HTTPURL HTTPURL",1,1,Santa Barbara,34.4221319,-119.702667,6,4,Severe Meteorological (Tornado/Hail)
+"LIX continues Tornado Warning [tornado: RADAR INDICATED, hail: &lt;.75 IN] for Ascension, St. James [LA] till 1:00 AM CST HTTPURL HTTPURL",1,1,St. James,51.5069112,-0.1331561,1,4,Severe Meteorological (Tornado/Hail)
+"DLH continues Blizzard Warning valid at Feb 17, 9:00 PM CST for Southern Cook/North Shore, Southern Lake/North Shore [MN] till Feb 19, 12:00 PM CST HTTPURL HTTPURL",1,1,Southern Lake/North,35.6485022,-80.9445473,7,4,Severe Meteorological (Tornado/Hail)
+"Japan just shook with a 6.7 quake off the Izu Islands' coast. 🌊 Tsunami warning lifted, but Mother Earth reminds us why the ""Ring of Fire"" is no joke. Stay alert, Tokyo! HTTPURL",1,1,Japan,36.5748441,139.2394179,3,4,Severe Meteorological (Tornado/Hail)
+"Japan lifts tsunami warning after magnitude 6.7 quake
+
+HTTPURL HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"A strong earthquake struck Japan on Jan 6, 2026, with a magnitude around 6.2–6.4.
+The epicenter was in Shimane Prefecture, in the western (Chugoku) region of Japan. 
+It was shallow (about 10 km deep) and felt widely across the region.
+No tsunami warning was issued.",1,1,Japan,36.5748441,139.2394179,3,3,Hydrological (Flash Floods) & Social Reports
+"4.6 magnitude #earthquake. 52 km from #Noda, Iwate, #Japan HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"SHV continues Severe Thunderstorm Warning [wind: 60 MPH (RADAR INDICATED), hail: 0.00 IN (RADAR INDICATED)] for Caldwell, Grant, La Salle, Winn [LA] till 9:45 PM CST HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"Japan tsunami warning after 6.7- magnitude quake
+
+HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"WEATHER AUTHORITY ALERT...SHV issues Severe Thunderstorm Warning [wind: 60 MPH (RADAR INDICATED), hail: 0.00 IN (RADAR INDICATED)] for La Salle [LA] till 10:00 PM CST Click HTTPURL  for 
+ more radar information. HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"Flash Flood Warning for Lancaster: FFWLOX The National Weather Service in Los Angeles/Oxnard has extended the * Flash Flood Warning for, Southwestern Los Angeles County in southwestern California, * Until 500 PM PST. * At 320 PM PST, Doppler radar and automated rain gauges ind...",1,1,Los Angeles/Oxnard,34.179088,-118.600493,8,1,Geological (Japan Earthquake/Tsunami)
+"⚠️ 6.2-magnitude earthquake struck western Japan, hitting eastern Shimane Prefecture at 10:18 am local time at depth of about 10 km
+
+🔹 No tsunami warning was issued and no casualties have been reported HTTPURL",1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"DLH upgrades Winter Storm Watch to Blizzard Warning valid at Feb 17, 9:00 PM CST for Southern Cook/North Shore, Southern Lake/North Shore [MN] till Feb 19, 12:00 PM CST HTTPURL HTTPURL",1,1,Southern Lake/North,35.6485022,-80.9445473,7,4,Severe Meteorological (Tornado/Hail)
+"2.6 magnitude #earthquake. 73 km SE of New Allakaket, Alaska HTTPURL",1,1,Alaska,64.4459613,-149.680909,4,0,Arctic Storms & Volcanic Activity
+"Tornado Warning for Ascension, Assumption, and St. James Parish in LA until 1:00am CST. #lawx",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"4.6 magnitude #earthquake. 52 km from Noda, Iwate, #Japan HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+WDSU Severe WX Alert Tornado Warning for Ascension and St. James Parish in LA until 1:00am. HTTPURL #LAWX,1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"LCH updates Severe Thunderstorm Warning [tornado: POSSIBLE, wind: 60 MPH (RADAR INDICATED), hail: &lt;.75 IN (RADAR INDICATED)] (cancels St. Landry [LA], continues Iberia, Lafayette, St. Martin, St. Mary, Vermilion [LA]) till 11:45 PM CST HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"LOX issues Tornado Warning [tornado: RADAR INDICATED, hail: &lt;.75 IN] for Santa Barbara [CA] till 1:15 AM PST HTTPURL HTTPURL",1,1,Santa Barbara,34.4221319,-119.702667,6,4,Severe Meteorological (Tornado/Hail)
+"LCH updates Severe Thunderstorm Warning [tornado: POSSIBLE, wind: 60 MPH (RADAR INDICATED), hail: 0.75 IN (RADAR INDICATED)] (cancels Rapides [LA], continues Acadia, Avoyelles, Evangeline, St. Landry [LA]) till 10:30 PM CST HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"⚠️​🇯🇵 A new M6.7 quake struck northeastern Japan, prompting a JMA tsunami alert for waves up to one meter high. Authorities strictly instructed coastal population to seek immediate higher ground. #JapanQuake #TsunamiAlert #JMA #PacificRingOfFire #SeismicRisk HTTPURL",1,1,Japan,36.5748441,139.2394179,3,4,Severe Meteorological (Tornado/Hail)
+"Earthquake of magnitude 6.2 struck western Japan near Osaka at 10:19 am local time with shaking reported across multiple cities but no tsunami warning or nuclear facility irregularities  
+
+𝐁𝐞 𝐏𝐚𝐫𝐭 𝐎𝐟 𝐓𝐡𝐞 𝐂𝐨𝐧𝐯𝐞𝐫𝐬𝐚𝐭𝐢𝐨𝐧 𝐎𝐧 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩: 📱 HTTPURL",1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"Magnitude 6.2 earthquake hits western Japan near Shimane. Strong shaking reported. Officials indicated no tsunami warning was in effect. Aftershocks possible.
+ HTTPURL",1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"Check out this summarized news story 👀
+
+Japan hit by 6.7 earthquake, tsunami warning issued HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"Japan | Earthquake Alert
+A magnitude 6.3 earthquake struck the eastern part of Shimane Prefecture earlier today, with a shallow depth of around 10 km.
+
+Maximum intensity reported: 6- (JMA scale)
+
+• Widespread shaking detected across western Honshu
+• No tsunami warning issued at this time
+
+Authorities are monitoring for aftershocks and assessing potential damage. Residents in affected areas are urged to remain alert and follow local safety guidance",1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"Severe Thunderstorm Warning including Maringouin LA, Rosedale LA and  Grosse Tete LA until 11:15 PM CST HTTPURL",1,1,LA,20.0171109,103.378253,5,1,Geological (Japan Earthquake/Tsunami)
+"NWStornado: Tornado Warning continues for Ascension Parish, LA, St. James Parish, LA until 1:00 AM CST HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"Japan | Earthquake Alert
+A magnitude 6.3 earthquake struck the eastern part of Shimane Prefecture earlier today, with a shallow depth of around 10 km.
+
+Maximum intensity reported: 6- (JMA scale)
+
+• Widespread shaking detected across western Honshu
+• No tsunami warning issued at HTTPURL",1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"@USER @USER @USER @USER @USER The QLCS storm is hitting Santa Barbara County now, with severe thunderstorm warnings and possible tornadoes. Winds up to 50mph, heavy rain expected. No evacuations yet, but drive cautiously. FirePhotoGirl, perfect for some breaking news shots! Stay safe everyone.",1,1,Santa Barbara County,34.7136533,-119.985823,6,2,Regional Meteorological Alerts (US South)
+"#BREAKING | 6.7 magnitude earthquake hits Japan.
+
+Country issues tsunami warning after quake.
+
+@USER has more. HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"Flash Flood Warning for Anaheim: FFWLOX The National Weather Service in Los Angeles/Oxnard has issued a * Flash Flood Warning for, Much of Central and Southern Los Angeles County in southwestern California, Including Multiple Burn Scars. * Until 200 PM PST. * At 1128 AM PST, l...",1,1,Los Angeles/Oxnard,34.179088,-118.600493,8,1,Geological (Japan Earthquake/Tsunami)
+"6.2 magnitude earthquake detected in Japan, no tsunami warning issued
+
+The earthquake's epicentre was located in Shimane Prefecture.
+HTTPURL
+via ABC News App",1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"Earthquake in Japan: Quake of Magnitude 6.2 Hits Shimane Prefecture, No Tsunami Warning Issued
+
+HTTPURL
+
+#Earthquake #Quake #Japan",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+@USER What is the situation in Japan's coast? Is it safe now or is there a tsunami warning there too?,0,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"[Delayed Report] On Feb 14, at 10:01 PM CST, 1 S Opelousas [St. Landry Co, LA] Broadcast Media reports Tstm Wnd Dmg. Photos received of severe tree damage due to thunderstorm winds. Multiple live oak trees sustained major limb destruction and... #lawx HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,2,Regional Meteorological Alerts (US South)
+"⚠️ TORNADO POSSIBLE: Santa Barbara County, CA.
+
+Radar indicating potential for a brief tornado near Vandenberg SFB and Lompoc. 60 MPH winds also likely with this line.
+
+Rare setup for the coast. Move to an interior room if you're in the warning box. HTTPURL",1,1,Santa Barbara County,34.7136533,-119.985823,6,0,Arctic Storms & Volcanic Activity
+"6.2 magnitude earthquake detected in Japan, no tsunami warning issued - ABC News HTTPURL",1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"LIX updates Severe Thunderstorm Warning [wind: 60 MPH (RADAR INDICATED), hail: 0.75 IN (RADAR INDICATED)] (cancels St. James, St. John The Baptist [LA], continues Jefferson, Lafourche, Orleans, St. Charles, Terrebonne [LA]) till 1:45 AM CST HTTPURL HTTPURL",1,1,St. James,51.5069112,-0.1331561,1,4,Severe Meteorological (Tornado/Hail)
+"A magnitude 6.2 earthquake struck western Japan (Shimane Prefecture) at ~10 km depth, according to the Japan Meteorological Agency. No tsunami warning issued. Damage and casualty reports pending.",1,1,Japan,36.5748441,139.2394179,3,3,Hydrological (Flash Floods) & Social Reports
+"1.6 magnitude #earthquake. 35 km ENE of Chase, Alaska HTTPURL",1,1,Alaska,64.4459613,-149.680909,4,1,Geological (Japan Earthquake/Tsunami)
+"At 8:55 PM PST, Santa Barbara [Santa Barbara Co, CA] Public reports Flash Flood. Flooding on State St and N Ontare Rd reported on Waze. #cawx HTTPURL HTTPURL",1,1,Santa Barbara,34.4221319,-119.702667,6,1,Geological (Japan Earthquake/Tsunami)
+"1.9 magnitude #earthquake. 17 km SE of Clam Gulch, Alaska HTTPURL",1,1,Alaska,64.4459613,-149.680909,4,4,Severe Meteorological (Tornado/Hail)
+"Severe Thunderstorm Warning for Grant, Natchitoches, and Winn Parish in LA until 9:00pm CST. #tacswx #LAWX",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+Aftershocks keep rocking Japan. HTTPURL,0,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"Video: Strong earthquake hits northern Japan, tsunami warning issued | NHK WORLD-JAPAN News HTTPURL",1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"Flash Flood Warning for Baldwin Park: FFWLOX The National Weather Service in Los Angeles/Oxnard has extended the * Flash Flood Warning for, Southwestern Los Angeles County in southwestern California, * Until 400 PM PST. * At 152 PM PST, Doppler radar and automated rain gauges ...",1,1,Los Angeles/Oxnard,34.179088,-118.600493,8,1,Geological (Japan Earthquake/Tsunami)
+"Strong quake hits western Japan, no tsunami warning HTTPURL",1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"Tornado Warning continues for Gramercy LA, Lutcher LA and  Grand Point LA until 1:00 AM CST HTTPURL",1,1,LA,20.0171109,103.378253,5,1,Geological (Japan Earthquake/Tsunami)
+"A 6.2-magnitude earthquake shook the coast of western Japan on Tuesday, the country’s meteorological office said, with no tsunami warning issued. #Japan #Earthquake #Disaster #SinarDaily HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"The National Weather Service has issued a Severe Thunderstorm Warning for Rapides, LA and Avoyelles, LA beginning at 10:32 pm and ending at 11:32 pm",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"A massive sinkhole in Central Aceh has expanded to over 30,000 square metres and 100 metres deep 
+
+#AssociatesTimes #Indonesia #Aceh #CentralAceh #Sinkhole #NaturalDisaster #BreakingNews #InfrastructureRisk #RedZone #GeologicalHazard HTTPURL",1,1,Central Aceh,-6.8769742,109.0883535,-1,3,Hydrological (Flash Floods) & Social Reports
+"Flash Flood Warning for Lancaster: FFWLOX The National Weather Service in Los Angeles/Oxnard has issued a * Flash Flood Warning for, Much of Central and Southern Los Angeles County in southwestern California, Including Multiple Burn Scars. * Until 200 PM PST. * At 1128 AM PST,...",1,1,Los Angeles/Oxnard,34.179088,-118.600493,8,1,Geological (Japan Earthquake/Tsunami)
+"BREAKING: Japan Struck With Another Quake of 6.7 Magnitude, Tsunami Warning Issued | WION News HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+Severe Thunderstorm Warning for St. Tammany Parish in LA until 2:30am CST. #tacswx #LAWX,1,1,LA,20.0171109,103.378253,5,1,Geological (Japan Earthquake/Tsunami)
+"SHV issues Severe Thunderstorm Warning [wind: 60 MPH (RADAR INDICATED), hail: 0.00 IN (RADAR INDICATED)] for La Salle [LA] till 10:00 PM CST HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"Severe Thunderstorm Warning for Iberia, Lafayette, St. Landry, St. Martin, St. Mary and Vermilion Parish in LA until 11:45pm CST. #tacswx #LAWX",1,1,Iberia,39.8963997,-4.4974366,2,4,Severe Meteorological (Tornado/Hail)
+"🚨 -65°F WIND CHILLS. This is not a drill. Alaska's Arctic Coast is seeing life-threatening cold where frostbite strikes in 5 minutes. 
+
+We are tracking this extreme arctic blast and active Blizzard Warnings LIVE on YouTube and X. 
+
+#AKwx #ArcticBlast #Yallbot HTTPURL",1,1,Alaska,64.4459613,-149.680909,4,2,Regional Meteorological Alerts (US South)
+6.5 quake hits Japan's Hokkaido day after 7.5 tremors triggered tsunami warning HTTPURL,1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+Japan lifts tsunami warning after magnitude 6.7 quake HTTPURL,1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"LIX issues Severe Thunderstorm Warning [wind: 60 MPH (RADAR INDICATED), hail: 0.75 IN (RADAR INDICATED)] for Assumption, Lafourche, St. James, Terrebonne [LA] till 12:45 AM CST HTTPURL HTTPURL",1,1,St. James,51.5069112,-0.1331561,1,4,Severe Meteorological (Tornado/Hail)
+"LIX updates Tornado Warning [tornado: RADAR INDICATED, hail: &lt;.75 IN] (cancels Tangipahoa [LA], continues St. Tammany, Washington [LA]) till 1:30 AM CST HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+New article on Readible: Japan tsunami warning after 6.7-magnitude quake HTTPURL,1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"At 8:40 PM PST, Santa Barbara [Santa Barbara Co, CA] Public reports Flash Flood. Flooding on HWY 101 and CA 217 reported on Waze. #cawx HTTPURL HTTPURL",1,1,Santa Barbara,34.4221319,-119.702667,6,1,Geological (Japan Earthquake/Tsunami)
+"Japan Earthquake: Japan Rocked by Powerful 6.7 Magnitude Earthquake, Tsunami Warning Issued HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"BREAKING: A magnitude 6.2 earthquake has struck western Japan, with the epicenter in Shimane Prefecture, according to the Japan Meteorological Agency. No tsunami warning has been issued at this time.
+#Japan #Earthquake",1,1,Japan,36.5748441,139.2394179,3,3,Hydrological (Flash Floods) & Social Reports
+"LIX issues Tornado Warning [tornado: RADAR INDICATED, hail: &lt;.75 IN] for Ascension, Assumption, St. James [LA] till 1:00 AM CST HTTPURL HTTPURL",1,1,St. James,51.5069112,-0.1331561,1,4,Severe Meteorological (Tornado/Hail)
+"#Breaking 🚨 Newz ""Deadly Blizzard Strikes Japan: 35+ Killed in Heavy Snow Chaos""
+➡️ At least 35 people killed &amp; more than 390 injured across Japan due to severe heavy snow &amp; winter storms. HTTPURL",1,1,Japan,36.5748441,139.2394179,3,2,Regional Meteorological Alerts (US South)
+"LOX issues Tornado Warning [tornado: RADAR INDICATED, hail: &lt;.75 IN] for Santa Barbara [CA] till 1:15 AM PST HTTPURL HTTPURL",1,1,Santa Barbara,34.4221319,-119.702667,6,4,Severe Meteorological (Tornado/Hail)
+"@USER @USER This appears to be a Japanese news alert about a minor earthquake at 00:58 JST (Feb 7, or Feb 6 GMT) with intensity 3 (on Japan's Shindo scale) felt in southern Tochigi, southern Gunma, and northern Saitama prefectures. No reports of damage or tsunami. For updates, check JMA or local sources.",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"MAF issues Flash Flood Warning [flash flood: radar indicated] for Andrews, Ector, Martin, Midland [TX] till Feb 14, 1:30 AM CST HTTPURL HTTPURL",1,1,Martin,32.2675039,-101.9190317,0,4,Severe Meteorological (Tornado/Hail)
+"A magnitude 6.0 earthquake struck #Japan on #NewYear’s Eve, with tremors felt across nearby regions. No #tsunami warning has been issued so far. Authorities are monitoring #aftershocks. #JapanEarthquake #BreakingNews
+Details here:
+HTTPURL HTTPURL",1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"HTTPURL 6.2 magnitude earthquake detected in Japan, no tsunami warning issued",1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"@USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER @USER An earthquake struck Japan’s Shimane prefecture on Tuesday, initially reported at magnitude 6.3 before being downgraded to 4.5 by Japanese authorities, while the USGS put it at 5.8. The quake registered an upper-5 intensity locally, with no tsunami warning issued. HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"Flash Flood Warning for Pico Rivera: FFWLOX The National Weather Service in Los Angeles/Oxnard has issued a * Flash Flood Warning for, The Santa Monica Mountains, Including the Palisades and Franklin Burn Scars, And Surrounding Areas of Southwestern Los Angeles County in south...",1,1,Los Angeles/Oxnard,34.179088,-118.600493,8,1,Geological (Japan Earthquake/Tsunami)
+"Multiple earthquakes, including one at 6.2 magnitude, struck western Japan late Tuesday morning local time, centered in Shimane Prefecture and neighboring Tottori Prefecture.
+HTTPURL
+#earthquake #seismic",1,1,Japan,36.5748441,139.2394179,3,3,Hydrological (Flash Floods) & Social Reports
+"An earthquake just hit Japan
+There’s an active tsunami warning.
+
+#japanearthquake",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"Severe Thunderstorm Warning for Allen, Beauregard, Evangeline, Rapides and Vernon Parish in LA until 9:45pm CST. #tacswx #LAWX",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"A 6.7-magnitude earthquake occurred off northern Japan , the weather office said, days after a 7.5-level tremor in the same region injured at least 50 people.
+
+ #inp #independentnewspakistan
+#japanearthquake 
+
+ click on ⬇️ link
+HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"LCH updates Severe Thunderstorm Warning [tornado: POSSIBLE, wind: 60 MPH (RADAR INDICATED), hail: 0.75 IN (RADAR INDICATED)] (cancels Acadia, Evangeline [LA], continues Avoyelles, St. Landry [LA]) till 10:30 PM CST HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"Japan tsunami warning after 6.7-magnitude quake
+
+A 6.7-magnitude earthquake occurred off northern Japan on Friday, the weather office said, days after a 7.5-level tremor in the same region injured at least 50 people..
+#JapanEarthquake #NorthernJapan #JMA #TsunamiWarning HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"Japan Earthquake: A magnitude 6.7 earthquake jolted northern Japan, and authorities briefly issued a tsunami warning before lifting it. HTTPURL",1,1,Japan,36.5748441,139.2394179,3,3,Hydrological (Flash Floods) & Social Reports
+"@USER A strong 6.3-magnitude earthquake has struck off southern Japan injuring 17 people, reports say, as officials warned residents to be alert to the danger of landslides following the tremor. There was no tsunami warning or reports of major damage.",1,1,Japan,36.5748441,139.2394179,3,3,Hydrological (Flash Floods) & Social Reports
+"Flash Flood Warning for South Gate: FFWLOX The National Weather Service in Los Angeles/Oxnard has issued a * Flash Flood Warning for, Much of Central and Southern Los Angeles County in southwestern California, Including Multiple Burn Scars. * Until 200 PM PST. * At 1128 AM PST...",1,1,Los Angeles/Oxnard,34.179088,-118.600493,8,1,Geological (Japan Earthquake/Tsunami)
+Severe Thunderstorm Warning for St. Tammany Parish in LA until 2:30am CST. #lawx,1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"LOX issues Severe Thunderstorm Warning [tornado: POSSIBLE, wind: 60 MPH (RADAR INDICATED), hail: 0.75 IN (RADAR INDICATED)] for Santa Barbara [CA] till Feb 16, 9:30 AM PST HTTPURL HTTPURL",1,1,Santa Barbara,34.4221319,-119.702667,6,4,Severe Meteorological (Tornado/Hail)
+"Severe Thunderstorm Warning continues for Jena LA, Olla LA and  Urania LA until 9:45 PM CST HTTPURL",1,1,LA,20.0171109,103.378253,5,1,Geological (Japan Earthquake/Tsunami)
+"SHV continues Severe Thunderstorm Warning [wind: 60 MPH (RADAR INDICATED), hail: 0.00 IN (RADAR INDICATED)] for Caldwell, Grant, La Salle, Winn [LA] till 9:45 PM CST HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"2.0 magnitude #earthquake. 3 km WNW of Keeseville, New York HTTPURL",1,1,Keeseville,44.505098,-73.4828735,-1,3,Hydrological (Flash Floods) & Social Reports
+"On 2026-02-14, at 09:28:34 (UTC), there was an earthquake around 68 km SW of False Pass, Alaska. The depth of the hypocenter is about 85.1km, and the magnitude of the earthquake is estimated to be about 4.5.
+HTTPURL HTTPURL",1,1,Alaska,64.4459613,-149.680909,4,1,Geological (Japan Earthquake/Tsunami)
+New strong earthquake in Japan - tsunami warning...there are no reports of any damage to any of the region's nuclear power plants.🤔,1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+Japan lifts tsunami warning after magnitude 6.7 quake HTTPURL,1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"SHV continues Severe Thunderstorm Warning [wind: 60 MPH (RADAR INDICATED), hail: 0.00 IN (RADAR INDICATED)] for Caldwell, Grant, La Salle, Winn [LA] till 9:45 PM CST HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+Japan issues tsunami warning after 6.7 magnitude earthquake HTTPURL,1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"DLH continues Blizzard Warning valid at Feb 17, 9:00 PM CST for Southern Cook/North Shore, Southern Lake/North Shore [MN] till Feb 19, 12:00 PM CST HTTPURL HTTPURL",1,1,Southern Lake/North,35.6485022,-80.9445473,7,4,Severe Meteorological (Tornado/Hail)
+"LCH updates Severe Thunderstorm Warning [tornado: POSSIBLE, wind: 60 MPH (RADAR INDICATED), hail: 0.75 IN (RADAR INDICATED)] (cancels Acadia, Evangeline [LA], continues Avoyelles, St. Landry [LA]) till 10:30 PM CST HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"LOX continues Tornado Warning [tornado: RADAR INDICATED, hail: &lt;.75 IN] for Santa Barbara [CA] till 1:15 AM PST HTTPURL HTTPURL",1,1,Santa Barbara,34.4221319,-119.702667,6,4,Severe Meteorological (Tornado/Hail)
+"Japan hit by 6.7 magnitude earthquake, tsunami warning issued
+
+Stay updated with all the stories that matter — download the Hindustan Times app
+
+HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"Strong quake hits western Japan, no tsunami warning HTTPURL",1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"4.0 magnitude #earthquake. 6 km N of Meadow Lakes, Alaska HTTPURL",1,1,Alaska,64.4459613,-149.680909,4,1,Geological (Japan Earthquake/Tsunami)
+"Flash Flood Warning for Lancaster: FFWLOX The National Weather Service in Los Angeles/Oxnard has issued a * Flash Flood Warning for, Eastern Los Angeles County in southwestern California, * Until 200 PM PST. * At 1201 PM PST, Doppler radar and automated rain gauges indicated t...",1,1,Los Angeles/Oxnard,34.179088,-118.600493,8,1,Geological (Japan Earthquake/Tsunami)
+"SHV issues Severe Thunderstorm Warning [wind: 60 MPH (RADAR INDICATED), hail: 0.00 IN (RADAR INDICATED)] for Caldwell, Grant, La Salle, Winn [LA] till 9:45 PM CST HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"Japan Earthquake : 6.2-Magnitude Quake Strikes Shimane, No Tsunami Alert
+
+HTTPURL 
+
+#japanearthquake #chugokuquake #ShinkansenHalted",1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"LIX continues Tornado Warning [tornado: RADAR INDICATED, hail: &lt;.75 IN] for Ascension, Assumption, St. James [LA] till 1:00 AM CST HTTPURL HTTPURL",1,1,St. James,51.5069112,-0.1331561,1,4,Severe Meteorological (Tornado/Hail)
+"NWStornado: Tornado Warning continues for Gramercy LA, Lutcher LA and  Grand Point LA until 1:00 AM CST HTTPURL",1,1,LA,20.0171109,103.378253,5,1,Geological (Japan Earthquake/Tsunami)
+"Strong magnitude 6.7 earthquake hit Japan’s northeast on December 12th, prompting a tsunami warning across coastal zones HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"A magnitude 6.2 earthquake hit western Japan, followed by a sizeable number of aftershocks. 
+
+There was no tsunami warning issued and no immediate reports of injuries or major damage. HTTPURL",1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"LCH updates Severe Thunderstorm Warning [tornado: POSSIBLE, wind: 60 MPH (RADAR INDICATED), hail: &lt;.75 IN (RADAR INDICATED)] (cancels St. Landry [LA], continues Iberia, Lafayette, St. Martin, St. Mary, Vermilion [LA]) till 11:45 PM CST HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"Flash Flood Warning for Willowbrook: FFWLOX The National Weather Service in Los Angeles/Oxnard has issued a * Flash Flood Warning for, Much of Central and Southern Los Angeles County in southwestern California, Including Multiple Burn Scars. * Until 200 PM PST. * At 1128 AM PS...",1,1,Los Angeles/Oxnard,34.179088,-118.600493,8,1,Geological (Japan Earthquake/Tsunami)
+"NWStornado: Tornado Warning including Donaldsonville LA, Gramercy LA and  Lutcher LA until 1:00 AM CST HTTPURL",1,1,LA,20.0171109,103.378253,5,1,Geological (Japan Earthquake/Tsunami)
+"[Delayed Report] On Feb 14, at 10:01 PM CST, 1 S Opelousas [St. Landry Co, LA] Broadcast Media reports Tstm Wnd Dmg. Photos received of severe tree damage due to thunderstorm winds. Multiple live oak trees sustained major limb destruction and... #lawx HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,2,Regional Meteorological Alerts (US South)
+"SHV issues Severe Thunderstorm Warning [wind: 60 MPH (RADAR INDICATED), hail: 0.00 IN (RADAR INDICATED)] for La Salle [LA] till 10:00 PM CST HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"Flash Flood Warning for Torrance: FFWLOX The National Weather Service in Los Angeles/Oxnard has issued a * Flash Flood Warning for, Much of Central and Southern Los Angeles County in southwestern California, Including Multiple Burn Scars. * Until 200 PM PST. * At 1128 AM PST, ...",1,1,Los Angeles/Oxnard,34.179088,-118.600493,8,1,Geological (Japan Earthquake/Tsunami)
+"The National Weather Service has issued a Severe Thunderstorm Warning for Ascension, LA, Tangipahoa, LA, and Livingston, LA beginning at 1:44 am and ending at 3:14 am",1,1,LA,20.0171109,103.378253,5,1,Geological (Japan Earthquake/Tsunami)
+"LOX issues Severe Thunderstorm Warning [tornado: POSSIBLE, wind: 60 MPH (RADAR INDICATED), hail: 0.75 IN (RADAR INDICATED)] for Santa Barbara [CA] till Feb 16, 9:30 AM PST HTTPURL HTTPURL",1,1,Santa Barbara,34.4221319,-119.702667,6,4,Severe Meteorological (Tornado/Hail)
+"Japan Issues Tsunami Warning After 6.7 Magnitude Earthquake Strikes Northeast Region
+
+#Japan #japanearthquake #JapanTsunami #ABPLive
+
+HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"LIX issues Severe Thunderstorm Warning [wind: 60 MPH (RADAR INDICATED), hail: 0.75 IN (RADAR INDICATED)] for Assumption, Lafourche, St. James, Terrebonne [LA] till 12:45 AM CST HTTPURL HTTPURL",1,1,St. James,51.5069112,-0.1331561,1,4,Severe Meteorological (Tornado/Hail)
+"DLH continues Blizzard Warning valid at Feb 17, 9:00 PM CST for Southern Cook/North Shore, Southern Lake/North Shore [MN] till Feb 19, 12:00 PM CST HTTPURL HTTPURL",1,1,Southern Lake/North,35.6485022,-80.9445473,7,4,Severe Meteorological (Tornado/Hail)
+"A powerful 7.5 quake hit off northern Japan near Aomori, injuring dozens and prompting tsunami advisories. 
+
+🔗 HTTPURL
+
+#BreakingNews #japanearthquake  #MegaquakeAlert #TsunamiWarning #StaySafe #WorldNews HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"LCH updates Severe Thunderstorm Warning [tornado: POSSIBLE, wind: 60 MPH (RADAR INDICATED), hail: &lt;.75 IN (RADAR INDICATED)] (cancels Lafayette, Vermilion [LA], continues Iberia, St. Martin, St. Mary [LA]) till 11:45 PM CST HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"LCH updates Severe Thunderstorm Warning [tornado: POSSIBLE, wind: 60 MPH (RADAR INDICATED), hail: &lt;.75 IN (RADAR INDICATED)] (cancels Beauregard, Vernon [LA], continues Allen, Evangeline, Rapides [LA]) till 9:45 PM CST HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"LOX continues Severe Thunderstorm Warning [tornado: POSSIBLE, wind: 60 MPH (RADAR INDICATED), hail: &lt;.75 IN (RADAR INDICATED)] for Santa Barbara [CA] till 9:30 AM PST HTTPURL HTTPURL",1,1,Santa Barbara,34.4221319,-119.702667,6,4,Severe Meteorological (Tornado/Hail)
+"LIX issues Tornado Warning [tornado: RADAR INDICATED, hail: &lt;.75 IN] for Ascension, Assumption, St. James [LA] till 1:00 AM CST HTTPURL HTTPURL",1,1,St. James,51.5069112,-0.1331561,1,4,Severe Meteorological (Tornado/Hail)
+"Flash Flood Warning for Willowbrook: FFWLOX The National Weather Service in Los Angeles/Oxnard has extended the * Flash Flood Warning for, Southwestern Los Angeles County in southwestern California, * Until 400 PM PST. * At 152 PM PST, Doppler radar and automated rain gauges i...",1,1,Los Angeles/Oxnard,34.179088,-118.600493,8,1,Geological (Japan Earthquake/Tsunami)
+"1.8 magnitude #earthquake. 13 km S of Point Possession, Alaska HTTPURL",1,1,Alaska,64.4459613,-149.680909,4,1,Geological (Japan Earthquake/Tsunami)
+"Flash Flood Warning for Pasadena: FFWLOX The National Weather Service in Los Angeles/Oxnard has extended the * Flash Flood Warning for, Southwestern Los Angeles County in southwestern California, * Until 400 PM PST. * At 152 PM PST, Doppler radar and automated rain gauges indi...",1,1,Los Angeles/Oxnard,34.179088,-118.600493,8,1,Geological (Japan Earthquake/Tsunami)
+"6.2 magnitude earthquake detected in Japan, no tsunami warning issued 
+Source: ABC News HTTPURL",1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"The National Weather Service has issued a Severe Thunderstorm Warning for Caldwell, LA and Winn, LA beginning at 9:52 pm and ending at 10:52 pm",1,1,LA,20.0171109,103.378253,5,1,Geological (Japan Earthquake/Tsunami)
+"Flash Flood Warning for Anaheim: FFWLOX The National Weather Service in Los Angeles/Oxnard has extended the * Flash Flood Warning for, Southwestern Los Angeles County in southwestern California, * Until 400 PM PST. * At 152 PM PST, Doppler radar and automated rain gauges indic...",1,1,Los Angeles/Oxnard,34.179088,-118.600493,8,1,Geological (Japan Earthquake/Tsunami)
+"Flash Flood Warning for Lawndale: FFWLOX The National Weather Service in Los Angeles/Oxnard has issued a * Flash Flood Warning for, The Santa Monica Mountains, Including the Palisades and Franklin Burn Scars, And Surrounding Areas of Southwestern Los Angeles County in southwes...",1,1,Los Angeles/Oxnard,34.179088,-118.600493,8,1,Geological (Japan Earthquake/Tsunami)
+Severe Thunderstorm Warning for Santa Barbara County in CA until 9:30am PST. #tacswx #CAWX,1,1,Santa Barbara County,34.7136533,-119.985823,6,1,Geological (Japan Earthquake/Tsunami)
+"Japan has been hit by one of the strongest earthquakes of the year. Dozens of people have been injured.
+
+Japan has issued a tsunami warning following the earthquake.
+
+A magnitude 6.7 earthquake struck off the coast of the Japanese island of Hokkaido. HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"NWStornado: Tornado Warning continues for Gramercy LA, Lutcher LA and  Grand Point LA until 1:00 AM CST HTTPURL",1,1,LA,20.0171109,103.378253,5,1,Geological (Japan Earthquake/Tsunami)
+"LIX issues Severe Thunderstorm Warning [wind: 60 MPH (RADAR INDICATED), hail: 0.75 IN (RADAR INDICATED)] for Assumption, Lafourche, St. James, Terrebonne [LA] till 12:45 AM CST HTTPURL HTTPURL",1,1,St. James,51.5069112,-0.1331561,1,4,Severe Meteorological (Tornado/Hail)
+"Severe Thunderstorm Warning for Allen, Beauregard, Calcasieu and Vernon Parish in LA until 9:00pm CST. #lawx",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"6.7 Magnitude Earthquake Strikes Northeast Japan, Triggers Tsunami Alert HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"LOX issues Severe Thunderstorm Warning [tornado: POSSIBLE, wind: 60 MPH (RADAR INDICATED), hail: 0.75 IN (RADAR INDICATED)] for Santa Barbara [CA] till Feb 16, 9:30 AM PST HTTPURL HTTPURL",1,1,Santa Barbara,34.4221319,-119.702667,6,4,Severe Meteorological (Tornado/Hail)
+"SHV continues Severe Thunderstorm Warning [wind: 60 MPH (RADAR INDICATED), hail: 0.00 IN (RADAR INDICATED)] for Caldwell, Grant, La Salle, Winn [LA] till 9:45 PM CST HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"SHV issues Severe Thunderstorm Warning [wind: 60 MPH (RADAR INDICATED), hail: 0.00 IN (RADAR INDICATED)] for Grant, Natchitoches, Winn [LA] till 9:00 PM CST HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"Flash Flood Warning for Pico Rivera: FFWLOX The National Weather Service in Los Angeles/Oxnard has extended the * Flash Flood Warning for, Southwestern Los Angeles County in southwestern California, * Until 500 PM PST. * At 320 PM PST, Doppler radar and automated rain gauges i...",1,1,Los Angeles/Oxnard,34.179088,-118.600493,8,1,Geological (Japan Earthquake/Tsunami)
+"A few hours ago, a 6.7-magnitude earthquake struck off the coast of Japan’s northern island of Hokkaido
+
+Authorities urged residents to remain alert and follow safety guidelines due to the risk of a tsunami. HTTPURL",1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+"The National Weather Service has issued a Severe Thunderstorm Warning for Rapides, LA beginning at 9:37 pm and ending at 11:07 pm",1,1,LA,20.0171109,103.378253,5,1,Geological (Japan Earthquake/Tsunami)
+"⛈ Severe T-Storm Warning until 2:30 AM CST for SE St. Tammany (LA), Hancock, Harrison &amp; Pearl River (MS). Line moving E at 40 mph with 60 mph winds. Slidell, Picayune, Bay St. Louis impacted. Take shelter. Tornado Watch in effect.
+#LAwx #MSwx #SevereWeather HTTPURL",1,1,LA,20.0171109,103.378253,5,0,Arctic Storms & Volcanic Activity
+"6.7-magnitude earthquake hits Japan’s north-east region, tsunami warning lifted | The Straits Times HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"SHV issues Severe Thunderstorm Warning [wind: 60 MPH (RADAR INDICATED), hail: 0.00 IN (RADAR INDICATED)] for La Salle [LA] till 10:00 PM CST HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"SHV continues Severe Thunderstorm Warning [wind: 60 MPH (RADAR INDICATED), hail: 0.00 IN (RADAR INDICATED)] for Caldwell, Grant, La Salle, Winn [LA] till 9:45 PM CST HTTPURL HTTPURL",1,1,LA,20.0171109,103.378253,5,4,Severe Meteorological (Tornado/Hail)
+"Flash Flood Warning for South Gate: FFWLOX The National Weather Service in Los Angeles/Oxnard has extended the * Flash Flood Warning for, Southwestern Los Angeles County in southwestern California, * Until 400 PM PST. * At 152 PM PST, Doppler radar and automated rain gauges in...",1,1,Los Angeles/Oxnard,34.179088,-118.600493,8,1,Geological (Japan Earthquake/Tsunami)
+"Japan hit by another quake: M6.7-6.9 off Aomori coast today (Dec 12). Small tsunami waves (~20 cm) observed, advisory lifted. No major damage or injuries reported. Aftershock of last week’s M7.5 event. Stay alert! 🇯🇵 HTTPURL",1,1,Japan,36.5748441,139.2394179,3,4,Severe Meteorological (Tornado/Hail)
+"LCH updates Severe Thunderstorm Warning [tornado: POSSIBLE, wind: 60 MPH (RADAR INDICATED), hail: &lt;.75 IN (RADAR INDICATED)] (cancels Iberia [LA], continues St. Martin, St. Mary [LA]) till 12:30 AM CST HTTPURL HTTPURL",1,1,Iberia,39.8963997,-4.4974366,2,4,Severe Meteorological (Tornado/Hail)
+From spring warmth to blizzard: Japan braces for heavy snow on election day HTTPURL via @USER,1,1,Japan,36.5748441,139.2394179,3,2,Regional Meteorological Alerts (US South)
+"A 6.7 magnitude earthquake causes small tsunami waves off northeastern Japan
+
+HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"Y’all get the flash flood warning in LA?
+
+Like, life-threatening, in Koreatown???",1,1,LA,20.0171109,103.378253,5,1,Geological (Japan Earthquake/Tsunami)
+"6.2 magnitude earthquake detected in Japan, no tsunami warning issued HTTPURL",1,1,Japan,36.5748441,139.2394179,3,1,Geological (Japan Earthquake/Tsunami)
+Japan earthquake live: Tsunami alert lifted after 6.9-magnitude tremor HTTPURL,1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"DLH continues Blizzard Warning valid at Feb 17, 9:00 PM CST for Southern Cook/North Shore, Southern Lake/North Shore [MN] till Feb 19, 12:00 PM CST HTTPURL HTTPURL",1,1,Southern Lake/North,35.6485022,-80.9445473,7,4,Severe Meteorological (Tornado/Hail)
+WDSU Severe WX Alert Severe Thunderstorm Warning for Tangipahoa and Washington Parish in LA until 12:45am. HTTPURL #LAWX,1,1,LA,20.0171109,103.378253,5,1,Geological (Japan Earthquake/Tsunami)
+Tornado Warning for Santa Barbara County in CA until 1:15am PST. #cawx,1,1,Santa Barbara County,34.7136533,-119.985823,6,1,Geological (Japan Earthquake/Tsunami)
+"4.5 magnitude #earthquake. 68 km SW of False Pass, Alaska HTTPURL",1,1,Alaska,64.4459613,-149.680909,4,1,Geological (Japan Earthquake/Tsunami)
+got a flash flood warning in LA and once again i feel like this HTTPURL,1,1,LA,20.0171109,103.378253,5,3,Hydrological (Flash Floods) & Social Reports
+Japan Earthquake LIVE: Tsunami Alert In Japan After Back-To- Back Quakes Shake The Region | WION HTTPURL,1,1,Japan,36.5748441,139.2394179,3,3,Hydrological (Flash Floods) & Social Reports
+"A 6.7-magnitude quake took place off northern Japan on Friday, the weather office said, days after a 7.5-level tremor in the same region injured at least 50 people.
+HTTPURL HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"2.3 magnitude #earthquake. 70 km ESE of Pope-Vannoy Landing, Alaska HTTPURL",1,1,Alaska,64.4459613,-149.680909,4,1,Geological (Japan Earthquake/Tsunami)
+"Strong 6.7-magnitude earthquake strikes Japan, tsunami alert issued
+
+#Japan #Earthquake #TsunamiAlert #BreakingNews #NaturalDisaster
+@USER HTTPURL",1,1,Japan,36.5748441,139.2394179,3,0,Arctic Storms & Volcanic Activity
+"MAF issues Flash Flood Warning [flash flood: radar indicated] for Andrews, Ector, Martin, Midland [TX] till Feb 14, 1:30 AM CST HTTPURL HTTPURL",1,1,Martin,32.2675039,-101.9190317,0,4,Severe Meteorological (Tornado/Hail)
