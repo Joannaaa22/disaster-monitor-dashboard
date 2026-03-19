@@ -11,17 +11,20 @@ if 'view' not in st.session_state:
 if 'selected_country' not in st.session_state: 
     st.session_state.selected_country = None
 
-# 3. THEME & STYLING (Light Map + Dark Text/UI elements)
+# 3. THEME & STYLING
 st.markdown("""
     <style>
     [data-testid="stSidebar"] { display: none; }
     
-    /* Main background remains white/light for the map contrast */
+    /* Main background remains white */
     .stApp { background-color: #FFFFFF; }
     
-    /* Target the Title specifically to be the dark color you wanted */
+    /* Global Text Color set to #0E1117 */
+    h1, h2, h3, p, span, label, .stSelectbox label { 
+        color: #0E1117 !important; 
+    }
+    
     h1 { 
-        color: #1C1C1C !important; 
         font-weight: 800 !important;
     }
     
@@ -36,7 +39,7 @@ st.markdown("""
     /* Custom Reset Button Styling */
     div.stButton > button {
         background-color: #FFFFFF;
-        color: #1C1C1C;
+        color: #0E1117;
         border: 1px solid #D0D0D0;
         border-radius: 6px;
         width: 100%;
@@ -83,7 +86,7 @@ df['display_label'] = df['Disaster_Category'].apply(lambda x: DISASTER_CONFIG.ge
 # --- TOP NAVIGATION BAR ---
 t1, t2 = st.columns([7, 1])
 with t1:
-    st.title("Global Real-Time Disaster Monitor") # This is now the Dark Colour
+    st.title("Global Real-Time Disaster Monitor")
 with t2:
     if st.button("Reset View"):
         st.session_state.view = 'Global'
@@ -108,7 +111,8 @@ if view_mode == 'Global':
             get_radius=220000,
             pickable=True,
         )
-        # BACK TO LIGHT MAP STYLE
+        
+        # RESTORED MAP OUTLINE: map_style='mapbox://styles/mapbox/light-v10'
         st.pydeck_chart(pdk.Deck(
             map_style='mapbox://styles/mapbox/light-v10', 
             layers=[layer], 
@@ -119,18 +123,18 @@ if view_mode == 'Global':
     with col_ctrl:
         st.subheader("Incident Legend")
         
-        # Build HTML content safely
+        # Build HTML content safely for the legend
         legend_items_html = ""
         for key, info in DISASTER_CONFIG.items():
             rgb = f"rgb({info['color'][0]}, {info['color'][1]}, {info['color'][2]})"
             legend_items_html += f"""
                 <div style="display: flex; align-items: center; margin-bottom: 10px;">
                     <div style="width: 15px; height: 15px; background-color: {rgb}; border-radius: 50%; margin-right: 12px;"></div>
-                    <span style="font-size: 14px; color: #1C1C1C; font-weight: 500;">{info['label']}</span>
+                    <span style="font-size: 14px; color: #0E1117; font-weight: 500;">{info['label']}</span>
                 </div>
             """
         
-        # Render the legend box ONCE to prevent HTML code leaking
+        # Render legend box
         st.markdown(f'<div class="legend-box">{legend_items_html}</div>', unsafe_allow_html=True)
         
         st.write("") 
