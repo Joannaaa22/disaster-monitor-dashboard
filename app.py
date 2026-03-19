@@ -96,11 +96,11 @@ if st.session_state.view == 'Global':
             get_color="color",
             get_radius=180000,
             pickable=True,
-            stroked=True,       # Enable outlines
+            stroked=True,
             filled=True,
             radius_min_pixels=5,
-            line_width_min_pixels=2, # Thickness of the outline
-            get_line_color=[0, 0, 0]  # SET TO BLACK [R, G, B]
+            line_width_min_pixels=2,
+            get_line_color=[200, 200, 200]  # VERY LIGHT GREY OUTLINE
         )
         
         st.pydeck_chart(pdk.Deck(
@@ -111,28 +111,29 @@ if st.session_state.view == 'Global':
         ))
 
     with col_ctrl:
+        # ✅ UPDATED LEGEND (MATCHING LIGHT GREY BORDERS)
         st.markdown('''
             <div class="legend-box">
                 <h3 style="margin-top:0; font-size: 1.2rem;">Incident Legend</h3>
                 <div style="line-height: 2.2;">
                     <div style="display: flex; align-items: center; margin-bottom: 4px;">
-                        <div style="width: 14px; height: 14px; background-color: rgb(128, 0, 128); border: 1.5px solid #000; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
+                        <div style="width: 14px; height: 14px; background-color: rgb(128, 0, 128); border: 1.5px solid #C8C8C8; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Storms & Tornadoes</span>
                     </div>
                     <div style="display: flex; align-items: center; margin-bottom: 4px;">
-                        <div style="width: 14px; height: 14px; background-color: rgb(255, 0, 0); border: 1.5px solid #000; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
+                        <div style="width: 14px; height: 14px; background-color: rgb(255, 0, 0); border: 1.5px solid #C8C8C8; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Earthquakes & Tsunamis</span>
                     </div>
                     <div style="display: flex; align-items: center; margin-bottom: 4px;">
-                        <div style="width: 14px; height: 14px; background-color: rgb(100, 100, 255); border: 1.5px solid #000; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
+                        <div style="width: 14px; height: 14px; background-color: rgb(100, 100, 255); border: 1.5px solid #C8C8C8; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Extreme Cold & Volcanic</span>
                     </div>
                     <div style="display: flex; align-items: center; margin-bottom: 4px;">
-                        <div style="width: 14px; height: 14px; background-color: rgb(0, 255, 255); border: 1.5px solid #000; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
+                        <div style="width: 14px; height: 14px; background-color: rgb(0, 255, 255); border: 1.5px solid #C8C8C8; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Floods & Local Alerts</span>
                     </div>
                     <div style="display: flex; align-items: center; margin-bottom: 4px;">
-                        <div style="width: 14px; height: 14px; background-color: rgb(255, 165, 0); border: 1.5px solid #000; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
+                        <div style="width: 14px; height: 14px; background-color: rgb(255, 165, 0); border: 1.5px solid #C8C8C8; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></div>
                         <span style="font-size: 14px;">Regional Weather Alerts</span>
                     </div>
                 </div>
@@ -160,7 +161,17 @@ elif st.session_state.view == 'Detail':
         detail_view = pdk.ViewState(latitude=country_df['lat'].mean(), longitude=country_df['lon'].mean(), zoom=4)
         st.pydeck_chart(pdk.Deck(
             map_style='mapbox://styles/mapbox/light-v10',
-            layers=[pdk.Layer("ScatterplotLayer", country_df, get_position=["lon", "lat"], get_color="color", stroked=True, get_line_color=[0,0,0], line_width_min_pixels=2, get_radius=50000, pickable=True)],
+            layers=[pdk.Layer(
+                "ScatterplotLayer", 
+                country_df, 
+                get_position=["lon", "lat"], 
+                get_color="color", 
+                stroked=True, 
+                get_line_color=[200, 200, 200], 
+                line_width_min_pixels=2, 
+                get_radius=50000, 
+                pickable=True
+            )],
             initial_view_state=detail_view,
             tooltip={"text": "{Disaster_Category}"}
         ))
