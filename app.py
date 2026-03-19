@@ -43,7 +43,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# Helper function to render the legend (so we can put it anywhere)
+# Helper function to render the legend (Horizontal Layout for bottom placement)
 def render_legend():
     st.markdown('''
         <div class="legend-box">
@@ -77,6 +77,7 @@ def render_legend():
 @st.cache_data
 def load_data():
     df = pd.read_csv('final_dashboard_ready_data.csv')
+    df = df.dropna(subset=['lat', 'lon']) # Drop missing coordinates to prevent crashes
     np.random.seed(42) 
     df['lat'] = df['lat'] + np.random.uniform(-1.0, 1.0, len(df))
     df['lon'] = df['lon'] + np.random.uniform(-1.0, 1.0, len(df))
@@ -133,11 +134,14 @@ if st.session_state.view == 'Global':
             get_line_color=[80, 80, 80, 120] 
         )
         st.pydeck_chart(pdk.Deck(
-            map_style='mapbox://styles/mapbox/light-v10', 
+            map_style='light', # Changed for stability
             layers=[layer], 
             initial_view_state=view_state,
             tooltip={"text": "{location}\n{Disaster_Category}"}
         ))
+        
+        # Legend placed under the map
+        render_legend()
 
     with col_ctrl:
         st.subheader("Investigate Hotspot")
@@ -147,10 +151,6 @@ if st.session_state.view == 'Global':
             st.session_state.view = 'Detail'
             st.session_state.selected_country = selected
             st.rerun()
-        
-        st.write("")
-        # Add legend to sidebar in global view
-        render_legend()
 
 # --- DETAIL VIEW ---
 elif st.session_state.view == 'Detail':
@@ -161,37 +161,38 @@ elif st.session_state.view == 'Detail':
     d_map, d_list = st.columns([2, 1])
     
     with d_map:
-        # FIXED: Ensure view_state has valid mean values
-        detail_view = pdk.ViewState(
-            latitude=country_df['lat'].mean(), 
-            longitude=country_df['lon'].mean(), 
-            zoom=4,
-            pitch=0
-        )
-        
-        detail_layer = pdk.Layer(
-            "ScatterplotLayer",
-            country_df,
-            get_position=["lon", "lat"],
-            get_color="color",
-            get_radius=50000,
-            pickable=True,
-            stroked=True,
-            filled=True,
-            radius_min_pixels=5,
-            line_width_min_pixels=1,
-            get_line_color=[80, 80, 80, 120] 
-        )
-        
-        # FIXED: Explicitly defined the light-v10 style here
-        st.pydeck_chart(pdk.Deck(
-            map_style='mapbox://styles/mapbox/light-v10',
-            layers=[detail_layer],
-            initial_view_state=detail_view,
-            tooltip={"text": "{Disaster_Category}"}
-        ))
-        
-        # ✅ ADDED: Legend placed directly under the map
+        if not country_df.empty:
+            detail_view = pdk.ViewState(
+                latitude=country_df['lat'].mean(), 
+                longitude=country_df['lon'].mean(), 
+                zoom=4,
+                pitch=0
+            )
+            
+            detail_layer = pdk.Layer(
+                "ScatterplotLayer",
+                country_df,
+                get_position=["lon", "lat"],
+                get_color="color",
+                get_radius=50000,
+                pickable=True,
+                stroked=True,
+                filled=True,
+                radius_min_pixels=5,
+                line_width_min_pixels=1,
+                get_line_color=[80, 80, 80, 120] 
+            )
+            
+            st.pydeck_chart(pdk.Deck(
+                map_style='light', # Changed for stability
+                layers=[detail_layer],
+                initial_view_state=detail_view,
+                tooltip={"text": "{Disaster_Category}"}
+            ))
+        else:
+            st.warning("No data found for this location.")
+            
+        # Legend placed directly under the map
         render_legend()
     
     with d_list:
