@@ -8,20 +8,36 @@ st.set_page_config(page_title="Global Crisis Monitor", layout="wide")
 # 2. FORCE TOTAL WHITE THEME (Main & Sidebar)
 st.markdown("""
     <style>
-    .stApp { background-color: #FFFFFF; }
+    /* Main background */
+    .stApp {
+        background-color: #FFFFFF;
+    }
+    /* Sidebar background */
     [data-testid="stSidebar"] {
         background-color: #F8F9FA;
         border-right: 1px solid #E0E0E0;
     }
-    h1, h2, h3, p { color: #1C1C1C !important; }
-    .stAlert {
+    /* FIX FOR RESET BUTTON: Light background, Dark text */
+    div.stButton > button {
         background-color: #FFFFFF;
-        border: 1px solid #E0E0E0;
+        color: #1C1C1C;
+        border: 1px solid #D0D0D0;
         border-radius: 8px;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+    /* Hover effect for the button */
+    div.stButton > button:hover {
+        background-color: #E0E0E0;
+        border-color: #1C1C1C;
+        color: #000000;
+    }
+    /* Titles and Text */
+    h1, h2, h3, p {
+        color: #1C1C1C !important;
     }
     </style>
     """, unsafe_allow_html=True)
-
 # 3. Load Data
 @st.cache_data
 def load_data():
