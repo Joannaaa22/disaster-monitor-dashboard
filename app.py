@@ -5,14 +5,10 @@ import pydeck as pdk
 # 1. Page Config
 st.set_page_config(page_title="Global Crisis Monitor", layout="wide")
 
-# 2. FORCE TOTAL WHITE THEME (Main & Sidebar)
+# 2. THEME & BUTTON STYLING
 st.markdown("""
     <style>
-    /* Main background */
-    .stApp {
-        background-color: #FFFFFF;
-    }
-    /* Sidebar background */
+    .stApp { background-color: #FFFFFF; }
     [data-testid="stSidebar"] {
         background-color: #F8F9FA;
         border-right: 1px solid #E0E0E0;
@@ -24,20 +20,16 @@ st.markdown("""
         border: 1px solid #D0D0D0;
         border-radius: 8px;
         width: 100%;
-        transition: all 0.3s ease;
     }
-    /* Hover effect for the button */
     div.stButton > button:hover {
         background-color: #E0E0E0;
         border-color: #1C1C1C;
         color: #000000;
     }
-    /* Titles and Text */
-    h1, h2, h3, p {
-        color: #1C1C1C !important;
-    }
+    h1, h2, h3, p { color: #1C1C1C !important; }
     </style>
     """, unsafe_allow_html=True)
+
 # 3. Load Data
 @st.cache_data
 def load_data():
@@ -46,27 +38,31 @@ def load_data():
 df = load_data()
 
 # Initialize Session State
-if 'view' not in st.session_state:
-    st.session_state.view = 'Global'
-if 'selected_country' not in st.session_state:
-    st.session_state.selected_country = None
+if 'view' not in st.session_state: st.session_state.view = 'Global'
 
-# 4. Sidebar Content
-st.sidebar.title("🗺️ Controls")
+# 4. SIDEBAR (Removed "Controls" text)
+st.sidebar.markdown("## 🗺️ Navigation")
 
+# Corrected Legend - Matching the Map Colors exactly
 st.sidebar.subheader("Disaster Legend")
-st.sidebar.write("🔵 Arctic/Volcanic")
-st.sidebar.write("🔴 Japan Earthquake")
-st.sidebar.write("🟠 US South Storms")
-st.sidebar.write("🟢 Floods/Social")
-st.sidebar.write("🟣 Tornado/Hail")
+st.sidebar.markdown("""
+<div style="line-height: 2;">
+    <span style="color: rgb(100, 100, 255); font-size: 20px;">●</span> Arctic/Volcanic<br>
+    <span style="color: rgb(255, 0, 0); font-size: 20px;">●</span> Japan Earthquake<br>
+    <span style="color: rgb(255, 165, 0); font-size: 20px;">●</span> US South Storms<br>
+    <span style="color: rgb(0, 255, 255); font-size: 20px;">●</span> Floods/Social<br>
+    <span style="color: rgb(128, 0, 128); font-size: 20px;">●</span> Tornado/Hail
+</div>
+""", unsafe_allow_html=True)
+
+st.sidebar.write("---")
 
 if st.sidebar.button("🌍 Reset to Global View"):
     st.session_state.view = 'Global'
     st.session_state.selected_country = None
     st.rerun()
 
-# 5. Color Mapping
+# 5. Color Mapping Logic (The Source of Truth)
 color_lookup = {
     "Arctic Storms & Volcanic Activity": [100, 100, 255, 160],
     "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 160],
@@ -80,7 +76,8 @@ df['color'] = df['Disaster_Category'].map(color_lookup)
 if st.session_state.view == 'Global':
     st.title("Global Real-Time Disaster Map")
     
-    view_state = pdk.ViewState(latitude=20, longitude=0, zoom=1.2, pitch=0)
+    # Increased zoom to 2.0 to help map outlines appear
+    view_state = pdk.ViewState(latitude=20, longitude=0, zoom=2.0, pitch=0)
     
     layer = pdk.Layer(
         "ScatterplotLayer",
@@ -91,7 +88,6 @@ if st.session_state.view == 'Global':
         pickable=True,
     )
 
-    # Use 'road' or 'light' for built-in map outlines without a token
     st.pydeck_chart(pdk.Deck(
         map_style='light', 
         layers=[layer], 
