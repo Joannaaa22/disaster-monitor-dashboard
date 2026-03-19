@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import pydeck as pdk
+import numpy as np
 
 # 1. Page Config
 st.set_page_config(page_title="DisasterMonitor AI", layout="wide", initial_sidebar_state="collapsed")
@@ -41,10 +42,19 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# 3. Load Data
+# 3. Load Data with Jittering Logic
 @st.cache_data
 def load_data():
-    return pd.read_csv('final_dashboard_ready_data.csv')
+    df = pd.read_csv('final_dashboard_ready_data.csv')
+    
+    # --- ADD JITTERING ---
+    # Because many events have the exact same lat/lon, we add a tiny bit of 
+    # random noise so they spread out slightly and all become visible.
+    np.random.seed(42) # Keeps the points in the same spot on refresh
+    df['lat'] = df['lat'] + np.random.uniform(-0.25, 0.25, len(df))
+    df['lon'] = df['lon'] + np.random.uniform(-0.25, 0.25, len(df))
+    
+    return df
 
 df = load_data()
 
@@ -68,7 +78,7 @@ df['color'] = df['Disaster_Category'].map(color_lookup)
 # --- TOP NAVIGATION BAR ---
 t1, t2 = st.columns([7, 1])
 with t1:
-    st.title("Global Real-Time Disaster Monitor") # EMOJI REMOVED
+    st.title("Global Real-Time Disaster Monitor")
 with t2:
     if st.button("Reset View"):
         st.session_state.view = 'Global'
@@ -99,7 +109,7 @@ if st.session_state.view == 'Global':
         ))
 
     with col_ctrl:
-        # ✅ UPDATED LEGEND (CSS CIRCLES + CLEAN NAMES)
+        # ✅ LEGEND (CSS CIRCLES + CLEAN NAMES)
         st.markdown('''
             <div class="legend-box">
                 <h3 style="margin-top:0; font-size: 1.2rem;">Incident Legend</h3>
@@ -140,7 +150,7 @@ if st.session_state.view == 'Global':
 # --- DETAIL VIEW ---
 elif st.session_state.view == 'Detail':
     country = st.session_state.selected_country
-    st.subheader(f"Detailed Analysis: {country}") # PIN EMOJI REMOVED
+    st.subheader(f"Detailed Analysis: {country}")
     
     country_df = df[df['location'] == country]
     
