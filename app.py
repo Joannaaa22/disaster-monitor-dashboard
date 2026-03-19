@@ -48,13 +48,70 @@ if 'view' not in st.session_state:
 if 'selected_country' not in st.session_state: 
     st.session_state.selected_country = None
 
-# 4. COLOR MAPPING
+import streamlit as st
+import pandas as pd
+import pydeck as pdk
+
+# 1. Page Config
+st.set_page_config(page_title="CrisisMonitor AI", layout="wide", initial_sidebar_state="collapsed")
+
+# 2. THEME & STYLING
+st.markdown("""
+    <style>
+    /* Hide Sidebar */
+    [data-testid="stSidebar"] { display: none; }
+    
+    /* Main background */
+    .stApp { background-color: #FFFFFF; }
+    
+    /* Custom Reset Button Styling */
+    div.stButton > button {
+        background-color: #FFFFFF;
+        color: #1C1C1C;
+        border: 1px solid #D0D0D0;
+        border-radius: 6px;
+        width: 100%;
+        font-weight: 500;
+    }
+    div.stButton > button:hover {
+        background-color: #F0F2F6;
+        border-color: #1C1C1C;
+    }
+    
+    /* Text Colors */
+    h1, h2, h3, p, span { color: #1C1C1C !important; }
+    
+    /* Legend Box Styling */
+    .legend-box {
+        padding: 20px;
+        border: 1px solid #E0E0E0;
+        border-radius: 10px;
+        background-color: #FDFDFD;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+# 3. Load Data
+@st.cache_data
+def load_data():
+    # Ensure this filename matches exactly what is in your GitHub repo
+    return pd.read_csv('final_dashboard_ready_data.csv')
+
+df = load_data()
+
+# Session State Initialization
+if 'view' not in st.session_state: 
+    st.session_state.view = 'Global'
+if 'selected_country' not in st.session_state: 
+    st.session_state.selected_country = None
+
+# 4. COLOR MAPPING (The Source of Truth for Legend & Map)
 color_lookup = {
-    "Arctic Storms & Volcanic Activity": [100, 100, 255, 180],
-    "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 180],
-    "Regional Meteorological Alerts (US South)": [255, 165, 0, 180],
-    "Hydrological (Flash Floods) & Social Reports": [0, 255, 255, 180],
-    "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 180]
+    "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 180],      # Purple
+    "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 180],       # Red
+    "Arctic Storms & Volcanic Activity": [100, 100, 255, 180],       # Blue
+    "Hydrological (Flash Floods) & Social Reports": [0, 255, 255, 180], # Cyan
+    "Regional Meteorological Alerts (US South)": [255, 165, 0, 180]   # Orange
 }
 
 df['color'] = df['Disaster_Category'].map(color_lookup)
@@ -62,7 +119,7 @@ df['color'] = df['Disaster_Category'].map(color_lookup)
 # --- TOP NAVIGATION BAR ---
 t1, t2 = st.columns([7, 1])
 with t1:
-    st.title("Global Real-Time Disaster Monitor")
+    st.title("🌍 Global Real-Time Crisis Monitor")
 with t2:
     if st.button("Reset View"):
         st.session_state.view = 'Global'
@@ -93,19 +150,20 @@ if st.session_state.view == 'Global':
         ))
 
     with col_ctrl:
-        # ✅ DYNAMIC LEGEND (AUTO-SYNC WITH MAP)
+        # ✅ DYNAMIC LEGEND GENERATOR (Synchronized)
         legend_html = '<div class="legend-box">'
-        legend_html += '<h3 style="margin-top:0;">Incident Legend</h3>'
-        legend_html += '<div style="line-height: 2.2;">'
+        legend_html += '<h3 style="margin-top:0; font-size: 1.2rem;">Incident Legend</h3>'
+        legend_html += '<div style="line-height: 2.0;">'
 
         for category, color in color_lookup.items():
-            rgb = f"rgb({color[0]}, {color[1]}, {color[2]})"
+            rgb_str = f"rgb({color[0]}, {color[1]}, {color[2]})"
             legend_html += f'''
-                <span style="color: {rgb}; font-size: 20px;">●</span> {category}<br>
+                <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                    <span style="color: {rgb_str}; font-size: 24px; margin-right: 12px;">●</span>
+                    <span style="font-size: 14px; color: #1C1C1C;">{category}</span>
+                </div>
             '''
-
         legend_html += '</div></div>'
-
         st.markdown(legend_html, unsafe_allow_html=True)
         
         st.write("") 
@@ -120,13 +178,14 @@ if st.session_state.view == 'Global':
 # --- DETAIL VIEW ---
 elif st.session_state.view == 'Detail':
     country = st.session_state.selected_country
-    st.subheader(f"Detailed Analysis: {country}")
+    st.subheader(f"📍 Detailed Analysis: {country}")
     
     country_df = df[df['location'] == country]
     
     d_map, d_list = st.columns([2, 1])
     
     with d_map:
+        # Synchronized Light-themed Detail Map
         detail_view = pdk.ViewState(
             latitude=country_df['lat'].mean(), 
             longitude=country_df['lon'].mean(), 
