@@ -8,10 +8,7 @@ st.set_page_config(page_title="DisasterMonitor AI", layout="wide", initial_sideb
 # 2. THEME & STYLING
 st.markdown("""
     <style>
-    /* Hide Sidebar */
     [data-testid="stSidebar"] { display: none; }
-    
-    /* Main background */
     .stApp { background-color: #FFFFFF; }
     
     /* Custom Reset Button Styling */
@@ -23,30 +20,31 @@ st.markdown("""
         width: 100%;
         font-weight: 500;
     }
-    div.stButton > button:hover {
-        background-color: #F0F2F6;
-        border-color: #1C1C1C;
-    }
     
     /* Text Colors */
     h1, h2, h3, p, span { color: #1C1C1C !important; }
     
     /* Legend Box Styling */
     .legend-box {
-        padding: 20px;
+        padding: 15px;
         border: 1px solid #E0E0E0;
         border-radius: 10px;
         background-color: #FDFDFD;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
     
-    /* Custom Circle Swatch for Legend */
+    .legend-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
     .legend-circle {
         width: 14px;
         height: 14px;
         border-radius: 50%;
         margin-right: 12px;
-        display: inline-block;
-        border: 1px solid rgba(0,0,0,0.1);
+        border: 1px solid rgba(0,0,0,0.2);
     }
     </style>
     """, unsafe_allow_html=True)
@@ -54,8 +52,8 @@ st.markdown("""
 # 3. Load Data
 @st.cache_data
 def load_data():
-    # Ensure the CSV is in the same directory
-    return pd.read_csv('final_dashboard_ready_data.csv')
+    data = pd.read_csv('final_dashboard_ready_data.csv')
+    return data
 
 df = load_data()
 
@@ -66,33 +64,39 @@ if 'selected_country' not in st.session_state:
     st.session_state.selected_country = None
 
 # --- 4. CONFIGURATION (Source of Truth) ---
-# Maps the CSV category names to "Clean Labels" and "RGB Colors"
 DISASTER_CONFIG = {
     "Severe Meteorological (Tornado/Hail)": {
         "label": "Storms & Tornadoes",
-        "color": [128, 0, 128, 180]  # Purple
+        "color": [128, 0, 128, 200]  # Purple
     },
     "Geological (Japan Earthquake/Tsunami)": {
         "label": "Earthquakes & Tsunamis",
-        "color": [255, 0, 0, 180]    # Red
+        "color": [255, 0, 0, 200]    # Red
     },
     "Arctic Storms & Volcanic Activity": {
         "label": "Arctic & Volcanic Activity",
-        "color": [100, 100, 255, 180] # Blue
+        "color": [100, 100, 255, 200] # Blue
     },
     "Hydrological (Flash Floods) & Social Reports": {
         "label": "Floods & Social Alerts",
-        "color": [0, 255, 255, 180]  # Cyan
+        "color": [0, 200, 200, 200]  # Darker Cyan for visibility
     },
     "Regional Meteorological Alerts (US South)": {
         "label": "Regional Weather",
-        "color": [255, 165, 0, 180]  # Orange
+        "color": [255, 165, 0, 200]  # Orange
     }
 }
 
-# Map the colors and friendly labels back to the dataframe
-df['color'] = df['Disaster_Category'].map(lambda x: DISASTER_CONFIG.get(x, {"color": [150, 150, 150, 180]})['color'])
-df['display_label'] = df['Disaster_Category'].map(lambda x: DISASTER_CONFIG.get(x, {"label": x})['label'])
+# --- 5. DATA PREPARATION ---
+# Explicitly map colors and labels to ensure Pydeck can read the lists correctly
+def get_color(cat):
+    return DISASTER_CONFIG.get(cat, {"color": [150, 150, 150, 200]})["color"]
+
+def get_label(cat):
+    return DISASTER_CONFIG.get(cat, {"label": cat})["label"]
+
+df['color'] = df['Disaster_Category'].apply(get_color)
+df['display_label'] = df['Disaster_Category'].apply(get_label)
 
 # --- TOP NAVIGATION BAR ---
 t1, t2 = st.columns([7, 1])
@@ -112,16 +116,20 @@ if st.session_state.view == 'Global':
     
     with col_map:
         view_state = pdk.ViewState(latitude=20, longitude=0, zoom=1.4, pitch=0)
+        
+        # We use a ScatterplotLayer with explicit color handling
         layer = pdk.Layer(
             "ScatterplotLayer",
             df,
             get_position=["lon", "lat"],
-            get_color="color",
+            get_color="color", # This looks at the 'color' column which is a list [R, G, B, A]
             get_radius=220000,
             pickable=True,
+            filled=True,
         )
+        
         st.pydeck_chart(pdk.Deck(
-            map_style='light', 
+            map_style='mapbox://styles/mapbox/light-v10', 
             layers=[layer], 
             initial_view_state=view_state,
             tooltip={"text": "{location}\nCategory: {display_label}"}
@@ -129,13 +137,16 @@ if st.session_state.view == 'Global':
 
     with col_ctrl:
         # --- DYNAMIC LEGEND ---
-        legend_html = '<div class="legend-box"><h3 style="margin-top:0; font-size: 1.1rem;">Incident Legend</h3>'
+        legend_html = '<div class="legend-box"><h3 style="margin-top:0; font-size: 1.1rem; margin-bottom:15px;">Incident Legend</h3>'
         for cat, info in DISASTER_CONFIG.items():
-            rgb = f"rgb({info['color'][0]}, {info['color'][1]}, {info['color'][2]})"
+            # Convert RGB list to string for CSS
+            c = info['color']
+            rgb_str = f"rgb({c[0]}, {c[1]}, {c[2]})"
+            
             legend_html += f'''
-                <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                    <div class="legend-circle" style="background-color: {rgb};"></div>
-                    <span style="font-size: 13px; font-weight: 500;">{info['label']}</span>
+                <div class="legend-item">
+                    <div class="legend-circle" style="background-color: {rgb_str};"></div>
+                    <span style="font-size: 13px; font-weight: 500; color: #333;">{info['label']}</span>
                 </div>
             '''
         legend_html += '</div>'
@@ -171,11 +182,11 @@ elif st.session_state.view == 'Detail':
             country_df,
             get_position=["lon", "lat"],
             get_color="color", 
-            get_radius=50000,
+            get_radius=40000,
             pickable=True,
         )
         st.pydeck_chart(pdk.Deck(
-            map_style='light',
+            map_style='mapbox://styles/mapbox/light-v10',
             layers=[detail_layer],
             initial_view_state=detail_view,
             tooltip={"text": "Category: {display_label}"}
@@ -184,4 +195,5 @@ elif st.session_state.view == 'Detail':
     with d_list:
         st.write(f"Showing {len(country_df)} incidents")
         for _, row in country_df.iterrows():
+            # Use the cleaner label in the info box too
             st.info(f"**{row['display_label']}**\n\n{row['Tweet_Text']}")
