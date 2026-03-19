@@ -42,17 +42,16 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# 3. Load Data with Jittering Logic
+# 3. Load Data with SIGNIFICANT Jittering
 @st.cache_data
 def load_data():
     df = pd.read_csv('final_dashboard_ready_data.csv')
     
-    # --- ADD JITTERING ---
-    # Because many events have the exact same lat/lon, we add a tiny bit of 
-    # random noise so they spread out slightly and all become visible.
-    np.random.seed(42) # Keeps the points in the same spot on refresh
-    df['lat'] = df['lat'] + np.random.uniform(-0.25, 0.25, len(df))
-    df['lon'] = df['lon'] + np.random.uniform(-0.25, 0.25, len(df))
+    # --- ADD "A LOT MORE" JITTERING ---
+    # Increased from 0.25 to 1.5 to ensure points are widely spread out
+    np.random.seed(42) 
+    df['lat'] = df['lat'] + np.random.uniform(-1.5, 1.5, len(df))
+    df['lon'] = df['lon'] + np.random.uniform(-1.5, 1.5, len(df))
     
     return df
 
