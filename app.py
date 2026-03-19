@@ -5,16 +5,13 @@ import pydeck as pdk
 # 1. Page Config
 st.set_page_config(page_title="DisasterMonitor AI", layout="wide", initial_sidebar_state="collapsed")
 
-# 2. THEME & STYLING
+# 2. THEME & STYLING (Pure White Professional Look)
 st.markdown("""
     <style>
-    /* Hide Sidebar */
     [data-testid="stSidebar"] { display: none; }
-    
-    /* Main background */
     .stApp { background-color: #FFFFFF; }
     
-    /* Custom Reset Button Styling */
+    /* Reset Button */
     div.stButton > button {
         background-color: #FFFFFF;
         color: #1C1C1C;
@@ -28,15 +25,15 @@ st.markdown("""
         border-color: #1C1C1C;
     }
     
-    /* Text Colors */
     h1, h2, h3, p, span { color: #1C1C1C !important; }
     
-    /* Legend Box Styling */
+    /* Legend Box with subtle shadow for depth */
     .legend-box {
         padding: 20px;
         border: 1px solid #E0E0E0;
         border-radius: 10px;
         background-color: #FDFDFD;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
     }
     </style>
     """, unsafe_allow_html=True)
@@ -48,19 +45,17 @@ def load_data():
 
 df = load_data()
 
-# Session State Initialization
-if 'view' not in st.session_state: 
-    st.session_state.view = 'Global'
-if 'selected_country' not in st.session_state: 
-    st.session_state.selected_country = None
+# Session State
+if 'view' not in st.session_state: st.session_state.view = 'Global'
+if 'selected_country' not in st.session_state: st.session_state.selected_country = None
 
-# 4. COLOR MAPPING (Source of Truth for Map)
+# 4. COLOR MAPPING (Exact RGB matches for Legend)
 color_lookup = {
-    "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 180],      # Purple
-    "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 180],       # Red
-    "Arctic Storms & Volcanic Activity": [100, 100, 255, 180],       # Blue
-    "Hydrological (Flash Floods) & Social Reports": [0, 255, 255, 180], # Cyan
-    "Regional Meteorological Alerts (US South)": [255, 165, 0, 180]   # Orange
+    "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 200],      # Purple
+    "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 200],       # Red
+    "Arctic Storms & Volcanic Activity": [100, 100, 255, 200],       # Blue
+    "Hydrological (Flash Floods) & Social Reports": [0, 200, 200, 200], # Dark Cyan
+    "Regional Meteorological Alerts (US South)": [255, 140, 0, 200]   # Dark Orange
 }
 
 df['color'] = df['Disaster_Category'].map(color_lookup)
@@ -68,7 +63,7 @@ df['color'] = df['Disaster_Category'].map(color_lookup)
 # --- TOP NAVIGATION BAR ---
 t1, t2 = st.columns([7, 1])
 with t1:
-    st.title("Global Real-Time Disaster Monitor") # EMOJI REMOVED
+    st.title("Global Real-Time Disaster Monitor")
 with t2:
     if st.button("Reset View"):
         st.session_state.view = 'Global'
@@ -99,30 +94,30 @@ if st.session_state.view == 'Global':
         ))
 
     with col_ctrl:
-        # ✅ HARD-CODED LEGEND (EXACT COLORS)
+        # ✅ HARD-CODED LEGEND WITH CLEAR NAMES
         st.markdown('''
             <div class="legend-box">
-                <h3 style="margin-top:0; font-size: 1.2rem;">Incident Legend</h3>
-                <div style="line-height: 2.2;">
+                <h3 style="margin-top:0; font-size: 1.1rem; border-bottom: 1px solid #EEE; padding-bottom:10px;">Incident Legend</h3>
+                <div style="line-height: 2.5;">
                     <div style="display: flex; align-items: center;">
-                        <span style="color: rgb(128, 0, 128); font-size: 24px; margin-right: 12px;">●</span>
-                        <span style="font-size: 14px;">Severe Meteorological (Tornado/Hail)</span>
+                        <span style="color: rgb(128, 0, 128); font-size: 28px; margin-right: 15px;">●</span>
+                        <b style="font-size: 14px;">Tornadoes & Hail</b>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <span style="color: rgb(255, 0, 0); font-size: 24px; margin-right: 12px;">●</span>
-                        <span style="font-size: 14px;">Geological (Japan Earthquake/Tsunami)</span>
+                        <span style="color: rgb(255, 0, 0); font-size: 28px; margin-right: 15px;">●</span>
+                        <b style="font-size: 14px;">Earthquakes & Tsunamis</b>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <span style="color: rgb(100, 100, 255); font-size: 24px; margin-right: 12px;">●</span>
-                        <span style="font-size: 14px;">Arctic Storms & Volcanic Activity</span>
+                        <span style="color: rgb(100, 100, 255); font-size: 28px; margin-right: 15px;">●</span>
+                        <b style="font-size: 14px;">Arctic Storms & Volcanoes</b>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <span style="color: rgb(0, 255, 255); font-size: 24px; margin-right: 12px;">●</span>
-                        <span style="font-size: 14px;">Hydrological (Flash Floods) & Social Reports</span>
+                        <span style="color: rgb(0, 200, 200); font-size: 28px; margin-right: 15px;">●</span>
+                        <b style="font-size: 14px;">Floods & Citizen Reports</b>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <span style="color: rgb(255, 165, 0); font-size: 24px; margin-right: 12px;">●</span>
-                        <span style="font-size: 14px;">Regional Meteorological Alerts (US South)</span>
+                        <span style="color: rgb(255, 140, 0); font-size: 28px; margin-right: 15px;">●</span>
+                        <b style="font-size: 14px;">Severe Thunderstorms (US)</b>
                     </div>
                 </div>
             </div>
@@ -140,7 +135,7 @@ if st.session_state.view == 'Global':
 # --- DETAIL VIEW ---
 elif st.session_state.view == 'Detail':
     country = st.session_state.selected_country
-    st.subheader(f"Detailed Analysis: {country}") # PIN EMOJI REMOVED
+    st.subheader(f"Detailed Analysis: {country}")
     
     country_df = df[df['location'] == country]
     
@@ -169,6 +164,6 @@ elif st.session_state.view == 'Detail':
         ))
     
     with d_list:
-        st.write(f"Showing {len(country_df)} incidents")
+        st.write(f"Active Reports: {len(country_df)}")
         for _, row in country_df.iterrows():
             st.info(f"**{row['Disaster_Category']}**\n\n{row['Tweet_Text']}")
