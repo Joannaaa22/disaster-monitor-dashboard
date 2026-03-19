@@ -82,9 +82,9 @@ if st.session_state.view == 'Global':
         pickable=True,
     )
 
-    st.pydeck_chart(pdk.Deck(
-        # Light-v10 provides the grey outlines on white land
-        map_style="mapbox://styles/mapbox/light-v10", 
+     st.pydeck_chart(pdk.Deck(
+        # 'light' is a built-in deck.gl style that doesn't rely on Mapbox servers
+        map_style='light', 
         layers=[layer], 
         initial_view_state=view_state,
         tooltip={"text": "Location: {location}\nCategory: {Disaster_Category}"}
