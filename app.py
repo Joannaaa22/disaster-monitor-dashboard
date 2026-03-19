@@ -56,11 +56,11 @@ if 'selected_country' not in st.session_state:
 
 # 4. COLOR MAPPING (Source of Truth for Map)
 color_lookup = {
-    "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 180],      # Purple
-    "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 180],       # Red
-    "Arctic Storms & Volcanic Activity": [100, 100, 255, 180],       # Blue
-    "Hydrological (Flash Floods) & Social Reports": [0, 255, 255, 180], # Cyan
-    "Regional Meteorological Alerts (US South)": [255, 165, 0, 180]   # Orange
+    "Storms & Tornadoes": [128, 0, 128, 180],      # Purple
+    "Earthquakes & Tsunamis": [255, 0, 0, 180],       # Red
+    "Extreme Cold & Volcanic": [100, 100, 255, 180],       # Blue
+    "Floods & Local Alerts": [0, 255, 255, 180], # Cyan
+    "Regional Weather Alerts": [255, 165, 0, 180]   # Orange
 }
 
 df['color'] = df['Disaster_Category'].map(color_lookup)
