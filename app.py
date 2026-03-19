@@ -5,17 +5,16 @@ import pydeck as pdk
 # 1. Page Config
 st.set_page_config(page_title="DisasterMonitor AI", layout="wide", initial_sidebar_state="collapsed")
 
-# 2. SESSION STATE INITIALIZATION
-if 'view' not in st.session_state: 
-    st.session_state.view = 'Global'
-if 'selected_country' not in st.session_state: 
-    st.session_state.selected_country = None
-
-# 3. THEME & STYLING
+# 2. THEME & STYLING
 st.markdown("""
     <style>
+    /* Hide Sidebar */
     [data-testid="stSidebar"] { display: none; }
+    
+    /* Main background */
     .stApp { background-color: #FFFFFF; }
+    
+    /* Custom Reset Button Styling */
     div.stButton > button {
         background-color: #FFFFFF;
         color: #1C1C1C;
@@ -24,7 +23,15 @@ st.markdown("""
         width: 100%;
         font-weight: 500;
     }
+    div.stButton > button:hover {
+        background-color: #F0F2F6;
+        border-color: #1C1C1C;
+    }
+    
+    /* Text Colors */
     h1, h2, h3, p, span { color: #1C1C1C !important; }
+    
+    /* Legend Box Styling */
     .legend-box {
         padding: 20px;
         border: 1px solid #E0E0E0;
@@ -34,46 +41,34 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# 4. Load Data
+# 3. Load Data
 @st.cache_data
 def load_data():
     return pd.read_csv('final_dashboard_ready_data.csv')
 
 df = load_data()
 
-# --- 5. CENTRAL CONFIGURATION (The "Source of Truth") ---
-# Key = Exact string in CSV | Label = What you want the user to see | Color = RGB
-DISASTER_CONFIG = {
-    "Severe Meteorological (Tornado/Hail)": {
-        "label": "Storms & Tornadoes",
-        "color": [128, 0, 128, 180]  # Purple
-    },
-    "Geological (Japan Earthquake/Tsunami)": {
-        "label": "Earthquakes & Tsunamis",
-        "color": [255, 0, 0, 180]    # Red
-    },
-    "Arctic Storms & Volcanic Activity": {
-        "label": "Extreme Cold & Volcanic",
-        "color": [100, 100, 255, 180] # Blue
-    },
-    "Hydrological (Flash Floods) & Social Reports": {
-        "label": "Floods & Local Alerts",
-        "color": [0, 255, 255, 180]  # Cyan
-    },
-    "Regional Meteorological Alerts (US South)": {
-        "label": "Regional Weather Alerts",
-        "color": [255, 165, 0, 180]  # Orange
-    }
+# Session State Initialization
+if 'view' not in st.session_state: 
+    st.session_state.view = 'Global'
+if 'selected_country' not in st.session_state: 
+    st.session_state.selected_country = None
+
+# 4. COLOR MAPPING (Source of Truth for Map)
+color_lookup = {
+    "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 180],      # Purple
+    "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 180],       # Red
+    "Arctic Storms & Volcanic Activity": [100, 100, 255, 180],       # Blue
+    "Hydrological (Flash Floods) & Social Reports": [0, 255, 255, 180], # Cyan
+    "Regional Meteorological Alerts (US South)": [255, 165, 0, 180]   # Orange
 }
 
-# Apply colors and clean labels to the dataframe
-df['color'] = df['Disaster_Category'].apply(lambda x: DISASTER_CONFIG.get(x, {"color": [150, 150, 150, 180]})['color'])
-df['display_label'] = df['Disaster_Category'].apply(lambda x: DISASTER_CONFIG.get(x, {"label": x})['label'])
+df['color'] = df['Disaster_Category'].map(color_lookup)
 
 # --- TOP NAVIGATION BAR ---
 t1, t2 = st.columns([7, 1])
 with t1:
-    st.title("Global Real-Time Disaster Monitor")
+    st.title("Global Real-Time Disaster Monitor") # EMOJI REMOVED
 with t2:
     if st.button("Reset View"):
         st.session_state.view = 'Global'
@@ -82,10 +77,8 @@ with t2:
 
 st.divider()
 
-# --- APP LOGIC ---
-current_view = st.session_state.get('view', 'Global')
-
-if current_view == 'Global':
+# --- GLOBAL VIEW ---
+if st.session_state.view == 'Global':
     col_map, col_ctrl = st.columns([3, 1])
     
     with col_map:
@@ -102,54 +95,80 @@ if current_view == 'Global':
             map_style='light', 
             layers=[layer], 
             initial_view_state=view_state,
-            tooltip={"text": "{location}\n{display_label}"}
+            tooltip={"text": "{location}\n{Disaster_Category}"}
         ))
 
     with col_ctrl:
-        # --- DYNAMIC LEGEND (Built from the Config) ---
-        legend_html = '<div class="legend-box"><h3 style="margin-top:0; font-size: 1.2rem;">Incident Legend</h3><div style="line-height: 2.2;">'
-        
-        for original_key, info in DISASTER_CONFIG.items():
-            rgb = f"rgb({info['color'][0]}, {info['color'][1]}, {info['color'][2]})"
-            legend_html += f'''
-                <div style="display: flex; align-items: center;">
-                    <span style="color: {rgb}; font-size: 24px; margin-right: 12px;">●</span>
-                    <span style="font-size: 14px;">{info['label']}</span>
+        # ✅ HARD-CODED LEGEND (EXACT COLORS)
+        st.markdown('''
+            <div class="legend-box">
+                <h3 style="margin-top:0; font-size: 1.2rem;">Incident Legend</h3>
+                <div style="line-height: 2.2;">
+                    <div style="display: flex; align-items: center;">
+                        <span style="color: rgb(128, 0, 128); font-size: 24px; margin-right: 12px;">●</span>
+                        <span style="font-size: 14px;">Severe Meteorological (Tornado/Hail)</span>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <span style="color: rgb(255, 0, 0); font-size: 24px; margin-right: 12px;">●</span>
+                        <span style="font-size: 14px;">Geological (Japan Earthquake/Tsunami)</span>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <span style="color: rgb(100, 100, 255); font-size: 24px; margin-right: 12px;">●</span>
+                        <span style="font-size: 14px;">Arctic Storms & Volcanic Activity</span>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <span style="color: rgb(0, 255, 255); font-size: 24px; margin-right: 12px;">●</span>
+                        <span style="font-size: 14px;">Hydrological (Flash Floods) & Social Reports</span>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <span style="color: rgb(255, 165, 0); font-size: 24px; margin-right: 12px;">●</span>
+                        <span style="font-size: 14px;">Regional Meteorological Alerts (US South)</span>
+                    </div>
                 </div>
-            '''
-        legend_html += '</div></div>'
-        st.markdown(legend_html, unsafe_allow_html=True)
+            </div>
+        ''', unsafe_allow_html=True)
         
         st.write("") 
         st.subheader("Investigate Hotspot")
-        selected = st.selectbox("Search Locations:", ["Select..."] + sorted(list(df['location'].unique())))
+        selected = st.selectbox("Search Locations:", ["Select..."] + list(df['location'].unique()))
         
         if selected != "Select...":
             st.session_state.view = 'Detail'
             st.session_state.selected_country = selected
             st.rerun()
 
-elif current_view == 'Detail':
+# --- DETAIL VIEW ---
+elif st.session_state.view == 'Detail':
     country = st.session_state.selected_country
-    st.subheader(f"Detailed Analysis: {country}")
+    st.subheader(f"Detailed Analysis: {country}") # PIN EMOJI REMOVED
     
     country_df = df[df['location'] == country]
+    
     d_map, d_list = st.columns([2, 1])
     
     with d_map:
         detail_view = pdk.ViewState(
-            latitude=country_df['lat'].mean(), longitude=country_df['lon'].mean(), 
-            zoom=4, pitch=0
+            latitude=country_df['lat'].mean(), 
+            longitude=country_df['lon'].mean(), 
+            zoom=4, 
+            pitch=0
+        )
+        detail_layer = pdk.Layer(
+            "ScatterplotLayer",
+            country_df,
+            get_position=["lon", "lat"],
+            get_color="color", 
+            get_radius=50000,
+            pickable=True,
         )
         st.pydeck_chart(pdk.Deck(
             map_style='light',
-            layers=[pdk.Layer("ScatterplotLayer", country_df, get_position=["lon", "lat"], 
-                               get_color="color", get_radius=50000, pickable=True)],
+            layers=[detail_layer],
             initial_view_state=detail_view,
-            tooltip={"text": "{display_label}"}
+            tooltip={"text": "{Disaster_Category}"}
         ))
     
     with d_list:
         st.write(f"Showing {len(country_df)} incidents")
         for _, row in country_df.iterrows():
-            st.info(f"**{row['display_label']}**\n\n{row['Tweet_Text']}")
+            st.info(f"**{row['Disaster_Category']}**\n\n{row['Tweet_Text']}")
