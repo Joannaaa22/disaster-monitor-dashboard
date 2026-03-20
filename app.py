@@ -16,7 +16,6 @@ st.markdown("""
     .stApp { background-color: #FFFFFF; }
 
     /* CENTER ALIGNMENT LOGIC */
-    /* This centers the entire block of content in the middle of the white space */
     .block-container {
         max-width: 1200px !important;
         padding-top: 2rem !important;
@@ -64,6 +63,21 @@ st.markdown("""
     }
 
     hr { border-top: 1px solid #E6E6E6 !important; margin: 15px 0 !important; }
+
+    /* BUTTON STYLING - Monochrome Grey with Amber Hover */
+    div.stButton > button {
+        background-color: #F8F9FA;
+        color: #262730;
+        border: 1px solid #E6E6E6;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    div.stButton > button:hover {
+        background-color: #FFC107 !important;
+        color: #262730 !important;
+        border-color: #FFC107 !important;
+    }
     
     /* OVERLAY LEGEND STYLING */
     .map-container { position: relative; }
@@ -158,7 +172,6 @@ df['Clean_Category'] = df['Disaster_Category'].map(clean_name_lookup)
 
 # --- MAIN APP LOGIC ---
 if st.session_state.view == 'Global':
-    # Main Dashboard centered horizontally
     col_map, col_ctrl = st.columns([2.8, 1.2], gap="large")
     
     with col_ctrl:
@@ -196,13 +209,9 @@ if st.session_state.view == 'Global':
         st.markdown('</div>', unsafe_allow_html=True)
 
 elif st.session_state.view == 'Detail':
-    if st.button("← Back to Global View"):
-        st.session_state.view = 'Global'
-        st.session_state.selected_country = None
-        st.rerun()
-
     country = st.session_state.selected_country
     st.subheader(f"Detailed Analysis: {country}")
+    
     country_df = df[df['location'] == country]
     d_map, d_list = st.columns([2, 1], gap="medium")
     
@@ -213,6 +222,12 @@ elif st.session_state.view == 'Detail':
         st.pydeck_chart(pdk.Deck(map_style='light', layers=[dl], initial_view_state=dv, height=500))
         render_map_legend()
         st.markdown('</div>', unsafe_allow_html=True)
+        
+        # ✅ BACK BUTTON PLACED UNDER MAP
+        if st.button("← Back to Global View"):
+            st.session_state.view = 'Global'
+            st.session_state.selected_country = None
+            st.rerun()
     
     with d_list:
         st.markdown(f'<span class="secondary-text">Showing {len(country_df)} incidents</span>', unsafe_allow_html=True)
