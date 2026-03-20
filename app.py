@@ -15,10 +15,13 @@ st.markdown("""
     /* Main background */
     .stApp { background-color: #FFFFFF; }
 
-    /* REDUCE TOP SPACING: Removes padding between header and map */
+    /* CENTER ALIGNMENT LOGIC */
+    /* This centers the entire block of content in the middle of the white space */
     .block-container {
-        padding-top: 1rem !important;
+        max-width: 1200px !important;
+        padding-top: 2rem !important;
         padding-bottom: 0rem !important;
+        margin: auto !important;
     }
     
     /* LOGO & TEXT INJECTION INTO TOP BAR */
@@ -60,7 +63,7 @@ st.markdown("""
         font-size: 0.85rem;
     }
 
-    hr { border-top: 1px solid #E6E6E6 !important; margin: 10px 0 !important; }
+    hr { border-top: 1px solid #E6E6E6 !important; margin: 15px 0 !important; }
     
     /* OVERLAY LEGEND STYLING */
     .map-container { position: relative; }
@@ -155,8 +158,8 @@ df['Clean_Category'] = df['Disaster_Category'].map(clean_name_lookup)
 
 # --- MAIN APP LOGIC ---
 if st.session_state.view == 'Global':
-    # Side-by-side layout: Map (3/4) and Controls (1/4)
-    col_map, col_ctrl = st.columns([3, 1])
+    # Main Dashboard centered horizontally
+    col_map, col_ctrl = st.columns([2.8, 1.2], gap="large")
     
     with col_ctrl:
         st.subheader("1. Investigate Hotspot")
@@ -187,13 +190,12 @@ if st.session_state.view == 'Global':
             layers=[layer], 
             initial_view_state=view_state, 
             tooltip={"text": "{location}\nCategory: {Clean_Category}"},
-            height=650 # Keeps map compact within the screen view
+            height=600
         ))
         render_map_legend()
         st.markdown('</div>', unsafe_allow_html=True)
 
 elif st.session_state.view == 'Detail':
-    # Keeping Reset button only on Detail page to allow returning to home
     if st.button("← Back to Global View"):
         st.session_state.view = 'Global'
         st.session_state.selected_country = None
@@ -202,7 +204,7 @@ elif st.session_state.view == 'Detail':
     country = st.session_state.selected_country
     st.subheader(f"Detailed Analysis: {country}")
     country_df = df[df['location'] == country]
-    d_map, d_list = st.columns([2, 1])
+    d_map, d_list = st.columns([2, 1], gap="medium")
     
     with d_map:
         st.markdown('<div class="map-container">', unsafe_allow_html=True)
