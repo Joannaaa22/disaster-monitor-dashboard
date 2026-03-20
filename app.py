@@ -4,7 +4,7 @@ import pydeck as pdk
 import numpy as np
 
 # 1. Page Config
-st.set_page_config(page_title="DisasterMonitor AI", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="ResQlytics", layout="wide", initial_sidebar_state="collapsed")
 
 # 2. THEME & STYLING
 st.markdown("""
@@ -15,6 +15,30 @@ st.markdown("""
     /* Main background */
     .stApp { background-color: #FFFFFF; }
     
+    /* LOGO INJECTION INTO TOP BAR */
+    header[data-testid="stHeader"]::before {
+        content: "";
+        background-image: url('https://img.icons8.com/ios-filled/50/FFC107/pulse.png'); /* Amber Pulse Icon Placeholder */
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        left: 20px;
+        top: 10px;
+        width: 35px;
+        height: 35px;
+    }
+    
+    header[data-testid="stHeader"]::after {
+        content: "ResQlytics";
+        position: absolute;
+        left: 65px;
+        top: 15px;
+        color: #262730;
+        font-weight: 800;
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 1.2rem;
+    }
+
     /* Custom Reset Button - Charcoal with Amber Hover */
     div.stButton > button {
         background-color: #262730;
@@ -43,9 +67,7 @@ st.markdown("""
     hr { border-top: 1px solid #E6E6E6 !important; }
     
     /* OVERLAY LEGEND STYLING */
-    .map-container {
-        position: relative;
-    }
+    .map-container { position: relative; }
     
     .legend-overlay {
         position: absolute;
@@ -55,9 +77,9 @@ st.markdown("""
         padding: 15px;
         border: 1px solid #E6E6E6;
         border-radius: 8px;
-        background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+        background-color: rgba(255, 255, 255, 0.9);
         box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
-        pointer-events: none; /* Allows clicking 'through' the legend to the map */
+        pointer-events: none;
     }
 
     .location-list {
@@ -73,7 +95,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# Updated Legend as an Overlay
+# Overlay Legend Function
 def render_map_legend():
     st.markdown('''
         <div class="legend-overlay">
@@ -114,11 +136,10 @@ def load_data():
 
 df = load_data()
 
-# Initialization
+# Logic / Mappings
 if 'view' not in st.session_state: st.session_state.view = 'Global'
 if 'selected_country' not in st.session_state: st.session_state.selected_country = None
 
-# Color and Name Mappings
 color_lookup = {
     "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 160],      
     "Geological (Japan Earthquake/Tsunami)": [255, 0, 0, 160],       
@@ -137,8 +158,8 @@ df['color'] = df['Disaster_Category'].map(color_lookup)
 df['Clean_Category'] = df['Disaster_Category'].map(clean_name_lookup)
 
 # --- TOP NAVIGATION BAR ---
-t1, t2 = st.columns([7, 1])
-with t1: st.title("Global Real-Time Disaster Monitor")
+# We keep the Reset button here, but the Name/Logo is now moved to the CSS top-bar
+_, t2 = st.columns([7, 1])
 with t2:
     if st.button("Reset View"):
         st.session_state.view = 'Global'
@@ -167,7 +188,6 @@ if st.session_state.view == 'Global':
             st.markdown(f'<div class="location-list">{" • ".join(regions)}</div>', unsafe_allow_html=True)
 
     with col_map:
-        # Wrap map in a div to allow absolute positioning of the legend
         st.markdown('<div class="map-container">', unsafe_allow_html=True)
         view_state = pdk.ViewState(latitude=20, longitude=0, zoom=1.4, pitch=0)
         layer = pdk.Layer(
@@ -176,7 +196,7 @@ if st.session_state.view == 'Global':
             radius_min_pixels=5, line_width_min_pixels=1, get_line_color=[80, 80, 80, 120]
         )
         st.pydeck_chart(pdk.Deck(map_style='light', layers=[layer], initial_view_state=view_state, tooltip={"text": "{location}\nCategory: {Clean_Category}"}))
-        render_map_legend() # Renders overlay
+        render_map_legend()
         st.markdown('</div>', unsafe_allow_html=True)
 
 elif st.session_state.view == 'Detail':
