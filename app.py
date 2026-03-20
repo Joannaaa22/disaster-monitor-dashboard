@@ -14,10 +14,16 @@ st.markdown("""
     
     /* Main background */
     .stApp { background-color: #FFFFFF; }
+
+    /* REDUCE TOP SPACING: Removes padding between header and map */
+    .block-container {
+        padding-top: 1rem !important;
+        padding-bottom: 0rem !important;
+    }
     
     /* LOGO & TEXT INJECTION INTO TOP BAR */
     header[data-testid="stHeader"] {
-        background-color: #262730 !important; /* Darkening the header bar for the white text to pop */
+        background-color: #262730 !important;
     }
 
     header[data-testid="stHeader"]::before {
@@ -37,28 +43,13 @@ st.markdown("""
         position: absolute;
         left: 60px;
         top: 14px;
-        color: #FFFFFF; /* Your pure white shade */
+        color: #FFFFFF;
         font-weight: 800;
         font-family: 'Source Sans Pro', sans-serif;
         font-size: 1.25rem;
         letter-spacing: -0.5px;
     }
 
-    /* Custom Reset Button - Charcoal with Amber Hover */
-    div.stButton > button {
-        background-color: #262730;
-        color: #FFFFFF;
-        border: none;
-        border-radius: 6px;
-        width: 100%;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
-    div.stButton > button:hover {
-        background-color: #FFC107 !important;
-        color: #262730 !important;
-    }
-    
     /* Standardized Text Colors */
     h1, h2, h3, .stSubheader, b, strong, p, span, label { 
         color: #262730 !important; 
@@ -69,7 +60,7 @@ st.markdown("""
         font-size: 0.85rem;
     }
 
-    hr { border-top: 1px solid #E6E6E6 !important; }
+    hr { border-top: 1px solid #E6E6E6 !important; margin: 10px 0 !important; }
     
     /* OVERLAY LEGEND STYLING */
     .map-container { position: relative; }
@@ -88,13 +79,13 @@ st.markdown("""
     }
 
     .location-list {
-        max-height: 150px;
+        max-height: 120px;
         overflow-y: auto;
-        padding: 10px;
+        padding: 8px;
         border: 1px solid #E6E6E6;
         border-radius: 5px;
         background-color: #FAFAF8;
-        font-size: 0.85rem;
+        font-size: 0.82rem;
         color: #8C8C8C !important;
     }
     </style>
@@ -162,17 +153,9 @@ clean_name_lookup = {
 df['color'] = df['Disaster_Category'].map(color_lookup)
 df['Clean_Category'] = df['Disaster_Category'].map(clean_name_lookup)
 
-# --- NAVIGATION AREA ---
-_, t2 = st.columns([7, 1])
-with t2:
-    if st.button("Reset View"):
-        st.session_state.view = 'Global'
-        st.session_state.selected_country = None
-        st.rerun()
-st.divider()
-
 # --- MAIN APP LOGIC ---
 if st.session_state.view == 'Global':
+    # Side-by-side layout: Map (3/4) and Controls (1/4)
     col_map, col_ctrl = st.columns([3, 1])
     
     with col_ctrl:
@@ -199,11 +182,23 @@ if st.session_state.view == 'Global':
             get_color="color", get_radius=180000, pickable=True, stroked=True, filled=True,
             radius_min_pixels=5, line_width_min_pixels=1, get_line_color=[80, 80, 80, 120]
         )
-        st.pydeck_chart(pdk.Deck(map_style='light', layers=[layer], initial_view_state=view_state, tooltip={"text": "{location}\nCategory: {Clean_Category}"}))
+        st.pydeck_chart(pdk.Deck(
+            map_style='light', 
+            layers=[layer], 
+            initial_view_state=view_state, 
+            tooltip={"text": "{location}\nCategory: {Clean_Category}"},
+            height=650 # Keeps map compact within the screen view
+        ))
         render_map_legend()
         st.markdown('</div>', unsafe_allow_html=True)
 
 elif st.session_state.view == 'Detail':
+    # Keeping Reset button only on Detail page to allow returning to home
+    if st.button("← Back to Global View"):
+        st.session_state.view = 'Global'
+        st.session_state.selected_country = None
+        st.rerun()
+
     country = st.session_state.selected_country
     st.subheader(f"Detailed Analysis: {country}")
     country_df = df[df['location'] == country]
@@ -213,7 +208,7 @@ elif st.session_state.view == 'Detail':
         st.markdown('<div class="map-container">', unsafe_allow_html=True)
         dv = pdk.ViewState(latitude=country_df['lat'].mean(), longitude=country_df['lon'].mean(), zoom=4)
         dl = pdk.Layer("ScatterplotLayer", country_df, get_position=["lon", "lat"], get_color="color", get_radius=50000, pickable=True, stroked=True, get_line_color=[80, 80, 80, 120])
-        st.pydeck_chart(pdk.Deck(map_style='light', layers=[dl], initial_view_state=dv))
+        st.pydeck_chart(pdk.Deck(map_style='light', layers=[dl], initial_view_state=dv, height=500))
         render_map_legend()
         st.markdown('</div>', unsafe_allow_html=True)
     
