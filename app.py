@@ -15,28 +15,33 @@ st.markdown("""
     /* Main background */
     .stApp { background-color: #FFFFFF; }
     
-    /* LOGO INJECTION INTO TOP BAR */
+    /* LOGO & TEXT INJECTION INTO TOP BAR */
+    header[data-testid="stHeader"] {
+        background-color: #262730 !important; /* Darkening the header bar for the white text to pop */
+    }
+
     header[data-testid="stHeader"]::before {
         content: "";
-        background-image: url('https://img.icons8.com/ios-filled/50/FFC107/pulse.png'); /* Amber Pulse Icon Placeholder */
+        background-image: url('https://img.icons8.com/ios-filled/50/FFC107/pulse.png');
         background-size: contain;
         background-repeat: no-repeat;
         position: absolute;
         left: 20px;
-        top: 10px;
-        width: 35px;
-        height: 35px;
+        top: 12px;
+        width: 30px;
+        height: 30px;
     }
     
     header[data-testid="stHeader"]::after {
         content: "ResQlytics";
         position: absolute;
-        left: 65px;
-        top: 15px;
-        color: #262730;
+        left: 60px;
+        top: 14px;
+        color: #FFFFFF; /* Your pure white shade */
         font-weight: 800;
         font-family: 'Source Sans Pro', sans-serif;
-        font-size: 1.2rem;
+        font-size: 1.25rem;
+        letter-spacing: -0.5px;
     }
 
     /* Custom Reset Button - Charcoal with Amber Hover */
@@ -157,8 +162,7 @@ clean_name_lookup = {
 df['color'] = df['Disaster_Category'].map(color_lookup)
 df['Clean_Category'] = df['Disaster_Category'].map(clean_name_lookup)
 
-# --- TOP NAVIGATION BAR ---
-# We keep the Reset button here, but the Name/Logo is now moved to the CSS top-bar
+# --- NAVIGATION AREA ---
 _, t2 = st.columns([7, 1])
 with t2:
     if st.button("Reset View"):
