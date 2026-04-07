@@ -22,6 +22,11 @@ st.markdown("""
         padding-bottom: 0rem !important;
         margin: auto !important;
     }
+
+    /* Extra space for Detail View Top */
+    .detail-view-spacer {
+        padding-top: 1.5rem;
+    }
     
     /* LOGO & TEXT INJECTION INTO TOP BAR */
     header[data-testid="stHeader"] {
@@ -64,7 +69,7 @@ st.markdown("""
 
     hr { border-top: 1px solid #E6E6E6 !important; margin: 15px 0 !important; }
 
-    /* BUTTON STYLING - Monochrome Grey with Amber Hover */
+    /* BUTTON STYLING */
     div.stButton > button {
         background-color: #F8F9FA;
         color: #262730;
@@ -160,6 +165,16 @@ color_lookup = {
     "Hydrological (Flash Floods) & Social Reports": [0, 255, 255, 160], 
     "Regional Meteorological Alerts (US South)": [255, 165, 0, 160]   
 }
+
+# Hex-code mapping for the mini-box icons
+icon_color_lookup = {
+    "Severe Meteorological (Tornado/Hail)": "rgb(128, 0, 128)",
+    "Geological (Japan Earthquake/Tsunami)": "rgb(255, 0, 0)",
+    "Arctic Storms & Volcanic Activity": "rgb(100, 100, 255)",
+    "Hydrological (Flash Floods) & Social Reports": "rgb(0, 255, 255)",
+    "Regional Meteorological Alerts (US South)": "rgb(255, 165, 0)"
+}
+
 clean_name_lookup = {
     "Severe Meteorological (Tornado/Hail)": "Storms & Tornadoes",
     "Geological (Japan Earthquake/Tsunami)": "Earthquakes & Tsunamis",
@@ -209,6 +224,7 @@ if st.session_state.view == 'Global':
         st.markdown('</div>', unsafe_allow_html=True)
 
 elif st.session_state.view == 'Detail':
+    st.markdown('<div class="detail-view-spacer"></div>', unsafe_allow_html=True)
     country = st.session_state.selected_country
     st.subheader(f"Detailed Analysis: {country}")
     
@@ -223,7 +239,23 @@ elif st.session_state.view == 'Detail':
         render_map_legend()
         st.markdown('</div>', unsafe_allow_html=True)
         
-        # ✅ BACK BUTTON PLACED UNDER MAP
+        # ACTIVE DISASTERS LIST FOR THIS AREA
+        st.write("")
+        st.markdown(f'<span class="secondary-text">**Active Disaster Types in {country}:**</span>', unsafe_allow_html=True)
+        
+        # Get unique disasters in this area
+        active_cats = country_df.drop_duplicates(subset=['Disaster_Category'])
+        
+        # Building the list strings manually to control icon color
+        cat_items = []
+        for _, row in active_cats.iterrows():
+            color = icon_color_lookup.get(row['Disaster_Category'], "grey")
+            name = row['Clean_Category']
+            cat_items.append(f'<span style="color:{color}; font-weight:bold;">●</span> {name}')
+            
+        st.markdown(f'<div class="location-list">{" &nbsp;&nbsp; ".join(cat_items)}</div>', unsafe_allow_html=True)
+
+        st.write("")
         if st.button("← Back to Global View"):
             st.session_state.view = 'Global'
             st.session_state.selected_country = None
