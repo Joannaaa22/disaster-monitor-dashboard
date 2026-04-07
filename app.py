@@ -64,22 +64,37 @@ st.markdown("""
         pointer-events: none;
     }
 
-    /* Style the Tabs to match Monochrome + Amber */
+    /* TAB MODIFICATIONS TO LOOK LIKE BUTTONS */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-    }
-    .stTabs [data-baseweb="tab"] {
-        height: 40px;
-        white-space: pre-wrap;
-        background-color: #F8F9FA;
-        border-radius: 4px 4px 0px 0px;
-        gap: 1px;
-        padding-top: 10px;
+        gap: 12px;
         padding-bottom: 10px;
     }
+    
+    .stTabs [data-baseweb="tab"] {
+        height: 45px;
+        background-color: #F8F9FA; /* Same grey as buttons */
+        border: 1px solid #E6E6E6;
+        border-radius: 6px; /* Rounded corners like buttons */
+        padding: 10px 30px !important; /* Increased length/width */
+        font-weight: 500;
+        color: #262730;
+        transition: all 0.2s ease;
+    }
+
+    .stTabs [data-baseweb="tab"]:hover {
+        background-color: #F0F2F6;
+        border-color: #262730;
+    }
+
     .stTabs [aria-selected="true"] {
-        background-color: #FFFFFF;
-        border-bottom: 3px solid #FFC107 !important;
+        background-color: #FFFFFF !important;
+        border: 1px solid #262730 !important;
+        border-bottom: 4px solid #FFC107 !important; /* Amber highlight on active button */
+    }
+    
+    /* Hide the default underline of Streamlit tabs */
+    .stTabs [data-baseweb="tab-highlight"] {
+        background-color: transparent !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -156,18 +171,15 @@ elif st.session_state.view == 'Detail':
     st.subheader(f"Detailed Analysis: {country}")
     country_df = df[df['location'] == country]
     
-    # Identify what categories exist in this location for the Tabs
     available_cats = sorted(list(country_df['Clean_Category'].unique()))
     tab_list = ["Overview"] + available_cats
     
-    # Create Tabs as a Nav Bar
     tabs = st.tabs(tab_list)
     
     for i, tab in enumerate(tabs):
         with tab:
             selected_type = tab_list[i]
             
-            # Filter data based on selected Tab
             if selected_type == "Overview":
                 tab_filtered_df = country_df
                 count_label = "All"
@@ -191,6 +203,5 @@ elif st.session_state.view == 'Detail':
             with d_list:
                 st.markdown(f'<span class="secondary-text">Showing {len(tab_filtered_df)} {count_label} incidents</span>', unsafe_allow_html=True)
                 st.divider()
-                # Displaying the tweets (filtered by the active tab)
                 for _, row in tab_filtered_df.iterrows():
                     st.info(f"**{row['Clean_Category']}**\n\n{row['Tweet_Text']}")
