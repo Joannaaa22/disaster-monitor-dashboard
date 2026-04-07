@@ -23,92 +23,53 @@ st.markdown("""
         margin: auto !important;
     }
 
-    /* Extra space for Detail View Top */
-    .detail-view-spacer {
-        padding-top: 1.5rem;
-    }
+    .detail-view-spacer { padding-top: 1.5rem; }
     
-    /* LOGO & TEXT INJECTION INTO TOP BAR */
-    header[data-testid="stHeader"] {
-        background-color: #262730 !important;
-    }
+    header[data-testid="stHeader"] { background-color: #262730 !important; }
 
     header[data-testid="stHeader"]::before {
         content: "";
         background-image: url('https://img.icons8.com/ios-filled/50/FFC107/pulse.png');
         background-size: contain;
         background-repeat: no-repeat;
-        position: absolute;
-        left: 20px;
-        top: 12px;
-        width: 30px;
-        height: 30px;
+        position: absolute; left: 20px; top: 12px; width: 30px; height: 30px;
     }
     
     header[data-testid="stHeader"]::after {
         content: "ResQlytics";
-        position: absolute;
-        left: 60px;
-        top: 14px;
-        color: #FFFFFF;
-        font-weight: 800;
-        font-family: 'Source Sans Pro', sans-serif;
-        font-size: 1.25rem;
-        letter-spacing: -0.5px;
+        position: absolute; left: 60px; top: 14px;
+        color: #FFFFFF; font-weight: 800; font-family: 'Source Sans Pro', sans-serif;
+        font-size: 1.25rem; letter-spacing: -0.5px;
     }
 
-    /* Standardized Text Colors */
-    h1, h2, h3, .stSubheader, b, strong, p, span, label { 
-        color: #262730 !important; 
-    }
-    
-    .secondary-text {
-        color: #8C8C8C !important;
-        font-size: 0.85rem;
-    }
-
+    h1, h2, h3, .stSubheader, b, strong, p, span, label { color: #262730 !important; }
+    .secondary-text { color: #8C8C8C !important; font-size: 0.85rem; }
     hr { border-top: 1px solid #E6E6E6 !important; margin: 15px 0 !important; }
 
     /* BUTTON STYLING */
     div.stButton > button {
-        background-color: #F8F9FA;
-        color: #262730;
-        border: 1px solid #E6E6E6;
-        border-radius: 6px;
-        font-weight: 500;
-        transition: all 0.3s ease;
+        background-color: #F8F9FA; color: #262730; border: 1px solid #E6E6E6;
+        border-radius: 6px; font-weight: 500; transition: all 0.3s ease;
     }
     div.stButton > button:hover {
-        background-color: #FFC107 !important;
-        color: #262730 !important;
-        border-color: #FFC107 !important;
+        background-color: #FFC107 !important; color: #262730 !important; border-color: #FFC107 !important;
     }
     
     /* OVERLAY LEGEND STYLING */
     .map-container { position: relative; }
-    
     .legend-overlay {
-        position: absolute;
-        bottom: 25px;
-        left: 25px;
-        z-index: 1000;
-        padding: 15px;
-        border: 1px solid #E6E6E6;
-        border-radius: 8px;
-        background-color: rgba(255, 255, 255, 0.9);
-        box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+        position: absolute; bottom: 25px; left: 25px; z-index: 1000;
+        padding: 15px; border: 1px solid #E6E6E6; border-radius: 8px;
+        background-color: rgba(255, 255, 255, 0.9); box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
         pointer-events: none;
     }
 
-    .location-list {
-        max-height: 120px;
-        overflow-y: auto;
-        padding: 8px;
-        border: 1px solid #E6E6E6;
-        border-radius: 5px;
-        background-color: #FAFAF8;
-        font-size: 0.82rem;
-        color: #8C8C8C !important;
+    /* Filter Pill Styling */
+    .filter-pill {
+        display: inline-block; padding: 4px 12px; border-radius: 20px;
+        border: 1px solid #E6E6E6; background: #FAFAF8; cursor: pointer;
+        font-size: 0.75rem; margin-right: 5px; margin-bottom: 5px;
+        transition: 0.2s;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -119,31 +80,15 @@ def render_map_legend():
         <div class="legend-overlay">
             <b style="font-size: 0.9rem; margin-bottom: 8px; display: block; color: #262730;">Incident Legend</b>
             <div style="display: flex; flex-direction: column; gap: 6px;">
-                <div style="display: flex; align-items: center;">
-                    <div style="width: 12px; height: 12px; background-color: rgb(128, 0, 128); border: 1px solid rgba(80,80,80,0.5); border-radius: 50%; margin-right: 8px;"></div>
-                    <span style="font-size: 11px; color: #262730;">Storms & Tornadoes</span>
-                </div>
-                <div style="display: flex; align-items: center;">
-                    <div style="width: 12px; height: 12px; background-color: rgb(255, 0, 0); border: 1px solid rgba(80,80,80,0.5); border-radius: 50%; margin-right: 8px;"></div>
-                    <span style="font-size: 11px; color: #262730;">Earthquakes & Tsunamis</span>
-                </div>
-                <div style="display: flex; align-items: center;">
-                    <div style="width: 12px; height: 12px; background-color: rgb(100, 100, 255); border: 1px solid rgba(80,80,80,0.5); border-radius: 50%; margin-right: 8px;"></div>
-                    <span style="font-size: 11px; color: #262730;">Extreme Cold & Volcanic</span>
-                </div>
-                <div style="display: flex; align-items: center;">
-                    <div style="width: 12px; height: 12px; background-color: rgb(0, 255, 255); border: 1px solid rgba(80,80,80,0.5); border-radius: 50%; margin-right: 8px;"></div>
-                    <span style="font-size: 11px; color: #262730;">Floods & Local Alerts</span>
-                </div>
-                <div style="display: flex; align-items: center;">
-                    <div style="width: 12px; height: 12px; background-color: rgb(255, 165, 0); border: 1px solid rgba(80,80,80,0.5); border-radius: 50%; margin-right: 8px;"></div>
-                    <span style="font-size: 11px; color: #262730;">Regional Weather Alerts</span>
-                </div>
+                <div style="display: flex; align-items: center;"><div style="width: 12px; height: 12px; background-color: rgb(128, 0, 128); border: 1px solid rgba(80,80,80,0.5); border-radius: 50%; margin-right: 8px;"></div><span style="font-size: 11px; color: #262730;">Storms & Tornadoes</span></div>
+                <div style="display: flex; align-items: center;"><div style="width: 12px; height: 12px; background-color: rgb(255, 0, 0); border: 1px solid rgba(80,80,80,0.5); border-radius: 50%; margin-right: 8px;"></div><span style="font-size: 11px; color: #262730;">Earthquakes & Tsunamis</span></div>
+                <div style="display: flex; align-items: center;"><div style="width: 12px; height: 12px; background-color: rgb(100, 100, 255); border: 1px solid rgba(80,80,80,0.5); border-radius: 50%; margin-right: 8px;"></div><span style="font-size: 11px; color: #262730;">Extreme Cold & Volcanic</span></div>
+                <div style="display: flex; align-items: center;"><div style="width: 12px; height: 12px; background-color: rgb(0, 255, 255); border: 1px solid rgba(80,80,80,0.5); border-radius: 50%; margin-right: 8px;"></div><span style="font-size: 11px; color: #262730;">Floods & Local Alerts</span></div>
+                <div style="display: flex; align-items: center;"><div style="width: 12px; height: 12px; background-color: rgb(255, 165, 0); border: 1px solid rgba(80,80,80,0.5); border-radius: 50%; margin-right: 8px;"></div><span style="font-size: 11px; color: #262730;">Regional Weather Alerts</span></div>
             </div>
         </div>
     ''', unsafe_allow_html=True)
 
-# 3. Load Data
 @st.cache_data
 def load_data():
     df = pd.read_csv('final_dashboard_ready_data.csv').dropna(subset=['lat', 'lon'])
@@ -154,9 +99,10 @@ def load_data():
 
 df = load_data()
 
-# Logic / Mappings
+# Initialization
 if 'view' not in st.session_state: st.session_state.view = 'Global'
 if 'selected_country' not in st.session_state: st.session_state.selected_country = None
+if 'detail_filter' not in st.session_state: st.session_state.detail_filter = "All"
 
 color_lookup = {
     "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 160],      
@@ -165,8 +111,6 @@ color_lookup = {
     "Hydrological (Flash Floods) & Social Reports": [0, 255, 255, 160], 
     "Regional Meteorological Alerts (US South)": [255, 165, 0, 160]   
 }
-
-# Hex-code mapping for the mini-box icons
 icon_color_lookup = {
     "Severe Meteorological (Tornado/Hail)": "rgb(128, 0, 128)",
     "Geological (Japan Earthquake/Tsunami)": "rgb(255, 0, 0)",
@@ -174,7 +118,6 @@ icon_color_lookup = {
     "Hydrological (Flash Floods) & Social Reports": "rgb(0, 255, 255)",
     "Regional Meteorological Alerts (US South)": "rgb(255, 165, 0)"
 }
-
 clean_name_lookup = {
     "Severe Meteorological (Tornado/Hail)": "Storms & Tornadoes",
     "Geological (Japan Earthquake/Tsunami)": "Earthquakes & Tsunamis",
@@ -185,83 +128,74 @@ clean_name_lookup = {
 df['color'] = df['Disaster_Category'].map(color_lookup)
 df['Clean_Category'] = df['Disaster_Category'].map(clean_name_lookup)
 
-# --- MAIN APP LOGIC ---
+# --- GLOBAL VIEW ---
 if st.session_state.view == 'Global':
     col_map, col_ctrl = st.columns([2.8, 1.2], gap="large")
-    
     with col_ctrl:
         st.subheader("1. Investigate Hotspot")
         selected_loc = st.selectbox("Search by Location:", ["Select..."] + sorted(list(df['location'].unique())), key="loc_filter")
         if selected_loc != "Select...":
-            st.session_state.view = 'Detail'; st.session_state.selected_country = selected_loc; st.rerun()
-
+            st.session_state.view = 'Detail'; st.session_state.selected_country = selected_loc; st.session_state.detail_filter = "All"; st.rerun()
         st.divider()
         st.subheader("2. Filter by Disaster")
         selected_cat = st.selectbox("Select Category:", ["All Incidents"] + list(clean_name_lookup.values()), key="cat_filter")
-        
         filtered_df = df if selected_cat == "All Incidents" else df[df['Clean_Category'] == selected_cat]
-        if selected_cat != "All Incidents":
-            regions = sorted(filtered_df['location'].unique())
-            st.markdown(f'<span class="secondary-text">Active in:</span>', unsafe_allow_html=True)
-            st.markdown(f'<div class="location-list">{" • ".join(regions)}</div>', unsafe_allow_html=True)
-
     with col_map:
         st.markdown('<div class="map-container">', unsafe_allow_html=True)
         view_state = pdk.ViewState(latitude=20, longitude=0, zoom=1.4, pitch=0)
-        layer = pdk.Layer(
-            "ScatterplotLayer", filtered_df, get_position=["lon", "lat"],
-            get_color="color", get_radius=180000, pickable=True, stroked=True, filled=True,
-            radius_min_pixels=5, line_width_min_pixels=1, get_line_color=[80, 80, 80, 120]
-        )
-        st.pydeck_chart(pdk.Deck(
-            map_style='light', 
-            layers=[layer], 
-            initial_view_state=view_state, 
-            tooltip={"text": "{location}\nCategory: {Clean_Category}"},
-            height=600
-        ))
-        render_map_legend()
-        st.markdown('</div>', unsafe_allow_html=True)
+        layer = pdk.Layer("ScatterplotLayer", filtered_df, get_position=["lon", "lat"], get_color="color", get_radius=180000, pickable=True, stroked=True, filled=True, radius_min_pixels=5, line_width_min_pixels=1, get_line_color=[80, 80, 80, 120])
+        st.pydeck_chart(pdk.Deck(map_style='light', layers=[layer], initial_view_state=view_state, tooltip={"text": "{location}\nCategory: {Clean_Category}"}, height=600))
+        render_map_legend(); st.markdown('</div>', unsafe_allow_html=True)
 
+# --- DETAIL VIEW ---
 elif st.session_state.view == 'Detail':
     st.markdown('<div class="detail-view-spacer"></div>', unsafe_allow_html=True)
     country = st.session_state.selected_country
     st.subheader(f"Detailed Analysis: {country}")
-    
     country_df = df[df['location'] == country]
+    
+    # Filtering Logic based on interaction
+    if st.session_state.detail_filter == "All":
+        detail_filtered_df = country_df
+    else:
+        detail_filtered_df = country_df[country_df['Clean_Category'] == st.session_state.detail_filter]
+
     d_map, d_list = st.columns([2, 1], gap="medium")
     
     with d_map:
         st.markdown('<div class="map-container">', unsafe_allow_html=True)
         dv = pdk.ViewState(latitude=country_df['lat'].mean(), longitude=country_df['lon'].mean(), zoom=4)
-        dl = pdk.Layer("ScatterplotLayer", country_df, get_position=["lon", "lat"], get_color="color", get_radius=50000, pickable=True, stroked=True, get_line_color=[80, 80, 80, 120])
+        dl = pdk.Layer("ScatterplotLayer", detail_filtered_df, get_position=["lon", "lat"], get_color="color", get_radius=50000, pickable=True, stroked=True, get_line_color=[80, 80, 80, 120])
         st.pydeck_chart(pdk.Deck(map_style='light', layers=[dl], initial_view_state=dv, height=500))
-        render_map_legend()
-        st.markdown('</div>', unsafe_allow_html=True)
+        render_map_legend(); st.markdown('</div>', unsafe_allow_html=True)
         
-        # ACTIVE DISASTERS LIST FOR THIS AREA
-        st.write("")
-        st.markdown(f'<span class="secondary-text">**Active Disaster Types in {country}:**</span>', unsafe_allow_html=True)
-        
-        # Get unique disasters in this area
-        active_cats = country_df.drop_duplicates(subset=['Disaster_Category'])
-        
-        # Building the list strings manually to control icon color
-        cat_items = []
-        for _, row in active_cats.iterrows():
-            color = icon_color_lookup.get(row['Disaster_Category'], "grey")
-            name = row['Clean_Category']
-            cat_items.append(f'<span style="color:{color}; font-weight:bold;">●</span> {name}')
-            
-        st.markdown(f'<div class="location-list">{" &nbsp;&nbsp; ".join(cat_items)}</div>', unsafe_allow_html=True)
-
         st.write("")
         if st.button("← Back to Global View"):
-            st.session_state.view = 'Global'
-            st.session_state.selected_country = None
-            st.rerun()
-    
+            st.session_state.view = 'Global'; st.rerun()
+
     with d_list:
-        st.markdown(f'<span class="secondary-text">Showing {len(country_df)} incidents</span>', unsafe_allow_html=True)
-        for _, row in country_df.iterrows():
+        # INTERACTIVE DISASTER FILTERS
+        st.markdown(f'<span class="secondary-text">**Filter Content by Incident Type:**</span>', unsafe_allow_html=True)
+        
+        # Pill-style manual buttons using Streamlit columns
+        unique_cats = country_df['Clean_Category'].unique()
+        
+        c1, c2 = st.columns(2)
+        if c1.button("Show All"):
+            st.session_state.detail_filter = "All"; st.rerun()
+            
+        for i, cat_name in enumerate(unique_cats):
+            target_col = c2 if i % 2 == 0 else c1
+            # Find the original category to get the color icon
+            orig_cat = [k for k, v in clean_name_lookup.items() if v == cat_name][0]
+            icon_color = icon_color_lookup.get(orig_cat, "grey")
+            
+            if target_col.button(f"● {cat_name}"):
+                st.session_state.detail_filter = cat_name; st.rerun()
+
+        st.divider()
+        st.markdown(f'<span class="secondary-text">Showing {len(detail_filtered_df)} {st.session_state.detail_filter if st.session_state.detail_filter != "All" else ""} incidents</span>', unsafe_allow_html=True)
+        
+        # Displaying the tweets (filtered)
+        for _, row in detail_filtered_df.iterrows():
             st.info(f"**{row['Clean_Category']}**\n\n{row['Tweet_Text']}")
