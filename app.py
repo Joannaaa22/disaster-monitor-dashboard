@@ -64,12 +64,22 @@ st.markdown("""
         pointer-events: none;
     }
 
-    /* Filter Pill Styling */
-    .filter-pill {
-        display: inline-block; padding: 4px 12px; border-radius: 20px;
-        border: 1px solid #E6E6E6; background: #FAFAF8; cursor: pointer;
-        font-size: 0.75rem; margin-right: 5px; margin-bottom: 5px;
-        transition: 0.2s;
+    /* Style the Tabs to match Monochrome + Amber */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 8px;
+    }
+    .stTabs [data-baseweb="tab"] {
+        height: 40px;
+        white-space: pre-wrap;
+        background-color: #F8F9FA;
+        border-radius: 4px 4px 0px 0px;
+        gap: 1px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .stTabs [aria-selected="true"] {
+        background-color: #FFFFFF;
+        border-bottom: 3px solid #FFC107 !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -102,7 +112,6 @@ df = load_data()
 # Initialization
 if 'view' not in st.session_state: st.session_state.view = 'Global'
 if 'selected_country' not in st.session_state: st.session_state.selected_country = None
-if 'detail_filter' not in st.session_state: st.session_state.detail_filter = "All"
 
 color_lookup = {
     "Severe Meteorological (Tornado/Hail)": [128, 0, 128, 160],      
@@ -110,13 +119,6 @@ color_lookup = {
     "Arctic Storms & Volcanic Activity": [100, 100, 255, 160],       
     "Hydrological (Flash Floods) & Social Reports": [0, 255, 255, 160], 
     "Regional Meteorological Alerts (US South)": [255, 165, 0, 160]   
-}
-icon_color_lookup = {
-    "Severe Meteorological (Tornado/Hail)": "rgb(128, 0, 128)",
-    "Geological (Japan Earthquake/Tsunami)": "rgb(255, 0, 0)",
-    "Arctic Storms & Volcanic Activity": "rgb(100, 100, 255)",
-    "Hydrological (Flash Floods) & Social Reports": "rgb(0, 255, 255)",
-    "Regional Meteorological Alerts (US South)": "rgb(255, 165, 0)"
 }
 clean_name_lookup = {
     "Severe Meteorological (Tornado/Hail)": "Storms & Tornadoes",
@@ -135,7 +137,7 @@ if st.session_state.view == 'Global':
         st.subheader("1. Investigate Hotspot")
         selected_loc = st.selectbox("Search by Location:", ["Select..."] + sorted(list(df['location'].unique())), key="loc_filter")
         if selected_loc != "Select...":
-            st.session_state.view = 'Detail'; st.session_state.selected_country = selected_loc; st.session_state.detail_filter = "All"; st.rerun()
+            st.session_state.view = 'Detail'; st.session_state.selected_country = selected_loc; st.rerun()
         st.divider()
         st.subheader("2. Filter by Disaster")
         selected_cat = st.selectbox("Select Category:", ["All Incidents"] + list(clean_name_lookup.values()), key="cat_filter")
@@ -154,48 +156,41 @@ elif st.session_state.view == 'Detail':
     st.subheader(f"Detailed Analysis: {country}")
     country_df = df[df['location'] == country]
     
-    # Filtering Logic based on interaction
-    if st.session_state.detail_filter == "All":
-        detail_filtered_df = country_df
-    else:
-        detail_filtered_df = country_df[country_df['Clean_Category'] == st.session_state.detail_filter]
-
-    d_map, d_list = st.columns([2, 1], gap="medium")
+    # Identify what categories exist in this location for the Tabs
+    available_cats = sorted(list(country_df['Clean_Category'].unique()))
+    tab_list = ["Overview"] + available_cats
     
-    with d_map:
-        st.markdown('<div class="map-container">', unsafe_allow_html=True)
-        dv = pdk.ViewState(latitude=country_df['lat'].mean(), longitude=country_df['lon'].mean(), zoom=4)
-        dl = pdk.Layer("ScatterplotLayer", detail_filtered_df, get_position=["lon", "lat"], get_color="color", get_radius=50000, pickable=True, stroked=True, get_line_color=[80, 80, 80, 120])
-        st.pydeck_chart(pdk.Deck(map_style='light', layers=[dl], initial_view_state=dv, height=500))
-        render_map_legend(); st.markdown('</div>', unsafe_allow_html=True)
-        
-        st.write("")
-        if st.button("← Back to Global View"):
-            st.session_state.view = 'Global'; st.rerun()
-
-    with d_list:
-        # INTERACTIVE DISASTER FILTERS
-        st.markdown(f'<span class="secondary-text">**Filter Content by Incident Type:**</span>', unsafe_allow_html=True)
-        
-        # Pill-style manual buttons using Streamlit columns
-        unique_cats = country_df['Clean_Category'].unique()
-        
-        c1, c2 = st.columns(2)
-        if c1.button("Show All"):
-            st.session_state.detail_filter = "All"; st.rerun()
+    # Create Tabs as a Nav Bar
+    tabs = st.tabs(tab_list)
+    
+    for i, tab in enumerate(tabs):
+        with tab:
+            selected_type = tab_list[i]
             
-        for i, cat_name in enumerate(unique_cats):
-            target_col = c2 if i % 2 == 0 else c1
-            # Find the original category to get the color icon
-            orig_cat = [k for k, v in clean_name_lookup.items() if v == cat_name][0]
-            icon_color = icon_color_lookup.get(orig_cat, "grey")
-            
-            if target_col.button(f"● {cat_name}"):
-                st.session_state.detail_filter = cat_name; st.rerun()
+            # Filter data based on selected Tab
+            if selected_type == "Overview":
+                tab_filtered_df = country_df
+                count_label = "All"
+            else:
+                tab_filtered_df = country_df[country_df['Clean_Category'] == selected_type]
+                count_label = selected_type
 
-        st.divider()
-        st.markdown(f'<span class="secondary-text">Showing {len(detail_filtered_df)} {st.session_state.detail_filter if st.session_state.detail_filter != "All" else ""} incidents</span>', unsafe_allow_html=True)
-        
-        # Displaying the tweets (filtered)
-        for _, row in detail_filtered_df.iterrows():
-            st.info(f"**{row['Clean_Category']}**\n\n{row['Tweet_Text']}")
+            d_map, d_list = st.columns([2, 1], gap="medium")
+            
+            with d_map:
+                st.markdown('<div class="map-container">', unsafe_allow_html=True)
+                dv = pdk.ViewState(latitude=country_df['lat'].mean(), longitude=country_df['lon'].mean(), zoom=4)
+                dl = pdk.Layer("ScatterplotLayer", tab_filtered_df, get_position=["lon", "lat"], get_color="color", get_radius=50000, pickable=True, stroked=True, get_line_color=[80, 80, 80, 120])
+                st.pydeck_chart(pdk.Deck(map_style='light', layers=[dl], initial_view_state=dv, height=500))
+                render_map_legend(); st.markdown('</div>', unsafe_allow_html=True)
+                
+                st.write("")
+                if st.button("← Back to Global View", key=f"back_{i}"):
+                    st.session_state.view = 'Global'; st.rerun()
+
+            with d_list:
+                st.markdown(f'<span class="secondary-text">Showing {len(tab_filtered_df)} {count_label} incidents</span>', unsafe_allow_html=True)
+                st.divider()
+                # Displaying the tweets (filtered by the active tab)
+                for _, row in tab_filtered_df.iterrows():
+                    st.info(f"**{row['Clean_Category']}**\n\n{row['Tweet_Text']}")
