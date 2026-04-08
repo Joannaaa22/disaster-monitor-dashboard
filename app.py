@@ -64,6 +64,17 @@ st.markdown("""
         pointer-events: none;
     }
 
+    .location-list {
+        max-height: 120px;
+        overflow-y: auto;
+        padding: 8px;
+        border: 1px solid #E6E6E6;
+        border-radius: 5px;
+        background-color: #FAFAF8;
+        font-size: 0.82rem;
+        color: #8C8C8C !important;
+    }
+
     /* TAB MODIFICATIONS TO LOOK LIKE BUTTONS */
     .stTabs [data-baseweb="tab-list"] {
         gap: 12px;
@@ -72,10 +83,10 @@ st.markdown("""
     
     .stTabs [data-baseweb="tab"] {
         height: 45px;
-        background-color: #F8F9FA; /* Same grey as buttons */
+        background-color: #F8F9FA;
         border: 1px solid #E6E6E6;
-        border-radius: 6px; /* Rounded corners like buttons */
-        padding: 10px 30px !important; /* Increased length/width */
+        border-radius: 6px;
+        padding: 10px 30px !important;
         font-weight: 500;
         color: #262730;
         transition: all 0.2s ease;
@@ -89,10 +100,9 @@ st.markdown("""
     .stTabs [aria-selected="true"] {
         background-color: #FFFFFF !important;
         border: 1px solid #262730 !important;
-        border-bottom: 4px solid #FFC107 !important; /* Amber highlight on active button */
+        border-bottom: 4px solid #FFC107 !important;
     }
     
-    /* Hide the default underline of Streamlit tabs */
     .stTabs [data-baseweb="tab-highlight"] {
         background-color: transparent !important;
     }
@@ -109,11 +119,12 @@ def render_map_legend():
                 <div style="display: flex; align-items: center;"><div style="width: 12px; height: 12px; background-color: rgb(255, 0, 0); border: 1px solid rgba(80,80,80,0.5); border-radius: 50%; margin-right: 8px;"></div><span style="font-size: 11px; color: #262730;">Earthquakes & Tsunamis</span></div>
                 <div style="display: flex; align-items: center;"><div style="width: 12px; height: 12px; background-color: rgb(100, 100, 255); border: 1px solid rgba(80,80,80,0.5); border-radius: 50%; margin-right: 8px;"></div><span style="font-size: 11px; color: #262730;">Extreme Cold & Volcanic</span></div>
                 <div style="display: flex; align-items: center;"><div style="width: 12px; height: 12px; background-color: rgb(0, 255, 255); border: 1px solid rgba(80,80,80,0.5); border-radius: 50%; margin-right: 8px;"></div><span style="font-size: 11px; color: #262730;">Floods & Local Alerts</span></div>
-                <div style="display: flex; align-items: center;"><div style="width: 12px; height: 12px; background-color: rgb(255, 165, 0); border: 1px solid rgba(80,80,80,0.5); border-radius: 50%; margin-right: 8px;"></div><span style="font-size: 11px; color: #262730;">Regional Weather Alerts</span></div>
+                <div style="display: flex; align-items: center;"><div style="width: 12px; height: 12px; background-color: rgb(255, 165, 0); border: 1.5px solid rgba(80,80,80,0.5); border-radius: 50%; margin-right: 8px;"></div><span style="font-size: 11px; color: #262730;">Regional Weather Alerts</span></div>
             </div>
         </div>
     ''', unsafe_allow_html=True)
 
+# 3. Load Data
 @st.cache_data
 def load_data():
     df = pd.read_csv('final_dashboard_ready_data.csv').dropna(subset=['lat', 'lon'])
@@ -124,7 +135,7 @@ def load_data():
 
 df = load_data()
 
-# Initialization
+# Logic / Mappings
 if 'view' not in st.session_state: st.session_state.view = 'Global'
 if 'selected_country' not in st.session_state: st.session_state.selected_country = None
 
@@ -145,32 +156,44 @@ clean_name_lookup = {
 df['color'] = df['Disaster_Category'].map(color_lookup)
 df['Clean_Category'] = df['Disaster_Category'].map(clean_name_lookup)
 
-# --- GLOBAL VIEW ---
+# --- MAIN APP LOGIC ---
 if st.session_state.view == 'Global':
     col_map, col_ctrl = st.columns([2.8, 1.2], gap="large")
+    
     with col_ctrl:
         st.subheader("1. Investigate Hotspot")
         selected_loc = st.selectbox("Search by Location:", ["Select..."] + sorted(list(df['location'].unique())), key="loc_filter")
         if selected_loc != "Select...":
             st.session_state.view = 'Detail'; st.session_state.selected_country = selected_loc; st.rerun()
+
         st.divider()
         st.subheader("2. Filter by Disaster")
         selected_cat = st.selectbox("Select Category:", ["All Incidents"] + list(clean_name_lookup.values()), key="cat_filter")
+        
         filtered_df = df if selected_cat == "All Incidents" else df[df['Clean_Category'] == selected_cat]
+        if selected_cat != "All Incidents":
+            regions = sorted(filtered_df['location'].unique())
+            st.markdown(f'<span class="secondary-text">Active in:</span>', unsafe_allow_html=True)
+            st.markdown(f'<div class="location-list">{" • ".join(regions)}</div>', unsafe_allow_html=True)
+
     with col_map:
         st.markdown('<div class="map-container">', unsafe_allow_html=True)
         view_state = pdk.ViewState(latitude=20, longitude=0, zoom=1.4, pitch=0)
-        layer = pdk.Layer("ScatterplotLayer", filtered_df, get_position=["lon", "lat"], get_color="color", get_radius=180000, pickable=True, stroked=True, filled=True, radius_min_pixels=5, line_width_min_pixels=1, get_line_color=[80, 80, 80, 120])
+        layer = pdk.Layer(
+            "ScatterplotLayer", filtered_df, get_position=["lon", "lat"],
+            get_color="color", get_radius=180000, pickable=True, stroked=True, filled=True,
+            radius_min_pixels=5, line_width_min_pixels=1, get_line_color=[80, 80, 80, 120]
+        )
         st.pydeck_chart(pdk.Deck(map_style='light', layers=[layer], initial_view_state=view_state, tooltip={"text": "{location}\nCategory: {Clean_Category}"}, height=600))
-        render_map_legend(); st.markdown('</div>', unsafe_allow_html=True)
+        render_map_legend()
+        st.markdown('</div>', unsafe_allow_html=True)
 
-# --- DETAIL VIEW ---
 elif st.session_state.view == 'Detail':
     st.markdown('<div class="detail-view-spacer"></div>', unsafe_allow_html=True)
     country = st.session_state.selected_country
     st.subheader(f"Detailed Analysis: {country}")
-    country_df = df[df['location'] == country]
     
+    country_df = df[df['location'] == country]
     available_cats = sorted(list(country_df['Clean_Category'].unique()))
     tab_list = ["Overview"] + available_cats
     
@@ -179,13 +202,8 @@ elif st.session_state.view == 'Detail':
     for i, tab in enumerate(tabs):
         with tab:
             selected_type = tab_list[i]
-            
-            if selected_type == "Overview":
-                tab_filtered_df = country_df
-                count_label = "All"
-            else:
-                tab_filtered_df = country_df[country_df['Clean_Category'] == selected_type]
-                count_label = selected_type
+            tab_filtered_df = country_df if selected_type == "Overview" else country_df[country_df['Clean_Category'] == selected_type]
+            count_label = "All" if selected_type == "Overview" else selected_type
 
             d_map, d_list = st.columns([2, 1], gap="medium")
             
@@ -194,11 +212,13 @@ elif st.session_state.view == 'Detail':
                 dv = pdk.ViewState(latitude=country_df['lat'].mean(), longitude=country_df['lon'].mean(), zoom=4)
                 dl = pdk.Layer("ScatterplotLayer", tab_filtered_df, get_position=["lon", "lat"], get_color="color", get_radius=50000, pickable=True, stroked=True, get_line_color=[80, 80, 80, 120])
                 st.pydeck_chart(pdk.Deck(map_style='light', layers=[dl], initial_view_state=dv, height=500))
-                render_map_legend(); st.markdown('</div>', unsafe_allow_html=True)
+                render_map_legend()
+                st.markdown('</div>', unsafe_allow_html=True)
                 
                 st.write("")
                 if st.button("← Back to Global View", key=f"back_{i}"):
-                    st.session_state.view = 'Global'; st.rerun()
+                    st.session_state.view = 'Global'
+                    st.rerun()
 
             with d_list:
                 st.markdown(f'<span class="secondary-text">Showing {len(tab_filtered_df)} {count_label} incidents</span>', unsafe_allow_html=True)
